@@ -1,5 +1,6 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -29,9 +30,11 @@ public class Maint {
     @Column(name = "capability_id", nullable = false)
     private Long capabilityId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "appeared_data", nullable = false)
     private LocalDate createdData;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_data", nullable = false)
     private LocalDate dueData;
 
@@ -50,7 +53,7 @@ public class Maint {
     private String client;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<MaintComments> comments = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,10 +24,11 @@ public class MaintComments {
     @Column(name = "comment_text", nullable = false)
     private String commentText;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_data", nullable = false)
     private LocalDate createdData;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "maint_id")
     private Maint maint;
 
