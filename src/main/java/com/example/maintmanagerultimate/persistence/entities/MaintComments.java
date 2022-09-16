@@ -25,7 +25,8 @@ public class MaintComments {
     private String commentText;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "created_data", nullable = false)
+    //todo how to get nullable = false without error
+    @Column(name = "created_data", nullable = true)
     private LocalDate createdData;
 
     @ManyToOne(fetch = FetchType.EAGER)
