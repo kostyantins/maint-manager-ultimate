@@ -33,6 +33,24 @@ Content-Type: application/json
 "client": "MCB"
 }
 ```
+or with comments
+```
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "1",
+  "createdData": "2022-09-14",
+  "dueData": "2022-09-15",
+  "solvePriorityId": "1",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+```
 ###
 ```
 GET http://localhost:8080/maint/get/all
