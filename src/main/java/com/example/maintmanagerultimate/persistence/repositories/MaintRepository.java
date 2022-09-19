@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MaintRepository extends JpaRepository<Maint, Long> {
 
     Maint findMaintByMaintIdentifier(String maintIdentifier);
+
+    void deleteMaintById(Long maintId);
 }

@@ -1,7 +1,11 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
+//todo investigate how to create default values (approval, limit, access-control)
+@Getter
 @Entity
 @Table(name = "capability")
 public class Capability {
