@@ -3,13 +3,17 @@ package com.example.maintmanagerultimate.service.controller;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.exeptions.NoMaintCommentsException;
 import com.example.maintmanagerultimate.service.exeptions.NoMaintException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/maint")
 @RequiredArgsConstructor
@@ -18,15 +22,17 @@ public class MaintController {
     private final MaintRepository maintRepository;
 
     @PostMapping("/create")
-    public Long createMaint(@RequestBody Maint maint) {
+    public ResponseEntity<Long> createMaint(@RequestBody Maint maint) {
         final var createdMaint = maintRepository.save(maint);
 
-        //todo why it doesnt create maint id into DB
         if (maint.getComments() != null && !maint.getComments().isEmpty()) {
             maint.addComment(new MaintComments(maint.getComments().get(0).getCommentText(), createdMaint));
+            log.debug("The comment: '{}' was added to the maint: {}",
+                    maint.getComments().stream().map(Object::toString).collect(Collectors.joining()), maint.getId());
         }
 
-        return createdMaint.getId();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(createdMaint.getId());
     }
 
     @GetMapping("/get")
@@ -46,8 +52,11 @@ public class MaintController {
         return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
     }
 
-    @DeleteMapping("/delete")
-    public void deleteMaint(@RequestParam Long maintId) {
+    // todo why it doesnt work and how to create a right response code and do not return body
+    @DeleteMapping("/delete/{maintId}")
+    public ResponseEntity<?> deleteMaint(@PathVariable Long maintId) {
         maintRepository.deleteMaintById(maintId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(maintId);
     }
 }

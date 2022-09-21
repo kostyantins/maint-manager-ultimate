@@ -6,6 +6,7 @@ import com.example.maintmanagerultimate.service.exeptions.NoMaintCommentsExcepti
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -34,8 +35,8 @@ public class MaintCommentsController {
         return commentsRepository.findAll();
     }
 
-    @DeleteMapping("/delete")
-    public void deleteComment(@RequestParam Long commentId){
+    @DeleteMapping("/delete/{commentId}")
+    public void deleteComment(@PathParam("commentId") Long commentId){
         commentsRepository.deleteById(commentId);
     }
 }
