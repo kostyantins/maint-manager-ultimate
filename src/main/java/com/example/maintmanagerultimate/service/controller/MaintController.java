@@ -1,35 +1,29 @@
 package com.example.maintmanagerultimate.service.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.exeptions.NoMaintException;
+import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Slf4j
 @RestController
 @RequestMapping("/maint")
 @RequiredArgsConstructor
 public class MaintController {
 
     private final MaintRepository maintRepository;
+    private final MaintService maintService;
 
     @PostMapping("/create")
     public ResponseEntity<Long> createMaint(@RequestBody Maint maint) {
         final var createdMaint = maintRepository.save(maint);
 
-        if (maint.getComments() != null && !maint.getComments().isEmpty()) {
-            maint.addComment(new MaintComments(maint.getComments().get(0).getCommentText(), createdMaint));
-            log.debug("The comment: '{}' was added to the maint: {}",
-                    maint.getComments().stream().map(Object::toString).collect(Collectors.joining()), maint.getId());
-        }
+        maintService.createCommentIfPresent(createdMaint);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(createdMaint.getId());

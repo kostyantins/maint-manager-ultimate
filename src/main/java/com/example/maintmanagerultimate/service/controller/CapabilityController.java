@@ -46,7 +46,6 @@ public class CapabilityController {
                         Capability.builder()
                                 .capabilityName("access-control")
                                 .build()
-
                 )
                 .forEach(capabilityRepository::save);
     }

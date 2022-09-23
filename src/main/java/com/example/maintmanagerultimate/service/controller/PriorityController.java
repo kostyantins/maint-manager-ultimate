@@ -38,12 +38,15 @@ public class PriorityController {
     public void createDefaultPriorities() {
         Stream.of(
                         Priorities.builder()
+                                .id(1L)
                                 .priorityName("High")
                                 .build(),
                         Priorities.builder()
+                                .id(2L)
                                 .priorityName("Mid")
                                 .build(),
                         Priorities.builder()
+                                .id(2L)
                                 .priorityName("Low")
                                 .build()
 
