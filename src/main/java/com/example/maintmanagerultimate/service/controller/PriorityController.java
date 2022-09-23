@@ -1,11 +1,14 @@
 package com.example.maintmanagerultimate.service.controller;
 
+import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.PrioritiesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/priority")
@@ -29,5 +32,22 @@ public class PriorityController {
     @GetMapping("/get/all")
     public List<Priorities> getCapabilities() {
         return prioritiesRepository.findAll();
+    }
+
+    @PostConstruct
+    public void createDefaultPriorities() {
+        Stream.of(
+                        Priorities.builder()
+                                .priorityName("High")
+                                .build(),
+                        Priorities.builder()
+                                .priorityName("Mid")
+                                .build(),
+                        Priorities.builder()
+                                .priorityName("Low")
+                                .build()
+
+                )
+                .forEach(prioritiesRepository::save);
     }
 }
