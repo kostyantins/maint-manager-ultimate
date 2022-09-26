@@ -13,14 +13,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MaintService {
 
-    public void createCommentIfPresent(Maint createdMaint){
+    public void createCommentIfPresent(Maint createdMaint) {
         if (createdMaint.getComments() != null && !createdMaint.getComments().isEmpty()) {
-//            createdMaint.getComments().forEach(i -> {
-//                createdMaint.addComment(new MaintComments(i.getCommentText(), createdMaint));
-//                log.debug("The comment: '{}' was added to the maint: {}",
-//                        i.getCommentText(), createdMaint.getId());
-//            });
-
             createdMaint.getComments().stream()
                     .map(MaintComments::getCommentText)
                     .collect(Collectors.toList())

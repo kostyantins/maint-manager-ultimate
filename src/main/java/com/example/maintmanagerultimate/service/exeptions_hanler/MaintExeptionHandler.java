@@ -14,10 +14,12 @@ public class MaintExeptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<MaintError> handleNoMaintException(NoMaintException exception) {
-        return new ResponseEntity<>(MaintError.builder()
+        return ResponseEntity
                 .status(HttpStatus.NOT_FOUND.value())
-                .comment(exception.getLocalizedMessage())
-                .date(now())
-                .build(), HttpStatus.NOT_FOUND);
+                .body(MaintError.builder()
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .comment(exception.getMessage())
+                        .date(now())
+                        .build());
     }
 }

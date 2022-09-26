@@ -46,11 +46,12 @@ public class MaintController {
         return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
     }
 
-    // todo why it doesnt work and how to create a right response code and do not return body
+    // todo why it doesnt return body
     @DeleteMapping("/delete/{maintId}")
-    public ResponseEntity<?> deleteMaint(@PathVariable Long maintId) {
-        maintRepository.deleteMaintById(maintId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Long> deleteMaint(@PathVariable Long maintId) {
+        maintRepository.deleteById(maintId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
                 .body(maintId);
     }
 }
