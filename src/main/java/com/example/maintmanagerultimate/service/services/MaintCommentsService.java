@@ -2,11 +2,12 @@ package com.example.maintmanagerultimate.service.services;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
-import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsDto;
 import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintCommentsException;
-import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.List;
 public class MaintCommentsService {
 
     private final MaintCommentsRepository maintCommentsRepository;
-    private final MaintRepository maintRepository;
 
     // Not good implementation causing a plenty additional select calls from result set
 //    public List<MaintCommentsDto> getIdentifiedMaintComments() {
@@ -27,22 +27,26 @@ public class MaintCommentsService {
 //
 //    }
 
-    // Much better approach
+    // Much better approach to return DTO
     public List<MaintCommentsDto> getIdentifiedMaintComments() {
         return maintCommentsRepository.findMaintIdentifiedComments();
     }
 
     public MaintComments getMaintComment(Long maintCommentId) {
-        maintRepository.findAll()
-                .stream()
-                .filter(f -> f.getComments().stream()
-                        .anyMatch(m -> m.getId().equals(maintCommentId)))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchMaintCommentsException(maintCommentId));
-
-        //todo how to return optional correctly here
         return maintCommentsRepository
                 .findById(maintCommentId)
-                .get();
+                .orElseThrow(() -> new NoSuchMaintCommentsException(maintCommentId));
+    }
+
+    public ResponseEntity<CreateMaintCommentResponseDto> createComment(MaintComments maintComment) {
+        final var commentId = maintCommentsRepository
+                .save(maintComment)
+                .getId();
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(CreateMaintCommentResponseDto.builder()
+                        .maintCommentId(commentId)
+                        .build());
     }
 }
