@@ -13,4 +13,6 @@ public interface MaintCommentsRepository extends JpaRepository<MaintComments, Lo
     @Query("select new com.example.maintmanagerultimate.service.dto.MaintCommentsDto(m.maintIdentifier, c.commentText) from Maint m inner join m.comments c")
     //@Query("select new com.example.maintmanagerultimate.service.dto.MaintCommentsDto(m.maintIdentifier, c.commentText) from Maint m inner join MaintComments c on m.id = c.maint.id")
     List<MaintCommentsDto> findMaintIdentifiedComments();
+
+    <T>List<T> findAllBy(Class<T> classType);
 }

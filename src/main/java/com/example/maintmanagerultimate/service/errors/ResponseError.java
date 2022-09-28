@@ -1,11 +1,13 @@
 package com.example.maintmanagerultimate.service.errors;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Builder
-public class MaintError {
+@Data
+public class ResponseError {
 
     private Integer status;
     private String comment;

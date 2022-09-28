@@ -2,7 +2,7 @@ package com.example.maintmanagerultimate.service.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.exeptions.NoMaintException;
+import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class MaintController {
     public Maint getMaint(@RequestParam Long maintId) {
         return maintRepository
                 .findById(maintId)
-                .orElseThrow(() -> new NoMaintException(maintId));
+                .orElseThrow(() -> new NoSuchMaintException(maintId));
     }
 
     @GetMapping("/get/all")
