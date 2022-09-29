@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Capability {
 
     @Id
-    @GeneratedValue
+    @Column
     private Long id;
 
     @Column(name = "capabilety_name")

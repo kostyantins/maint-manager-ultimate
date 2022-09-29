@@ -29,7 +29,7 @@ public class MaintComments {
     @Column(name = "created_data", nullable = true)
     private LocalDate createdData;
 
-    //todo why I cen not use FetchType.LAZY
+    //todo why I can not use FetchType.LAZY
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "maint_id")
     private Maint maint;

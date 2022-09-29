@@ -38,12 +38,15 @@ public class CapabilityController {
     public void createDefaultCapabilities() {
         Stream.of(
                         Capability.builder()
+                                .id(1L)
                                 .capabilityName("approval")
                                 .build(),
                         Capability.builder()
+                                .id(2L)
                                 .capabilityName("limit")
                                 .build(),
                         Capability.builder()
+                                .id(2L)
                                 .capabilityName("access-control")
                                 .build()
                 )

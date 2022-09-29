@@ -23,7 +23,7 @@ public class MaintCommentsController {
 
     @PostMapping("/create")
     public ResponseEntity<CreateMaintCommentResponseDto> createComment(@RequestBody MaintComments maintComment) {
-        return createComment(maintComment);
+        return maintCommentsService.createComment(maintComment);
     }
 
     @GetMapping("/get")
@@ -34,14 +34,12 @@ public class MaintCommentsController {
     // Use the approach in the case we need to work with pagination
     @GetMapping("/get/all/pageable")
     public Page<MaintComments> getMaintCommentsPageable(Pageable pageable) {
-        return commentsRepository
-                .findAll(pageable);
+        return commentsRepository.findAll(pageable);
     }
 
     @GetMapping("/get/all/identified")
     public List<MaintCommentsDto> getIdentifiedMaintComments() {
-        return maintCommentsService
-                .getIdentifiedMaintComments();
+        return maintCommentsService.getIdentifiedMaintComments();
     }
 
     @GetMapping("/get/all")
@@ -49,7 +47,7 @@ public class MaintCommentsController {
         return commentsRepository.findAll();
     }
 
-    //Just na example of different usage
+    //Just an example of different usage
     @GetMapping("/get/all/by")
     public List<MaintComments> getAllComments() {
         return commentsRepository.findAllBy(MaintComments.class);

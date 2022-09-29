@@ -54,8 +54,19 @@ public class MaintController {
     @DeleteMapping("/delete/{maintId}")
     public ResponseEntity<Long> deleteMaint(@PathVariable Long maintId) {
         maintRepository.deleteById(maintId);
+
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(maintId);
+    }
+
+    @PutMapping("/update/fixversion/{fixVersion}/{maintId}")
+    public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
+        maintRepository.updateMaintFixVersion(fixVersion, maintId);
+    }
+
+    @PutMapping("/update/fixversion/{fixVersion}/{maintId}/by")
+    public void updateMaintFixVersionBy(@PathVariable String fixVersion, @PathVariable Long maintId) {
+        maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
     }
 }
