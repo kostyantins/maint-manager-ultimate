@@ -50,7 +50,7 @@ public class MaintController {
         return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
     }
 
-    // todo why it doesnt return body
+    // todo how to return sust status code different form the default
     @DeleteMapping("/delete/{maintId}")
     public ResponseEntity<Long> deleteMaint(@PathVariable Long maintId) {
         maintRepository.deleteById(maintId);
