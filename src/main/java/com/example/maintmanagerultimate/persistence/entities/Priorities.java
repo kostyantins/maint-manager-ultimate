@@ -1,5 +1,6 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,9 +22,5 @@ public class Priorities {
     private Long id;
 
     @Column(name = "priority_name")
-    private String priorityName;
-
-    @OneToOne
-    @JoinColumn(name = "maint_sovle_priority_id")
-    private Maint maint;
+    private PrioritiesNames priorityName;
 }

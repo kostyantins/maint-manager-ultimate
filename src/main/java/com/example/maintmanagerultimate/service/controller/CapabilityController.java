@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.service.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Capability;
+import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
 import com.example.maintmanagerultimate.persistence.repositories.CapabilityRepository;
 import com.example.maintmanagerultimate.service.exeptions.NoCapabilityException;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +40,15 @@ public class CapabilityController {
         Stream.of(
                         Capability.builder()
                                 .id(1L)
-                                .capabilityName("approval")
+                                .capabilityName(CapabilityNames.ACCESS_CONTROL)
                                 .build(),
                         Capability.builder()
                                 .id(2L)
-                                .capabilityName("limit")
+                                .capabilityName(CapabilityNames.APPROVALS)
                                 .build(),
                         Capability.builder()
-                                .id(2L)
-                                .capabilityName("access-control")
+                                .id(3L)
+                                .capabilityName(CapabilityNames.LIMITS)
                                 .build()
                 )
                 .forEach(capabilityRepository::save);

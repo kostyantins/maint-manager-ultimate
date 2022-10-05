@@ -21,6 +21,7 @@ public interface MaintRepository extends JpaRepository<Maint, Long>, CustomMaint
     @Query("select m from Maint m where m.solvePriorityId = :solvePriorityId")
     Maint findMaintBySolvePriorityId(@Param("solvePriorityId") Integer solvePriorityId);
 
+    //todo why we were insisted to use @Transactional and @Modifying?
     //Just an example
     @Transactional
     @Modifying

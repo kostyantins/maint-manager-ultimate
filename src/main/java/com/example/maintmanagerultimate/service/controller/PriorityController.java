@@ -2,6 +2,7 @@ package com.example.maintmanagerultimate.service.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
+import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
 import com.example.maintmanagerultimate.persistence.repositories.PrioritiesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,15 +40,15 @@ public class PriorityController {
         Stream.of(
                         Priorities.builder()
                                 .id(1L)
-                                .priorityName("High")
+                                .priorityName(PrioritiesNames.HIGH)
                                 .build(),
                         Priorities.builder()
                                 .id(2L)
-                                .priorityName("Mid")
+                                .priorityName(PrioritiesNames.MID)
                                 .build(),
                         Priorities.builder()
-                                .id(2L)
-                                .priorityName("Low")
+                                .id(3L)
+                                .priorityName(PrioritiesNames.LOW)
                                 .build()
 
                 )

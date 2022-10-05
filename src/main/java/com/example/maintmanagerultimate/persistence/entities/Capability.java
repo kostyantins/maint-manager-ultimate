@@ -1,5 +1,6 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,10 +18,7 @@ public class Capability {
     @Column
     private Long id;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "capabilety_name")
-    private String capabilityName;
-
-    @OneToOne
-    @JoinColumn(name = "maint_capability_id")
-    private Maint maint;
+    private CapabilityNames capabilityName;
 }
