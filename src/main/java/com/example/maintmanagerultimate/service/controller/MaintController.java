@@ -60,7 +60,7 @@ public class MaintController {
                 .body(maintId);
     }
 
-    @PutMapping("/update/fixversion/{fixVersion}/{maintId}")
+    @PutMapping("/update/fixversion/{fixVersion}/byid/{maintId}")
     public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
         maintRepository.updateMaintFixVersion(fixVersion, maintId);
     }

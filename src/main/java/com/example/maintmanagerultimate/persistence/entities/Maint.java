@@ -21,7 +21,7 @@ import java.util.List;
 public class Maint {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "maint_identifier", unique = true)
