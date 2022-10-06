@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class MaintComments {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "comment_text", nullable = false)
