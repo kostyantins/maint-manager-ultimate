@@ -21,7 +21,7 @@ import java.util.List;
 public class Maint {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "maint_identifier", unique = true)
@@ -53,7 +53,7 @@ public class Maint {
     private String client;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<MaintComments> comments = new ArrayList<>();
 

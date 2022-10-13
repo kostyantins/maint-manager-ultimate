@@ -65,3 +65,25 @@ GET http://localhost:8080/maint/get?maintId={maintId}
 ```
 GET http://localhost:8080/maint/get/identifier?maintIdentifier={maintIdentifier}
 ```
+###
+```
+###
+POST http://localhost:8080/comments/create
+Content-Type: application/json
+
+{
+  "commentText": "This is MCB maint additional comment 3",
+  "createdData": "2022-10-14",
+  "maint": {
+    "id": 1,
+    "maintIdentifier": "MAINT-1",
+    "capabilityId": "1",
+    "createdData": "2022-09-14",
+    "dueData": "2022-09-15",
+    "solvePriorityId": "1",
+    "estimate": "5",
+    "fixVersion": "2022.08.01",
+    "client": "MCB"
+  }
+}
+```

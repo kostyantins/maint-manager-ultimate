@@ -1,24 +1,25 @@
 package com.example.maintmanagerultimate.service.services;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
+import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MaintService {
 
-    public void createCommentIfPresent(Maint createdMaint) {
-        if (createdMaint.getComments() != null && !createdMaint.getComments().isEmpty()) {
-            createdMaint.getComments().stream()
-                    .map(MaintComments::getCommentText)
-                    .collect(Collectors.toList())
-                    .forEach(i -> new MaintComments(i, createdMaint));
+    private final MaintRepository maintRepository;
+
+    public Maint createMaintAndCommentsIfPresent(Maint maint) {
+        if (maint.getComments() != null && !maint.getComments().isEmpty()) {
+            maint
+                    .getComments()
+                    .forEach(maintComments -> maintComments.setMaint(maint));
         }
+
+        return maintRepository.save(maint);
     }
 }

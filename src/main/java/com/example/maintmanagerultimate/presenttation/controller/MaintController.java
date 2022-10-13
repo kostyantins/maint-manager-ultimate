@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.controller;
+package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
@@ -22,14 +22,12 @@ public class MaintController {
 
     @PostMapping("/create")
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
-        final var createdMaint = maintRepository.save(maint);
-
-        maintService.createCommentIfPresent(createdMaint);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(CreateMaintResponseDto.builder()
-                        .maintId(createdMaint.getId())
+                        .maintId(maintService
+                                .createMaintAndCommentsIfPresent(maint)
+                                .getId())
                         .build());
     }
 

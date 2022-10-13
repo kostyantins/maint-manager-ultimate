@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.controller;
+package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;

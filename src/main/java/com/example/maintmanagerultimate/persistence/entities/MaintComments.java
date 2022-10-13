@@ -2,6 +2,7 @@ package com.example.maintmanagerultimate.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,20 +19,19 @@ import java.time.LocalDate;
 public class MaintComments {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "comment_text", nullable = false)
     private String commentText;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    //todo how to get nullable = false without error
-    @Column(name = "created_data", nullable = true)
+    @CreationTimestamp
+    @Column(name = "created_data", nullable = false)
     private LocalDate createdData;
 
-    //todo why I can not use FetchType.LAZY
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "maint_id")
+    @ManyToOne
+    @JoinColumn(name = "maint_id", nullable = false)
     private Maint maint;
 
     public MaintComments(String commentText, Maint maint) {
