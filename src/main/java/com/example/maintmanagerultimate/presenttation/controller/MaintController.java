@@ -3,7 +3,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,20 +22,12 @@ public class MaintController {
 
     @PostMapping
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(CreateMaintResponseDto.builder()
-                        .maintId(maintService
-                                .createMaintAndCommentsIfPresent(maint)
-                                .getId())
-                        .build());
+        return maintService.createMaintAndCommentsIfPresent(maint);
     }
 
     @GetMapping
-    public Maint getMaint(@RequestParam Long maintId) {
-        return maintRepository
-                .findById(maintId)
-                .orElseThrow(() -> new NoSuchMaintException(maintId));
+    public  ResponseEntity<GetMainResponseDto> getMaint(@RequestParam Long maintId) {
+        return maintService.getMaint(maintId);
     }
 
     @GetMapping("/all")
