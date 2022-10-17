@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/maint")
+@RequestMapping("/maints")
 @RequiredArgsConstructor
 public class MaintController {
 
     private final MaintRepository maintRepository;
     private final MaintService maintService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -31,34 +31,33 @@ public class MaintController {
                         .build());
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public Maint getMaint(@RequestParam Long maintId) {
         return maintRepository
                 .findById(maintId)
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
     }
 
-    @GetMapping("/get/all")
+    @GetMapping("/all")
     public List<Maint> getMaints() {
         return maintRepository.findAll();
     }
 
-    @GetMapping("/get/identifier")
+    @GetMapping("/identifier")
     public Maint getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
         return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
     }
 
-    // todo how to return sust status code different form the default
-    @DeleteMapping("/delete/{maintId}")
-    public ResponseEntity<Long> deleteMaint(@PathVariable Long maintId) {
+    @DeleteMapping("/{maintId}")
+    public ResponseEntity deleteMaint(@PathVariable Long maintId) {
         maintRepository.deleteById(maintId);
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(maintId);
+                .build();
     }
 
-    @PutMapping("/update/fixversion/{fixVersion}/byid/{maintId}")
+    @PutMapping("/fixversion/{fixVersion}/id/{maintId}")
     public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
         maintRepository.updateMaintFixVersion(fixVersion, maintId);
     }

@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.service.exeptions_hanler;
 
-import com.example.maintmanagerultimate.service.errors.ResponseError;
+import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
 import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import static java.time.LocalDate.now;
 public class MaintExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ResponseError> handleNoSuchMaintException(NoSuchMaintException exception) {
+    public ResponseEntity<ResponseErrorDto> handleNoSuchMaintException(NoSuchMaintException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND.value())
-                .body(ResponseError.builder()
+                .body(ResponseErrorDto.builder()
                         .status(HttpStatus.NOT_FOUND.value())
                         .comment(exception.getMessage())
                         .date(now())

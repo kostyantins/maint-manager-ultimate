@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.errors;
+package com.example.maintmanagerultimate.service.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 @Data
-public class ResponseError {
+public class ResponseErrorDto {
 
     private Integer status;
     private String comment;

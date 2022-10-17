@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo how to avoid the issue: 'Could not write JSON: failed to lazily initialize a collection of role: ...'
+// without annotation - @JsonIgnoreProperties(value= {"comments"})
+@JsonIgnoreProperties(value= {"comments"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

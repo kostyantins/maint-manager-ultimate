@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.service.exeptions_hanler;
 
-import com.example.maintmanagerultimate.service.errors.ResponseError;
+import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
 import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintCommentsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import static java.time.LocalDate.now;
 public class MaintCommentsExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ResponseError> handleNoSuchMaintCommentException(NoSuchMaintCommentsException exception) {
+    public ResponseEntity<ResponseErrorDto> handleNoSuchMaintCommentException(NoSuchMaintCommentsException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND.value())
-                .body(ResponseError.builder()
+                .body(ResponseErrorDto.builder()
                         .status(HttpStatus.NOT_FOUND.value())
                         .comment(exception.getMessage())
                         .date(now())

@@ -12,25 +12,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/capability")
+@RequestMapping("/capabilities")
 @RequiredArgsConstructor
 public class CapabilityController {
 
     private final CapabilityRepository capabilityRepository;
 
-    @PostMapping("/create")
+    @PostMapping
     public Long createCapability(@RequestBody Capability capability) {
         return capabilityRepository.save(capability).getId();
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public Capability getCapability(@RequestBody Long capabilityId) {
         return capabilityRepository
                 .findById(capabilityId)
                 .orElseThrow(() -> new NoCapabilityException(capabilityId));
     }
 
-    @GetMapping("/get/all")
+    @GetMapping("/all")
     public List<Capability> getCapabilities() {
         return capabilityRepository.findAll();
     }

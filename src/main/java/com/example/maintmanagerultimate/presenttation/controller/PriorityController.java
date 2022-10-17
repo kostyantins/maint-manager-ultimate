@@ -12,25 +12,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/priority")
+@RequestMapping("/priorities")
 @RequiredArgsConstructor
 public class PriorityController {
 
     private final PrioritiesRepository prioritiesRepository;
 
-    @PostMapping("/create")
+    @PostMapping
     public Long createPriority(@RequestBody Priorities priority) {
         return prioritiesRepository.save(priority).getId();
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public Priorities getPriority(@RequestParam Long priorityId) {
         return prioritiesRepository
                 .findById(priorityId)
                 .orElseThrow();
     }
 
-    @GetMapping("/get/all")
+    @GetMapping("/all")
     public List<Priorities> getCapabilities() {
         return prioritiesRepository.findAll();
     }
