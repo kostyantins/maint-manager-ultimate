@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -13,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
 @ToString
 @Builder
 @Entity
@@ -52,8 +52,9 @@ public class Maint {
     @Column(nullable = false)
     private String client;
 
+
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<MaintComments> comments = new ArrayList<>();
 

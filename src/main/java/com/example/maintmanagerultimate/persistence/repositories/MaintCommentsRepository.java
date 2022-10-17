@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface MaintCommentsRepository extends JpaRepository<MaintComments, Long> {
 
-    // todo it seems it doesn't work because of
     @Query("select new com.example.maintmanagerultimate.service.dto.MaintCommentsDto(m.maintIdentifier, c.commentText) from Maint m inner join m.comments c")
-    //@Query("select new com.example.maintmanagerultimate.service.dto.MaintCommentsDto(m.maintIdentifier, c.commentText) from Maint m inner join MaintComments c on m.id = c.maint.id")
     List<MaintCommentsDto> findMaintIdentifiedComments();
 
     //Just an example how we can work with abstract repo method

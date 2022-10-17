@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-@ToString(exclude = "maint")
-@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "maint_comments")
 public class MaintComments {
@@ -29,6 +27,7 @@ public class MaintComments {
     @CreationTimestamp
     @Column(name = "created_data", nullable = false)
     private LocalDate createdData;
+
 
     @ManyToOne
     @JoinColumn(name = "maint_id", nullable = false)
