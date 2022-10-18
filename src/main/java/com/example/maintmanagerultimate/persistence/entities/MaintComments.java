@@ -29,7 +29,7 @@ public class MaintComments {
     private LocalDate createdData;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "maint_id", nullable = false)
     private Maint maint;
 

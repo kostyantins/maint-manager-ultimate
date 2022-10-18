@@ -25,9 +25,9 @@ public class MaintController {
         return maintService.createMaintAndCommentsIfPresent(maint);
     }
 
-    @GetMapping
+    @GetMapping("/maint")
     public  ResponseEntity<GetMainResponseDto> getMaint(@RequestParam Long maintId) {
-        return maintService.getMaint(maintId);
+        return maintService.getMaintFetchComment(maintId);
     }
 
     @GetMapping("/all")

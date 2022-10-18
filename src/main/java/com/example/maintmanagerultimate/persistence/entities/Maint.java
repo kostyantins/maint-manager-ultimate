@@ -10,9 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//todo how to avoid the issue: 'Could not write JSON: failed to lazily initialize a collection of role: ...'
-// without annotation - @JsonIgnoreProperties(value= {"comments"})
-@JsonIgnoreProperties(value= {"comments"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

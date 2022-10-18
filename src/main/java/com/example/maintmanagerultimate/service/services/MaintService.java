@@ -5,12 +5,14 @@ import com.example.maintmanagerultimate.persistence.repositories.MaintRepository
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
 import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,12 +35,31 @@ public class MaintService {
                         .build());
     }
 
-    public ResponseEntity<GetMainResponseDto> getMaint(Long maintId) {
-        final var maint = maintRepository
-                .findById(maintId)
+//todo investigate why it throws: Could not write JSON: failed to lazily initialize a collection of role:
+// com.example.maintmanagerultimate.persistence.entities.Maint.comments, could not initialize proxy - no Session;
+// nested exception is com.fasterxml.jackson.databind.JsonMappingException:
+// failed to lazily initialize a collection of role:
+// com.example.maintmanagerultimate.persistence.entities.Maint.comments, could not initialize proxy - no Session
+// (through reference chain: java.util.ArrayList[0]->com.example.maintmanagerultimate.persistence.entities.Maint[\"comments\"])"
+
+//    public ResponseEntity<GetMainResponseDto> getMaint(Long maintId) {
+//        final var maint = maintRepository
+//                .findById(maintId)
+//                .orElseThrow(() -> new NoSuchMaintException(maintId));
+//
+//        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
+//
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(mappedMaint);
+//    }
+
+    public ResponseEntity<GetMainResponseDto> getMaintFetchComment(Long maintId) {
+        final var maint = Optional.ofNullable(maintRepository
+                .findByIdFetchComment(maintId))
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
 
-        final var mappedMaint = Mappers.getMapper(GetMainResponseDto.class);
+        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

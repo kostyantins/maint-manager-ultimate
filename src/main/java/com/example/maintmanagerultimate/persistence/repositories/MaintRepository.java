@@ -17,6 +17,9 @@ public interface MaintRepository extends JpaRepository<Maint, Long>, CustomMaint
     @Query("select m from Maint m order by m.createdData desc")
     Maint findLastAddedMaint();
 
+    @Query("select m from Maint m join fetch m.comments where m.id = :id")
+    Maint findByIdFetchComment(@Param("id") Long id);
+
     //The purpose of such constructions (native queries) is mostly to use 'join fetch' approach that allows us to avoid additional sql/DB calls
     @Query("select m from Maint m where m.solvePriorityId = :solvePriorityId")
     Maint findMaintBySolvePriorityId(@Param("solvePriorityId") Integer solvePriorityId);
