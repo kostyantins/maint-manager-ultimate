@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -54,9 +55,10 @@ public class MaintService {
 //                .body(mappedMaint);
 //    }
 
+    //todo investigate the issue with StackOverflow
     public ResponseEntity<GetMainResponseDto> getMaintFetchComment(Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
-                .findByIdFetchComment(maintId))
+                        .findByIdFetchComment(maintId))
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
 
         final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
@@ -64,5 +66,19 @@ public class MaintService {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(mappedMaint);
+    }
+
+    public ResponseEntity<List<Maint>> getMaints() {
+        final var maints = maintRepository.findAll();
+
+        if (maints.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maints);
     }
 }

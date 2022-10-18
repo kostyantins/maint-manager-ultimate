@@ -25,23 +25,23 @@ public class MaintController {
         return maintService.createMaintAndCommentsIfPresent(maint);
     }
 
-    @GetMapping("/maint")
-    public  ResponseEntity<GetMainResponseDto> getMaint(@RequestParam Long maintId) {
+    @GetMapping("{maintId}")
+    public  ResponseEntity<GetMainResponseDto> getMaint(@PathVariable Long maintId) {
         return maintService.getMaintFetchComment(maintId);
     }
 
-    @GetMapping("/all")
-    public List<Maint> getMaints() {
-        return maintRepository.findAll();
+    @GetMapping("all")
+    public ResponseEntity<List<Maint>> getMaints() {
+        return maintService.getMaints();
     }
 
-    @GetMapping("/identifier")
+    @GetMapping("identifier")
     public Maint getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
         return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
     }
 
-    @DeleteMapping("/{maintId}")
-    public ResponseEntity deleteMaint(@PathVariable Long maintId) {
+    @DeleteMapping("{maintId}")
+    public ResponseEntity<HttpStatus> deleteMaint(@PathVariable Long maintId) {
         maintRepository.deleteById(maintId);
 
         return ResponseEntity
@@ -49,12 +49,12 @@ public class MaintController {
                 .build();
     }
 
-    @PutMapping("/fixversion/{fixVersion}/id/{maintId}")
+    @PutMapping("fixversion/{fixVersion}/id/{maintId}")
     public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
-        maintRepository.updateMaintFixVersion(fixVersion, maintId);
+        maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
     }
 
-    @PutMapping("/update/fixversion/{fixVersion}/{maintId}/by")
+    @PutMapping("update/fixversion/{fixVersion}/{maintId}/by")
     public void updateMaintFixVersionBy(@PathVariable String fixVersion, @PathVariable Long maintId) {
         maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
     }
