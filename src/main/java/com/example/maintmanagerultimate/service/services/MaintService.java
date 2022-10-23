@@ -81,4 +81,16 @@ public class MaintService {
                 .status(HttpStatus.OK)
                 .body(maints);
     }
+
+    public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
+        final var maint = Optional
+                .ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
+                .orElseThrow(NoSuchMaintException::new);
+
+        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(mappedMaint);
+    }
 }

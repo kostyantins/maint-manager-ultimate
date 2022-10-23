@@ -36,8 +36,8 @@ public class MaintController {
     }
 
     @GetMapping("identifier")
-    public Maint getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
-        return maintRepository.findMaintByMaintIdentifier(maintIdentifier);
+    public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
+        return maintService.getMaintByIdIdentifier(maintIdentifier);
     }
 
     @DeleteMapping("{maintId}")
