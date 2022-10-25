@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.exeptions;
+package com.example.maintmanagerultimate.service.exeptions.capability;
 
 import static java.lang.String.format;
 

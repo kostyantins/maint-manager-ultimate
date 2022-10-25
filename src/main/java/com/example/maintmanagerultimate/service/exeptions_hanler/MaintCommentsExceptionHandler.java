@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate.service.exeptions_hanler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
-import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintCommentsException;
+import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

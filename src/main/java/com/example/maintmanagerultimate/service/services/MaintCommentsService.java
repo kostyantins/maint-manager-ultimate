@@ -4,7 +4,7 @@ import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
-import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintCommentsException;
+import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

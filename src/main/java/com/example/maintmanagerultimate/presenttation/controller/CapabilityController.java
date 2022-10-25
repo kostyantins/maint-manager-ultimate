@@ -3,7 +3,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
 import com.example.maintmanagerultimate.persistence.repositories.CapabilityRepository;
-import com.example.maintmanagerultimate.service.exeptions.NoCapabilityException;
+import com.example.maintmanagerultimate.service.exeptions.capability.NoCapabilityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

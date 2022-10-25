@@ -42,11 +42,7 @@ public class MaintController {
 
     @DeleteMapping("{maintId}")
     public ResponseEntity<HttpStatus> deleteMaint(@PathVariable Long maintId) {
-        maintRepository.deleteById(maintId);
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        return maintService.deleteMaint(maintId);
     }
 
     @PutMapping("fixversion/{fixVersion}/id/{maintId}")

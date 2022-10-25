@@ -4,7 +4,9 @@ import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
-import com.example.maintmanagerultimate.service.exeptions.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintIdentifierException;
+import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDeleteException;
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,12 +87,25 @@ public class MaintService {
     public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
         final var maint = Optional
                 .ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
-                .orElseThrow(NoSuchMaintException::new);
+                .orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
 
         final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(mappedMaint);
+    }
+
+    public ResponseEntity<HttpStatus> deleteMaint(Long maintId) {
+        try {
+            maintRepository.deleteById(maintId);
+        }catch (Exception e){
+            System.out.println(e);
+            throw new NoSuchMaintToDeleteException(maintId);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

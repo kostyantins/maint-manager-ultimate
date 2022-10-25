@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.exeptions;
+package com.example.maintmanagerultimate.service.exeptions.maint_comments;
 
 import static java.lang.String.format;
 
