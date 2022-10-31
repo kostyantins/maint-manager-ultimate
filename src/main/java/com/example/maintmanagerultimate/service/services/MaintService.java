@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -70,7 +71,7 @@ public class MaintService {
                 .body(mappedMaint);
     }
 
-    public ResponseEntity<List<Maint>> getMaints() {
+    public ResponseEntity<List<GetMainResponseDto>> getMaints() {
         final var maints = maintRepository.findAll();
 
         if (maints.isEmpty()) {
@@ -79,9 +80,13 @@ public class MaintService {
                     .build();
         }
 
+        final var mappedMaints = maints.stream()
+                .map(MaintMapper.INSTANCE::maintEntityToMaintDto)
+                .collect(Collectors.toList());
+
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(maints);
+                .body(mappedMaints);
     }
 
     public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
@@ -100,12 +105,25 @@ public class MaintService {
         try {
             maintRepository.deleteById(maintId);
         }catch (Exception e){
-            System.out.println(e);
             throw new NoSuchMaintToDeleteException(maintId);
         }
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
+
+    public ResponseEntity<HttpStatus> updateMaintFixVersion(String fixVersion, Long maintId) {
+        final var maint = Optional.ofNullable(maintRepository
+                        .findByIdFetchComment(maintId))
+                .orElseThrow(() -> new NoSuchMaintException(maintId));
+
+        maint.setFixVersion(fixVersion);
+
+        createMaintAndCommentsIfPresent(maint);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .build();
     }
 }

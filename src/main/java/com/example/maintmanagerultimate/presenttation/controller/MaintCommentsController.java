@@ -2,7 +2,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
-import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
 import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import lombok.RequiredArgsConstructor;
@@ -23,43 +23,39 @@ public class MaintCommentsController {
     private final MaintCommentsService maintCommentsService;
 
     @PostMapping
-    public ResponseEntity<CreateMaintCommentResponseDto> createComment(@RequestBody MaintComments maintComment) {
+    public ResponseEntity<?> createComment(@RequestBody MaintComments maintComment) {
         return maintCommentsService.createComment(maintComment);
     }
 
     @GetMapping
-    public MaintComments getComment(@RequestParam Long maintCommentId) {
+    public ResponseEntity<GetMaintCommentsResponseDto> getComment(@RequestParam Long maintCommentId) {
         return maintCommentsService.getMaintComment(maintCommentId);
     }
 
     // Use the approach in the case we need to work with pagination
     @GetMapping("/all/pageable")
-    public Page<MaintComments> getMaintCommentsPageable(Pageable pageable) {
-        return commentsRepository.findAll(pageable);
+    public ResponseEntity<Page<GetMaintCommentsResponseDto>> getMaintCommentsPageable(Pageable pageable) {
+        return maintCommentsService.getMaintComments(pageable);
     }
 
     @GetMapping("/all/identified")
-    public List<MaintCommentsMaintIdentifierDto> getIdentifiedMaintComments() {
+    public ResponseEntity<List<MaintCommentsMaintIdentifierDto>> getIdentifiedMaintComments() {
         return maintCommentsService.getIdentifiedMaintComments();
     }
 
     @GetMapping("/all")
-    public List<MaintComments> getComments() {
-        return commentsRepository.findAll();
+    public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
+        return maintCommentsService.getComments();
     }
 
     //Just an example of different usage
     @GetMapping("/all/by")
-    public List<MaintComments> getAllComments() {
-        return commentsRepository.findAllBy(MaintComments.class);
+    public ResponseEntity<List<GetMaintCommentsResponseDto>> getAllComments() {
+        return maintCommentsService.getAllComments();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(@PathVariable("commentId") Long commentId) {
-        commentsRepository.deleteById(commentId);
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+    public ResponseEntity<HttpStatus> deleteComment(@PathVariable("commentId") Long commentId) {
+        return maintCommentsService.deleteMaintComment(commentId);
     }
 }

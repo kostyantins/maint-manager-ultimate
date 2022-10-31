@@ -1,7 +1,6 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MaintController {
 
-    private final MaintRepository maintRepository;
     private final MaintService maintService;
 
     @PostMapping
@@ -26,12 +24,12 @@ public class MaintController {
     }
 
     @GetMapping("{maintId}")
-    public  ResponseEntity<GetMainResponseDto> getMaint(@PathVariable Long maintId) {
+    public ResponseEntity<GetMainResponseDto> getMaint(@PathVariable Long maintId) {
         return maintService.getMaintFetchComment(maintId);
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<Maint>> getMaints() {
+    public ResponseEntity<List<GetMainResponseDto>> getMaints() {
         return maintService.getMaints();
     }
 
@@ -47,11 +45,9 @@ public class MaintController {
 
     @PutMapping("fixversion/{fixVersion}/id/{maintId}")
     public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
-        maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
-    }
+        maintService.updateMaintFixVersion(fixVersion, maintId);
 
-    @PutMapping("update/fixversion/{fixVersion}/{maintId}/by")
-    public void updateMaintFixVersionBy(@PathVariable String fixVersion, @PathVariable Long maintId) {
-        maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
+        //todo why we replaced one method/call with two once
+        //maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
     }
 }
