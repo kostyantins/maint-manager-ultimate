@@ -2,9 +2,9 @@ package com.example.maintmanagerultimate.service.exeptions.capability;
 
 import static java.lang.String.format;
 
-public class NoCapabilityException extends RuntimeException{
+public class NoSuhcCapabilityException extends RuntimeException{
 
-    public NoCapabilityException(Long capabilityId) {
+    public NoSuhcCapabilityException(Long capabilityId) {
         super(format("The capability with id '%s' was not found !!", capabilityId));
     }
 }

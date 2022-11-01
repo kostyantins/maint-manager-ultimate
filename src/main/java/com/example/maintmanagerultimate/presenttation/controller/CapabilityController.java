@@ -3,8 +3,11 @@ package com.example.maintmanagerultimate.presenttation.controller;
 import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
 import com.example.maintmanagerultimate.persistence.repositories.CapabilityRepository;
-import com.example.maintmanagerultimate.service.exeptions.capability.NoCapabilityException;
+import com.example.maintmanagerultimate.service.dto.CreateCapabilityResponseDpo;
+import com.example.maintmanagerultimate.service.dto.GetCapabilityResponseDto;
+import com.example.maintmanagerultimate.service.services.CapabilityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -16,25 +19,24 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class CapabilityController {
 
-    private final CapabilityRepository capabilityRepository;
+    private final CapabilityService capabilityService;
 
     @PostMapping
-    public Long createCapability(@RequestBody Capability capability) {
-        return capabilityRepository.save(capability).getId();
+    public ResponseEntity<CreateCapabilityResponseDpo> createCapability(@RequestBody Capability capability) {
+        return capabilityService.createCapability(capability);
     }
 
     @GetMapping
-    public Capability getCapability(@RequestBody Long capabilityId) {
-        return capabilityRepository
-                .findById(capabilityId)
-                .orElseThrow(() -> new NoCapabilityException(capabilityId));
+    public ResponseEntity<GetCapabilityResponseDto> getCapability(@RequestParam Long capabilityId) {
+        return capabilityService.getCapability(capabilityId);
     }
 
     @GetMapping("/all")
-    public List<Capability> getCapabilities() {
-        return capabilityRepository.findAll();
+    public ResponseEntity<List<GetCapabilityResponseDto>> getCapabilities() {
+        return capabilityService.getCapabilities();
     }
 
+    //todo replace with liquibase or something
     @PostConstruct
     public void createDefaultCapabilities() {
         Stream.of(
@@ -51,6 +53,6 @@ public class CapabilityController {
                                 .capabilityName(CapabilityNames.LIMITS)
                                 .build()
                 )
-                .forEach(capabilityRepository::save);
+                .forEach(capabilityService::createCapability);
     }
 }

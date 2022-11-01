@@ -35,6 +35,7 @@ public class PriorityController {
         return prioritiesRepository.findAll();
     }
 
+    //todo replace with liquibase or something
     @PostConstruct
     public void createDefaultPriorities() {
         Stream.of(

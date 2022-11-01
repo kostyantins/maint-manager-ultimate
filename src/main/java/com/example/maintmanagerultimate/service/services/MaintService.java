@@ -90,8 +90,7 @@ public class MaintService {
     }
 
     public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
-        final var maint = Optional
-                .ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
+        final var maint = Optional.ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
                 .orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
 
         final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
@@ -104,7 +103,7 @@ public class MaintService {
     public ResponseEntity<HttpStatus> deleteMaint(Long maintId) {
         try {
             maintRepository.deleteById(maintId);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new NoSuchMaintToDeleteException(maintId);
         }
 
