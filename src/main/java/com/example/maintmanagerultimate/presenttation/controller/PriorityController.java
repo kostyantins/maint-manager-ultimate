@@ -1,10 +1,12 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
-import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
 import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
-import com.example.maintmanagerultimate.persistence.repositories.PrioritiesRepository;
+import com.example.maintmanagerultimate.service.dto.CreatePriorityResponseDpo;
+import com.example.maintmanagerultimate.service.dto.GetPriorityResponseDto;
+import com.example.maintmanagerultimate.service.services.PrioritiesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -16,23 +18,21 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class PriorityController {
 
-    private final PrioritiesRepository prioritiesRepository;
+    private final PrioritiesService prioritiesService;
 
     @PostMapping
-    public Long createPriority(@RequestBody Priorities priority) {
-        return prioritiesRepository.save(priority).getId();
+    public ResponseEntity<CreatePriorityResponseDpo> createPriority(@RequestBody Priorities priority) {
+        return prioritiesService.createCapability(priority);
     }
 
     @GetMapping
-    public Priorities getPriority(@RequestParam Long priorityId) {
-        return prioritiesRepository
-                .findById(priorityId)
-                .orElseThrow();
+    public ResponseEntity<GetPriorityResponseDto> getPriority(@RequestParam Long priorityId) {
+        return prioritiesService.getPriority(priorityId);
     }
 
     @GetMapping("/all")
-    public List<Priorities> getCapabilities() {
-        return prioritiesRepository.findAll();
+    public ResponseEntity<List<GetPriorityResponseDto>> getCapabilities() {
+        return prioritiesService.getPriorities();
     }
 
     //todo replace with liquibase or something
@@ -53,6 +53,6 @@ public class PriorityController {
                                 .build()
 
                 )
-                .forEach(prioritiesRepository::save);
+                .forEach(prioritiesService::createCapability);
     }
 }

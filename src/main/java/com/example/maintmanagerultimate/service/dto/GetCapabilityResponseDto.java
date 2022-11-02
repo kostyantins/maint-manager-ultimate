@@ -9,5 +9,5 @@ import lombok.Data;
 public class GetCapabilityResponseDto {
 
     private Long id;
-    private CapabilityNames capabilityNames;
+    private CapabilityNames capabilityName;
 }

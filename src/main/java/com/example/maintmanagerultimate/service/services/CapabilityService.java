@@ -7,7 +7,6 @@ import com.example.maintmanagerultimate.service.dto.GetCapabilityResponseDto;
 import com.example.maintmanagerultimate.service.exeptions.capability.NoSuhcCapabilityException;
 import com.example.maintmanagerultimate.service.mappers.CapabilityMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,6 @@ public class CapabilityService {
                     .build();
         }
 
-        //todo fix the issue with mapstruct
         final var mappedCapabilities = capability.stream()
                 .map(CapabilityMapper.INSTANCE::capabilityEntityToCapabilityDto)
                 .collect(Collectors.toList());
