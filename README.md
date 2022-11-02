@@ -99,4 +99,19 @@ GET http://localhost:8080/capabilities?capabilityId=4
 
 ###
 GET http://localhost:8080/capabilities/all
+
+###
+POST http://localhost:8080/priorities
+Content-Type: application/json
+
+{
+  "id": "4",
+  "priorityName": 2
+}
+
+###
+GET http://localhost:8080/priorities?priorityId=4
+
+###
+GET http://localhost:8080/priorities/all
 ```
