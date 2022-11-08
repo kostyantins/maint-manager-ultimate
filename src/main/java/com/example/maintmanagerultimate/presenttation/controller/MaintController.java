@@ -2,7 +2,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,17 +24,17 @@ public class MaintController {
     }
 
     @GetMapping("{maintId}")
-    public ResponseEntity<GetMainResponseDto> getMaint(@PathVariable Long maintId) {
+    public ResponseEntity<GetMaintResponseDto> getMaint(@PathVariable Long maintId) {
         return maintService.getMaintFetchComment(maintId);
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<GetMainResponseDto>> getMaints() {
+    public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
         return maintService.getMaints();
     }
 
     @GetMapping("identifier")
-    public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
+    public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
         return maintService.getMaintByIdIdentifier(maintIdentifier);
     }
 
@@ -46,8 +46,5 @@ public class MaintController {
     @PutMapping("fixversion/{fixVersion}/id/{maintId}")
     public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
         maintService.updateMaintFixVersion(fixVersion, maintId);
-
-        //todo why we replaced one method/call with two once
-        //maintRepository.updateMaintFixVersionBy(fixVersion, maintId);
     }
 }

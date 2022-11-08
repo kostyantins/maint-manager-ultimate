@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate.service.mappers;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,5 +12,5 @@ public interface MaintMapper {
 
     //Use mapping annotation in the case of differences of the properties in the entity and dto
     //@Mapping(target = "id", source = "maintId")
-    GetMainResponseDto maintEntityToMaintDto(Maint entity);
+    GetMaintResponseDto maintEntityToMaintDto(Maint entity);
 }

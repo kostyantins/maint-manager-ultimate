@@ -63,6 +63,15 @@ public class Maint {
         comment.setMaint(this);
     }
 
+    public void addComments(List<MaintComments> maintComments) {
+        if (maintComments == null || maintComments.isEmpty()){
+            throw new IllegalArgumentException("");
+        }
+
+        comments.addAll(maintComments);
+        comments.forEach(comment -> comment.setMaint(this));
+    }
+
     public void removeComment(MaintComments comment) {
         comments.remove(comment);
         comment.setMaint(null);

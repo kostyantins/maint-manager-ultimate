@@ -1,6 +1,5 @@
 package com.example.maintmanagerultimate.service.dto;
 
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class GetMainResponseDto {
+public class GetMaintResponseDto {
 
     private Long id;
     private String maintIdentifier;
@@ -20,5 +19,5 @@ public class GetMainResponseDto {
     private Integer estimate;
     private String fixVersion;
     private String client;
-    private List<MaintComments> comments;
+    private List<GetMaintCommentsResponseDto> comments;
 }

@@ -3,7 +3,7 @@ package com.example.maintmanagerultimate.service.services;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.GetMainResponseDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintIdentifierException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDeleteException;
@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,10 @@ public class MaintService {
 
     private final MaintRepository maintRepository;
 
+    //todo remove method, but I didnt get why((, need Artur clarification
     public ResponseEntity<CreateMaintResponseDto> createMaintAndCommentsIfPresent(Maint maint) {
         if (maint.getComments() != null && !maint.getComments().isEmpty()) {
-            maint
-                    .getComments()
-                    .forEach(maintComments -> maintComments.setMaint(maint));
+            maint.addComments(maint.getComments());
         }
 
         return ResponseEntity
@@ -58,8 +58,7 @@ public class MaintService {
 //                .body(mappedMaint);
 //    }
 
-    //todo investigate the issue with StackOverflow
-    public ResponseEntity<GetMainResponseDto> getMaintFetchComment(Long maintId) {
+    public ResponseEntity<GetMaintResponseDto> getMaintFetchComment(Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
                         .findByIdFetchComment(maintId))
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
@@ -71,7 +70,9 @@ public class MaintService {
                 .body(mappedMaint);
     }
 
-    public ResponseEntity<List<GetMainResponseDto>> getMaints() {
+
+    @Transactional
+    public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
         final var maints = maintRepository.findAll();
 
         if (maints.isEmpty()) {
@@ -89,7 +90,8 @@ public class MaintService {
                 .body(mappedMaints);
     }
 
-    public ResponseEntity<GetMainResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
+    @Transactional
+    public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
         final var maint = Optional.ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
                 .orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
 
@@ -112,6 +114,7 @@ public class MaintService {
                 .build();
     }
 
+    //todo use patch
     public ResponseEntity<HttpStatus> updateMaintFixVersion(String fixVersion, Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
                         .findByIdFetchComment(maintId))
@@ -125,4 +128,6 @@ public class MaintService {
                 .status(HttpStatus.OK)
                 .build();
     }
+
+    //todo create put using body as a param
 }
