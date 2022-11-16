@@ -27,16 +27,14 @@ public class MaintService {
     private final MaintRepository maintRepository;
 
     //todo remove method, but I didnt get why((, need Artur clarification
-    public ResponseEntity<CreateMaintResponseDto> createMaintAndCommentsIfPresent(Maint maint) {
+    public CreateMaintResponseDto createMaintAndCommentsIfPresent(Maint maint) {
         if (maint.getComments() != null && !maint.getComments().isEmpty()) {
             maint.addComments(maint.getComments());
         }
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(CreateMaintResponseDto.builder()
-                        .maintId(maintRepository.save(maint).getId())
-                        .build());
+        return CreateMaintResponseDto.builder()
+                .maintId(maintRepository.save(maint).getId())
+                .build();
     }
 
 //todo investigate why it throws: Could not write JSON: failed to lazily initialize a collection of role:
@@ -58,64 +56,42 @@ public class MaintService {
 //                .body(mappedMaint);
 //    }
 
-    public ResponseEntity<GetMaintResponseDto> getMaintFetchComment(Long maintId) {
+    public GetMaintResponseDto getMaintFetchComment(Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
                         .findByIdFetchComment(maintId))
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
 
-        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(mappedMaint);
+        return MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
     }
 
 
     @Transactional
-    public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
+    public List<GetMaintResponseDto> getMaints() {
         final var maints = maintRepository.findAll();
 
-        if (maints.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        final var mappedMaints = maints.stream()
+        return maints.stream()
                 .map(MaintMapper.INSTANCE::maintEntityToMaintDto)
                 .collect(Collectors.toList());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(mappedMaints);
     }
 
     @Transactional
-    public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(String maintIdentifier) {
+    public GetMaintResponseDto getMaintByIdIdentifier(String maintIdentifier) {
         final var maint = Optional.ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
                 .orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
 
-        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(mappedMaint);
+        return MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
     }
 
-    public ResponseEntity<HttpStatus> deleteMaint(Long maintId) {
+    public void deleteMaint(Long maintId) {
         try {
             maintRepository.deleteById(maintId);
         } catch (Exception e) {
             throw new NoSuchMaintToDeleteException(maintId);
         }
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
     }
 
-    //todo use patch
-    public ResponseEntity<HttpStatus> updateMaintFixVersion(String fixVersion, Long maintId) {
+    public void updateMaintFixVersion(String fixVersion, Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
                         .findByIdFetchComment(maintId))
                 .orElseThrow(() -> new NoSuchMaintException(maintId));
@@ -123,10 +99,6 @@ public class MaintService {
         maint.setFixVersion(fixVersion);
 
         createMaintAndCommentsIfPresent(maint);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
     }
 
     //todo create put using body as a param

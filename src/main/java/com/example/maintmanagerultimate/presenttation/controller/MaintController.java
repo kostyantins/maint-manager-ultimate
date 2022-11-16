@@ -20,31 +20,57 @@ public class MaintController {
 
     @PostMapping
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
-        return maintService.createMaintAndCommentsIfPresent(maint);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(CreateMaintResponseDto.builder()
+                        .maintId(maintService.createMaintAndCommentsIfPresent(maint).getMaintId())
+                        .build());
     }
 
     @GetMapping("{maintId}")
     public ResponseEntity<GetMaintResponseDto> getMaint(@PathVariable Long maintId) {
-        return maintService.getMaintFetchComment(maintId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintService.getMaintFetchComment(maintId));
     }
 
     @GetMapping("all")
     public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
-        return maintService.getMaints();
+        final var maints = maintService.getMaints();
+
+        if (maints.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maints);
     }
 
     @GetMapping("identifier")
     public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
-        return maintService.getMaintByIdIdentifier(maintIdentifier);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintService.getMaintByIdIdentifier(maintIdentifier));
     }
 
     @DeleteMapping("{maintId}")
     public ResponseEntity<HttpStatus> deleteMaint(@PathVariable Long maintId) {
-        return maintService.deleteMaint(maintId);
+        maintService.deleteMaint(maintId);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
-    @PutMapping("fixversion/{fixVersion}/id/{maintId}")
-    public void updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
+    @PatchMapping("fixversion/{fixVersion}/id/{maintId}")
+    public ResponseEntity<HttpStatus> updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
         maintService.updateMaintFixVersion(fixVersion, maintId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 }
