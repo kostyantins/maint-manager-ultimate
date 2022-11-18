@@ -6,6 +6,7 @@ import com.example.maintmanagerultimate.service.dto.CreatePriorityResponseDpo;
 import com.example.maintmanagerultimate.service.dto.GetPriorityResponseDto;
 import com.example.maintmanagerultimate.service.services.PrioritiesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,17 +23,31 @@ public class PriorityController {
 
     @PostMapping
     public ResponseEntity<CreatePriorityResponseDpo> createPriority(@RequestBody Priorities priority) {
-        return prioritiesService.createCapability(priority);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(prioritiesService.createPriority(priority));
     }
 
     @GetMapping
     public ResponseEntity<GetPriorityResponseDto> getPriority(@RequestParam Long priorityId) {
-        return prioritiesService.getPriority(priorityId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(prioritiesService.getPriority(priorityId));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<GetPriorityResponseDto>> getCapabilities() {
-        return prioritiesService.getPriorities();
+    @GetMapping
+    public ResponseEntity<List<GetPriorityResponseDto>> getPriorities() {
+        final var capability = prioritiesService.getPriorities();
+
+        if (capability.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(capability);
     }
 
     //todo replace with liquibase or something
@@ -53,6 +68,6 @@ public class PriorityController {
                                 .build()
 
                 )
-                .forEach(prioritiesService::createCapability);
+                .forEach(prioritiesService::createPriority);
     }
 }

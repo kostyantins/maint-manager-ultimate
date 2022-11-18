@@ -3,7 +3,9 @@ package com.example.maintmanagerultimate.service.services;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
+import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
+import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintIdentifierException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDeleteException;
@@ -36,25 +38,6 @@ public class MaintService {
                 .maintId(maintRepository.save(maint).getId())
                 .build();
     }
-
-//todo investigate why it throws: Could not write JSON: failed to lazily initialize a collection of role:
-// com.example.maintmanagerultimate.persistence.entities.Maint.comments, could not initialize proxy - no Session;
-// nested exception is com.fasterxml.jackson.databind.JsonMappingException:
-// failed to lazily initialize a collection of role:
-// com.example.maintmanagerultimate.persistence.entities.Maint.comments, could not initialize proxy - no Session
-// (through reference chain: java.util.ArrayList[0]->com.example.maintmanagerultimate.persistence.entities.Maint[\"comments\"])"
-
-//    public ResponseEntity<GetMainResponseDto> getMaint(Long maintId) {
-//        final var maint = maintRepository
-//                .findById(maintId)
-//                .orElseThrow(() -> new NoSuchMaintException(maintId));
-//
-//        final var mappedMaint = MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
-//
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(mappedMaint);
-//    }
 
     public GetMaintResponseDto getMaintFetchComment(Long maintId) {
         final var maint = Optional.ofNullable(maintRepository
@@ -91,15 +74,31 @@ public class MaintService {
         }
     }
 
-    public void updateMaintFixVersion(String fixVersion, Long maintId) {
+    public void patchMaintFixVersion(FixVersionRequestDto fixVersionRequestDto) {
         final var maint = Optional.ofNullable(maintRepository
-                        .findByIdFetchComment(maintId))
-                .orElseThrow(() -> new NoSuchMaintException(maintId));
+                        .findByIdFetchComment(fixVersionRequestDto.getMaintId()))
+                .orElseThrow(() -> new NoSuchMaintException(fixVersionRequestDto.getMaintId()));
 
-        maint.setFixVersion(fixVersion);
+        maint.setFixVersion(fixVersionRequestDto.getFixVersion());
 
         createMaintAndCommentsIfPresent(maint);
     }
 
-    //todo create put using body as a param
+    @Transactional
+    public void updateMaint(UpdateMaintDto updateMaintDto) {
+        final var maint = Optional.of(maintRepository
+                        .getReferenceById(updateMaintDto.getId()))
+                .orElseThrow(() -> new NoSuchMaintException(updateMaintDto.getId()));
+
+        maint.setFixVersion(updateMaintDto.getFixVersion());
+        maint.setClient(updateMaintDto.getClient());
+        maint.setMaintIdentifier(updateMaintDto.getMaintIdentifier());
+        maint.setCapabilityId(updateMaintDto.getCapabilityId());
+        maint.setCreatedData(updateMaintDto.getCreatedData());
+        maint.setDueData(updateMaintDto.getDueData());
+        maint.setEstimate(updateMaintDto.getEstimate());
+        maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());
+
+        maintRepository.save(maint);
+    }
 }

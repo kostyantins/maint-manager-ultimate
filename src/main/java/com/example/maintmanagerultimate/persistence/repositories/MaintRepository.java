@@ -18,5 +18,4 @@ public interface MaintRepository extends JpaRepository<Maint, Long> {
 
     @Query("select m from Maint m where m.solvePriorityId = :solvePriorityId")
     Maint findMaintBySolvePriorityId(@Param("solvePriorityId") Integer solvePriorityId);
-
 }

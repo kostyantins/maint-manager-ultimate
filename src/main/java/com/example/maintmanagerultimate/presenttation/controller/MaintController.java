@@ -2,7 +2,9 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
+import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
+import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,7 @@ public class MaintController {
                 .body(maintService.getMaintFetchComment(maintId));
     }
 
-    @GetMapping("all")
+    @GetMapping
     public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
         final var maints = maintService.getMaints();
 
@@ -65,9 +67,18 @@ public class MaintController {
                 .build();
     }
 
-    @PatchMapping("fixversion/{fixVersion}/id/{maintId}")
-    public ResponseEntity<HttpStatus> updateMaintFixVersion(@PathVariable String fixVersion, @PathVariable Long maintId) {
-        maintService.updateMaintFixVersion(fixVersion, maintId);
+    @PatchMapping("fixversion")
+    public ResponseEntity<HttpStatus> updateMaintFixVersion(@RequestBody FixVersionRequestDto fixVersionRequestDto) {
+        maintService.patchMaintFixVersion(fixVersionRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> updateMaint(@RequestBody UpdateMaintDto updateMaintDto) {
+        maintService.updateMaint(updateMaintDto);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

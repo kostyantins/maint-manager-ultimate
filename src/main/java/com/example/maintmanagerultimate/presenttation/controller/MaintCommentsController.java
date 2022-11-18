@@ -54,7 +54,7 @@ public class MaintCommentsController {
     }
 
     // Use the approach in the case we need to work with pagination
-    @GetMapping("/all/pageable")
+    @GetMapping("/pageable")
     public ResponseEntity<Page<GetMaintCommentsResponseDto>> getMaintCommentsPageable(Pageable pageable) {
         final var comments = maintCommentsService.getMaintComments(pageable);
 
@@ -69,14 +69,14 @@ public class MaintCommentsController {
                 .body(comments);
     }
 
-    @GetMapping("/all/identified")
+    @GetMapping("/identified")
     public ResponseEntity<List<MaintCommentsMaintIdentifierDto>> getIdentifiedMaintComments() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(maintCommentsService.getIdentifiedMaintComments());
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
         final var comments = maintCommentsService.getComments();
 
@@ -92,7 +92,7 @@ public class MaintCommentsController {
     }
 
     //Just an example of different usage
-    @GetMapping("/all/by")
+    @GetMapping("/by")
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getAllComments() {
         final var comments = maintCommentsService.getAllComments();
 
