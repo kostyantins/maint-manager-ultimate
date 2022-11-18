@@ -7,8 +7,6 @@ import com.example.maintmanagerultimate.service.dto.GetCapabilityResponseDto;
 import com.example.maintmanagerultimate.service.exeptions.capability.NoSuhcCapabilityException;
 import com.example.maintmanagerultimate.service.mappers.CapabilityMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,43 +18,27 @@ public class CapabilityService {
 
     private final CapabilityRepository capabilityRepository;
 
-    public ResponseEntity<CreateCapabilityResponseDpo> createCapability(Capability capability) {
+    public CreateCapabilityResponseDpo createCapability(Capability capability) {
         final var createdCapability = capabilityRepository.save(capability);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(CreateCapabilityResponseDpo.builder()
-                        .capabilityId(capabilityRepository.save(createdCapability).getId())
-                        .build());
+        return CreateCapabilityResponseDpo.builder()
+                .capabilityId(capabilityRepository.save(createdCapability).getId())
+                .build();
     }
 
-    public ResponseEntity<GetCapabilityResponseDto> getCapability(Long capabilityId) {
+    public GetCapabilityResponseDto getCapability(Long capabilityId) {
         final var createdCapability = capabilityRepository
                 .findById(capabilityId)
                 .orElseThrow(() -> new NoSuhcCapabilityException(capabilityId));
 
-        final var mappedCapability = CapabilityMapper.INSTANCE.capabilityEntityToCapabilityDto(createdCapability);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(mappedCapability);
+        return CapabilityMapper.INSTANCE.capabilityEntityToCapabilityDto(createdCapability);
     }
 
-    public ResponseEntity<List<GetCapabilityResponseDto>> getCapabilities() {
+    public List<GetCapabilityResponseDto> getCapabilities() {
         final var capability = capabilityRepository.findAll();
 
-        if (capability.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-
-        final var mappedCapabilities = capability.stream()
+        return capability.stream()
                 .map(CapabilityMapper.INSTANCE::capabilityEntityToCapabilityDto)
                 .collect(Collectors.toList());
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(mappedCapabilities);
     }
 }

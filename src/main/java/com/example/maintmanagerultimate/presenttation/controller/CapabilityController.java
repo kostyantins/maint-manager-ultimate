@@ -2,11 +2,11 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
-import com.example.maintmanagerultimate.persistence.repositories.CapabilityRepository;
 import com.example.maintmanagerultimate.service.dto.CreateCapabilityResponseDpo;
 import com.example.maintmanagerultimate.service.dto.GetCapabilityResponseDto;
 import com.example.maintmanagerultimate.service.services.CapabilityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,17 +23,31 @@ public class CapabilityController {
 
     @PostMapping
     public ResponseEntity<CreateCapabilityResponseDpo> createCapability(@RequestBody Capability capability) {
-        return capabilityService.createCapability(capability);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(capabilityService.createCapability(capability));
     }
 
     @GetMapping
     public ResponseEntity<GetCapabilityResponseDto> getCapability(@RequestParam Long capabilityId) {
-        return capabilityService.getCapability(capabilityId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(capabilityService.getCapability(capabilityId));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<GetCapabilityResponseDto>> getCapabilities() {
-        return capabilityService.getCapabilities();
+        final var capability = capabilityService.getCapabilities();
+
+        if (capability.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(capability);
     }
 
     //todo replace with liquibase or something
