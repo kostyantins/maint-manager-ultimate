@@ -35,7 +35,8 @@ public class CapabilityController {
                 .body(capabilityService.getCapability(capabilityId));
     }
 
-    @GetMapping
+    //todo how wo solve bin conflicts conflicts
+    @GetMapping("/all")
     public ResponseEntity<List<GetCapabilityResponseDto>> getCapabilities() {
         final var capability = capabilityService.getCapabilities();
 

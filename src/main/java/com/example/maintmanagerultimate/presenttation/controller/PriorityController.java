@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,7 +36,8 @@ public class PriorityController {
                 .body(prioritiesService.getPriority(priorityId));
     }
 
-    @GetMapping
+    //todo how wo solve bin conflicts conflicts
+    @GetMapping("/all")
     public ResponseEntity<List<GetPriorityResponseDto>> getPriorities() {
         final var capability = prioritiesService.getPriorities();
 

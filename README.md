@@ -115,3 +115,6 @@ GET http://localhost:8080/priorities?priorityId=4
 ###
 GET http://localhost:8080/priorities/all
 ```
+
+Build docker image:
+```mvn spring-boot:build-image```

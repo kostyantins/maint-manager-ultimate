@@ -76,7 +76,8 @@ public class MaintCommentsController {
                 .body(maintCommentsService.getIdentifiedMaintComments());
     }
 
-    @GetMapping
+    //todo how wo solve bin conflicts conflicts
+    @GetMapping("/all")
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
         final var comments = maintCommentsService.getComments();
 
