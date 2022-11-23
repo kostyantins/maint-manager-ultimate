@@ -121,3 +121,27 @@ GET http://localhost:8080/priorities/all
 
 ## Swagger:
 ```http://localhost:8080/swagger-ui/index.html```
+
+- @Operation - Describe operation or method HTTP for appropriate path.
+
+- @Parameter - Describe one parameter for the operation in OpenAPI.
+
+- @RequestBody - Describe an operation body
+
+- @ApiResponse - Describe an answer on operation
+
+- @Tag - Describe a tag for an operation or for the OpenAPI.
+
+- @Server - Describe a server for the operation or for OpenAPI.
+
+- @Callback - Describe amount or requests
+
+- @Link - Describe development time reference for the response.
+
+- @Schema - Describe input/output data.
+
+- @ArraySchema - Describe input/output data for the type of arrays.
+
+- @Content - Describe schema or an examples for the type of multimedia.
+
+- @Hidden - Describe a resource, operation or property

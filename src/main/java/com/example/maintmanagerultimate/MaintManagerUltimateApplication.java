@@ -25,10 +25,10 @@ public class MaintManagerUltimateApplication {
                         .contact(new Contact()
                                 .name("Groot")
                                 .email("imgroot@gmail.com")
-                                .url("https://www.google.com"))
+                                .url("https://www.marvel.com/teams-and-groups/guardians-of-the-galaxy"))
                         .license(new License()
                                 .name("Guardians of the Galaxy")
                                 .identifier("0123-mnj1-njnc-74y3-194d-ir39")
-                                .url("https://www.google.com")));
+                                .url("https://springdoc.org/")));
     }
 }
