@@ -13,7 +13,7 @@ paths:
       description: Returns a list of maints.
       responses:
         '200':
-          description: A JSON array of GetMaintResponseDto class
+          description: An array of GetMaintResponseDto
           content:
             application/json:
               schema:
@@ -29,4 +29,89 @@ paths:
                       type: string
                       example: MAINT-1
                     capabilityId:
-                      todo
+                      type: number
+                      example: 1
+                    createdData:
+                      type: string
+                      example: 2022-11-01
+                    dueData:
+                      type: string
+                      example: 2022-11-01
+                    solvePriorityId:
+                      type: integer
+                      example: 1
+                    estimate:
+                      type: integer
+                      example: 1
+                    fixVersion:
+                      type: string
+                      example: 1.1.1
+                    client:
+                      type: string
+                      example: MCB
+                    comments:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            format: int64
+                            example: 1
+                          commentText:
+                            type: string
+                            example: MCB comment
+                          createdData:
+                            type: string
+                            example: 2022-11-01
+    post:
+      summary: Create maint.
+      description: Create maint.
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                maintIdentifier:
+                  type: string
+                  example: MAINT-1
+                capabilityId:
+                  type: number
+                  example: 1
+                createdData:
+                  type: string
+                  example: 2022-11-01
+                dueData:
+                  type: string
+                  example: 2022-11-01
+                solvePriorityId:
+                  type: integer
+                  example: 1
+                estimate:
+                  type: integer
+                  example: 1
+                fixVersion:
+                  type: string
+                  example: 1.1.1
+                client:
+                  type: string
+                  example: MCB
+                comments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      commentText:
+                        type: string
+                        example: MCB comment
+      responses:
+        '201':
+          description: Create a Maint and resturs CreateMaintResponseDto
+          content:
+            application/json:
+              schema:
+                type: number
+                example: 1
