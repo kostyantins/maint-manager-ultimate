@@ -2,30 +2,27 @@ package com.example.maintmanagerultimate.maint;
 
 import com.example.maintmanagerultimate.MaintManagerUltimateApplicationTests;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
-import com.example.maintmanagerultimate.service.services.MaintService;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.engine.TestExecutionResult;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
 
 
 public class MaintTest extends MaintManagerUltimateApplicationTests {
 
     @Mock
-    MaintService maintService;
+    MaintController maintController;
 
     @Test
     void testMaintShouldBeCreated() {
@@ -35,63 +32,94 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
                 .maintId(1L)
                 .build();
 
-        when(maintService.createMaintAndCommentsIfPresent(maintRequest)).thenReturn(maintResponse);
+        ResponseEntity<CreateMaintResponseDto> response = ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(CreateMaintResponseDto.builder()
+                        .maintId(maintResponse.getMaintId())
+                        .build());
 
-        assertThat(maintService.createMaintAndCommentsIfPresent(maintRequest).getMaintId()).isEqualTo(maintResponse.getMaintId());
+        when(maintController.createMaint(maintRequest)).thenReturn(response);
+
+        assertThat(maintController.createMaint(maintRequest)).isEqualTo(response);
     }
 
     @Test
     void testMainsShouldBeRetrieved() {
-        final var maintResponse = createResponseMaintModel();
+        final var maintResponse = List.of(createResponseMaintModel());
 
-        when(maintService.getMaints()).thenReturn(List.of(maintResponse));
+        ResponseEntity<List<GetMaintResponseDto>> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintResponse);
 
-        assertThat(maintService.getMaints().get(0)).isEqualTo(maintResponse);
+        when(maintController.getMaints()).thenReturn(response);
+
+        assertThat(maintController.getMaints()).isEqualTo(response);
+    }
+
+    @Test
+    void testMainsShouldNotBeRetrieved() {
+        ResponseEntity<List<GetMaintResponseDto>> response = ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+
+        when(maintController.getMaints()).thenReturn(response);
+
+        assertThat(maintController.getMaints()).isEqualTo(response);
     }
 
     @Test
     void testMainCommentsShouldBeFetched() {
         final var maintResponse = createResponseMaintModel();
 
-        when(maintService.getMaintFetchComment(1L)).thenReturn(maintResponse);
+        ResponseEntity<GetMaintResponseDto> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintResponse);
 
-        assertThat(maintService.getMaintFetchComment(1L)).isEqualTo(maintResponse);
+        when(maintController.getMaint(1L)).thenReturn(response);
+
+        assertThat(maintController.getMaint(1L)).isEqualTo(response);
     }
 
     @Test
     void testMainShouldBeRetrievedByIdIdentifier() {
         final var maintResponse = createResponseMaintModel();
 
-        when(maintService.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).thenReturn(maintResponse);
+        ResponseEntity<GetMaintResponseDto> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintResponse);
 
-        assertThat(maintService.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).isEqualTo(maintResponse);
+        when(maintController.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).thenReturn(response);
+
+        assertThat(maintController.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).isEqualTo(response);
     }
 
-    //todo how to properly test void methods
     @Test
     void testMainShouldBeDeleted() {
-//        MaintService maintService = mock(MaintService.class);
-//
-//        doAnswer(() -> 204)
-//                .when(maintService.deleteMaint(1L));
-//
-//        assertThat(maintService.deleteMaint(1l).isEqualTo(204);
+        ResponseEntity<HttpStatus> response = ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+
+        when(maintController.deleteMaint(1L)).thenReturn(response);
+
+        assertThat(maintController.deleteMaint(1L)).isEqualTo(response);
     }
 
-    //todo how to properly test void methods
     @Test
     void testMainFixVersionShouldBePatched() {
-//        final var patch = FixVersionRequestDto.builder()
-//                .maintId(1L)
-//                .fixVersion("2.2.2")
-//                .build();
-//
-//        when(maintService.patchMaintFixVersion(patch)).then(answer);
-//
-//        assertThat(maintService.patchMaintFixVersion(patch).isEqualTo(200);
+        final var patch = FixVersionRequestDto.builder()
+                .maintId(1L)
+                .fixVersion("2.2.2")
+                .build();
+
+        ResponseEntity<HttpStatus> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+
+        when(maintController.updateMaintFixVersion(patch)).thenReturn(response);
+
+        assertThat(maintController.updateMaintFixVersion(patch)).isEqualTo(response);
     }
 
-    //todo how to properly test void methods
     @Test
     void testMainShouldBeUpdated() {
         final var update = UpdateMaintDto.builder()
@@ -104,10 +132,14 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
                 .fixVersion("3.3.3")
                 .client("MCB")
                 .build();
-//
-//        when(maintService.updateMaint(update)).then(200);
-//
-//        assertThat(maintService.deleteMaint(1l).isEqualTo(204);
+
+        ResponseEntity<HttpStatus> response = ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+
+        when(maintController.updateMaint(update)).thenReturn(response);
+
+        assertThat(maintController.updateMaint(update)).isEqualTo(response);
     }
 
     private Maint createRequestMaintModel() {

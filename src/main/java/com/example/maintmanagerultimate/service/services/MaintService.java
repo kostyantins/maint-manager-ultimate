@@ -12,8 +12,6 @@ import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDel
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,15 +32,11 @@ public class MaintService {
             maint.addComments(maint.getComments());
         }
 
-        return CreateMaintResponseDto.builder()
-                .maintId(maintRepository.save(maint).getId())
-                .build();
+        return CreateMaintResponseDto.builder().maintId(maintRepository.save(maint).getId()).build();
     }
 
     public GetMaintResponseDto getMaintFetchComment(Long maintId) {
-        final var maint = Optional.ofNullable(maintRepository
-                        .findByIdFetchComment(maintId))
-                .orElseThrow(() -> new NoSuchMaintException(maintId));
+        final var maint = Optional.ofNullable(maintRepository.findByIdFetchComment(maintId)).orElseThrow(() -> new NoSuchMaintException(maintId));
 
         return MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
     }
@@ -52,16 +46,13 @@ public class MaintService {
     public List<GetMaintResponseDto> getMaints() {
         final var maints = maintRepository.findAll();
 
-        return maints.stream()
-                .map(MaintMapper.INSTANCE::maintEntityToMaintDto)
-                .collect(Collectors.toList());
+        return maints.stream().map(MaintMapper.INSTANCE::maintEntityToMaintDto).collect(Collectors.toList());
 
     }
 
     @Transactional
     public GetMaintResponseDto getMaintByIdIdentifier(String maintIdentifier) {
-        final var maint = Optional.ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier))
-                .orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
+        final var maint = Optional.ofNullable(maintRepository.findMaintByMaintIdentifier(maintIdentifier)).orElseThrow(() -> new NoSuchMaintIdentifierException(maintIdentifier));
 
         return MaintMapper.INSTANCE.maintEntityToMaintDto(maint);
     }
@@ -75,9 +66,7 @@ public class MaintService {
     }
 
     public void patchMaintFixVersion(FixVersionRequestDto fixVersionRequestDto) {
-        final var maint = Optional.ofNullable(maintRepository
-                        .findByIdFetchComment(fixVersionRequestDto.getMaintId()))
-                .orElseThrow(() -> new NoSuchMaintException(fixVersionRequestDto.getMaintId()));
+        final var maint = Optional.ofNullable(maintRepository.findByIdFetchComment(fixVersionRequestDto.getMaintId())).orElseThrow(() -> new NoSuchMaintException(fixVersionRequestDto.getMaintId()));
 
         maint.setFixVersion(fixVersionRequestDto.getFixVersion());
 
@@ -86,9 +75,7 @@ public class MaintService {
 
     @Transactional
     public void updateMaint(UpdateMaintDto updateMaintDto) {
-        final var maint = Optional.of(maintRepository
-                        .getReferenceById(updateMaintDto.getId()))
-                .orElseThrow(() -> new NoSuchMaintException(updateMaintDto.getId()));
+        final var maint = Optional.of(maintRepository.getReferenceById(updateMaintDto.getId())).orElseThrow(() -> new NoSuchMaintException(updateMaintDto.getId()));
 
         maint.setFixVersion(updateMaintDto.getFixVersion());
         maint.setClient(updateMaintDto.getClient());
