@@ -9,7 +9,7 @@ servers:
 paths:
   /maints:
     get:
-      summary: Returns a list of maints.
+      summary: Get a list of maints.
       description: Returns a list of maints.
       responses:
         '200':
@@ -115,3 +115,65 @@ paths:
               schema:
                 type: number
                 example: 1
+  /maints/{maintId}:
+    get:
+      summary: Get maint by id.
+      parameters:
+        - in: path
+          name: maintId
+          schema:
+            type: number
+          required: true
+          description: Numeric (Long) ID of the maint to get
+      description: Returns a list of maints.
+      responses:
+        '200':
+          description: An array of GetMaintResponseDto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    format: int64
+                    example: 1
+                  maintIdentifier:
+                    type: string
+                    example: MAINT-1
+                  capabilityId:
+                    type: number
+                    example: 1
+                  createdData:
+                    type: string
+                    example: 2022-11-01
+                  dueData:
+                    type: string
+                    example: 2022-11-01
+                  solvePriorityId:
+                    type: integer
+                    example: 1
+                  estimate:
+                    type: integer
+                    example: 1
+                  fixVersion:
+                    type: string
+                    example: 1.1.1
+                  client:
+                    type: string
+                    example: MCB
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          format: int64
+                          example: 1
+                        commentText:
+                          type: string
+                          example: MCB comment
+                        createdData:
+                          type: string
+                          example: 2022-11-01
