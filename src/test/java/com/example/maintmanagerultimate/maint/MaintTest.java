@@ -115,9 +115,9 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
                 .status(HttpStatus.OK)
                 .build();
 
-        when(maintController.updateMaintFixVersion(patch)).thenReturn(response);
+        when(maintController.patchMaintFixVersion(patch)).thenReturn(response);
 
-        assertThat(maintController.updateMaintFixVersion(patch)).isEqualTo(response);
+        assertThat(maintController.patchMaintFixVersion(patch)).isEqualTo(response);
     }
 
     @Test

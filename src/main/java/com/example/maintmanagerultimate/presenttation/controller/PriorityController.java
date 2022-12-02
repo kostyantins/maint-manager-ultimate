@@ -2,6 +2,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
 import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
+import com.example.maintmanagerultimate.presenttation.swagger.PrioritySwagger;
 import com.example.maintmanagerultimate.service.dto.CreatePriorityResponseDpo;
 import com.example.maintmanagerultimate.service.dto.GetPriorityResponseDto;
 import com.example.maintmanagerultimate.service.services.PrioritiesService;
@@ -18,26 +19,27 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/priorities")
 @RequiredArgsConstructor
-public class PriorityController {
+public class PriorityController implements PrioritySwagger {
 
     private final PrioritiesService prioritiesService;
 
     @PostMapping
+    @Override
     public ResponseEntity<CreatePriorityResponseDpo> createPriority(@RequestBody Priorities priority) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(prioritiesService.createPriority(priority));
     }
 
-    @GetMapping
-    public ResponseEntity<GetPriorityResponseDto> getPriority(@RequestParam Long priorityId) {
+    @GetMapping("/{priorityId}")
+    @Override
+    public ResponseEntity<GetPriorityResponseDto> getPriority(@PathVariable Long priorityId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(prioritiesService.getPriority(priorityId));
     }
 
-    //todo how wo solve bin conflicts conflicts
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<GetPriorityResponseDto>> getPriorities() {
         final var capability = prioritiesService.getPriorities();
 

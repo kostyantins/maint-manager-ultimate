@@ -8,6 +8,12 @@
 
 **[3. Data access layer](#data_access_layer)**
 
+**[4. Examples of '.http' calls ](#examples_of_http_calls)**
+
+**[5. Build docker image](#build_docker_image)**
+
+**[6. Swagger](#swagger)**
+
 ## Presentation layer
 //TODO
 
@@ -17,7 +23,7 @@
 ## Data access layer
 //TODO
 
-## Examples of '.http' Calls
+## Examples of http calls
 ```
 POST http://localhost:8080/maints
 Content-Type: application/json

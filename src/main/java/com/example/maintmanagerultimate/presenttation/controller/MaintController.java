@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.presenttation.swagger.MaintSwagger;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
@@ -16,11 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/maints")
 @RequiredArgsConstructor
-public class MaintController {
+public class MaintController implements MaintSwagger {
 
     private final MaintService maintService;
 
     @PostMapping
+    @Override
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -30,6 +32,7 @@ public class MaintController {
     }
 
     @GetMapping("{maintId}")
+    @Override
     public ResponseEntity<GetMaintResponseDto> getMaint(@PathVariable Long maintId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -37,6 +40,7 @@ public class MaintController {
     }
 
     @GetMapping
+    @Override
     public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
         final var maints = maintService.getMaints();
 
@@ -52,6 +56,7 @@ public class MaintController {
     }
 
     @GetMapping("identifier")
+    @Override
     public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -59,6 +64,7 @@ public class MaintController {
     }
 
     @DeleteMapping("{maintId}")
+    @Override
     public ResponseEntity<HttpStatus> deleteMaint(@PathVariable Long maintId) {
         maintService.deleteMaint(maintId);
 
@@ -68,7 +74,8 @@ public class MaintController {
     }
 
     @PatchMapping("fixversion")
-    public ResponseEntity<HttpStatus> updateMaintFixVersion(@RequestBody FixVersionRequestDto fixVersionRequestDto) {
+    @Override
+    public ResponseEntity<HttpStatus> patchMaintFixVersion(@RequestBody FixVersionRequestDto fixVersionRequestDto) {
         maintService.patchMaintFixVersion(fixVersionRequestDto);
 
         return ResponseEntity
@@ -77,6 +84,7 @@ public class MaintController {
     }
 
     @PutMapping
+    @Override
     public ResponseEntity<HttpStatus> updateMaint(@RequestBody UpdateMaintDto updateMaintDto) {
         maintService.updateMaint(updateMaintDto);
 

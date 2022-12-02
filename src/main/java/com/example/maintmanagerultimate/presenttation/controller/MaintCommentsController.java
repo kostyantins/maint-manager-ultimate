@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
+import com.example.maintmanagerultimate.presenttation.swagger.MaintCommentsSwagger;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
@@ -20,11 +21,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 @RequiredArgsConstructor
-public class MaintCommentsController {
+public class MaintCommentsController implements MaintCommentsSwagger {
 
     private final MaintCommentsService maintCommentsService;
 
     @PostMapping
+    @Override
     public ResponseEntity<?> createComment(@RequestBody MaintComments maintComment) {
         final CreateMaintCommentResponseDto commentComment;
 
@@ -47,6 +49,7 @@ public class MaintCommentsController {
     }
 
     @GetMapping
+    @Override
     public ResponseEntity<GetMaintCommentsResponseDto> getComment(@RequestParam Long maintCommentId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -55,6 +58,7 @@ public class MaintCommentsController {
 
     // Use the approach in the case we need to work with pagination
     @GetMapping("/pageable")
+    @Override
     public ResponseEntity<Page<GetMaintCommentsResponseDto>> getMaintCommentsPageable(Pageable pageable) {
         final var comments = maintCommentsService.getMaintComments(pageable);
 
@@ -70,14 +74,16 @@ public class MaintCommentsController {
     }
 
     @GetMapping("/identified")
+    @Override
     public ResponseEntity<List<MaintCommentsMaintIdentifierDto>> getIdentifiedMaintComments() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(maintCommentsService.getIdentifiedMaintComments());
     }
 
-    //todo how wo solve bin conflicts conflicts
+    //todo remove '/all' mapping through replace query param with path param into getComment()
     @GetMapping("/all")
+    @Override
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
         final var comments = maintCommentsService.getComments();
 
@@ -94,6 +100,7 @@ public class MaintCommentsController {
 
     //Just an example of different usage
     @GetMapping("/by")
+    @Override
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getAllComments() {
         final var comments = maintCommentsService.getAllComments();
 
@@ -109,11 +116,12 @@ public class MaintCommentsController {
     }
 
     @DeleteMapping("/{commentId}")
+    @Override
     public ResponseEntity<HttpStatus> deleteComment(@PathVariable("commentId") Long commentId) {
-       maintCommentsService.deleteMaintComment(commentId);
+        maintCommentsService.deleteMaintComment(commentId);
 
-       return ResponseEntity
-               .status(HttpStatus.NO_CONTENT)
-               .build();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }
