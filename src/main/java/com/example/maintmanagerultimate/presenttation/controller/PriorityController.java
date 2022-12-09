@@ -1,7 +1,6 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
-import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
 import com.example.maintmanagerultimate.presenttation.swagger.PrioritySwagger;
 import com.example.maintmanagerultimate.service.dto.CreatePriorityResponseDpo;
 import com.example.maintmanagerultimate.service.dto.GetPriorityResponseDto;
@@ -11,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/priorities")
@@ -52,26 +48,5 @@ public class PriorityController implements PrioritySwagger {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(capability);
-    }
-
-    //todo replace with liquibase or something
-    @PostConstruct
-    public void createDefaultPriorities() {
-        Stream.of(
-                        Priorities.builder()
-                                .id(1L)
-                                .priorityName(PrioritiesNames.HIGH)
-                                .build(),
-                        Priorities.builder()
-                                .id(2L)
-                                .priorityName(PrioritiesNames.MID)
-                                .build(),
-                        Priorities.builder()
-                                .id(3L)
-                                .priorityName(PrioritiesNames.LOW)
-                                .build()
-
-                )
-                .forEach(prioritiesService::createPriority);
     }
 }

@@ -53,24 +53,4 @@ public class CapabilityController implements CapabilitySwagger {
                 .status(HttpStatus.OK)
                 .body(capability);
     }
-
-    //todo replace with liquibase or something
-    @PostConstruct
-    public void createDefaultCapabilities() {
-        Stream.of(
-                        Capability.builder()
-                                .id(1L)
-                                .capabilityName(CapabilityNames.ACCESS_CONTROL)
-                                .build(),
-                        Capability.builder()
-                                .id(2L)
-                                .capabilityName(CapabilityNames.APPROVALS)
-                                .build(),
-                        Capability.builder()
-                                .id(3L)
-                                .capabilityName(CapabilityNames.LIMITS)
-                                .build()
-                )
-                .forEach(capabilityService::createCapability);
-    }
 }
