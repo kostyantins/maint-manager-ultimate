@@ -1,13 +1,15 @@
 package com.example.maintmanagerultimate;
 
 import com.example.maintmanagerultimate.persistence.entities.Capability;
+import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.entities.Priorities;
 import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
 import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
 import com.example.maintmanagerultimate.presenttation.controller.CapabilityController;
+import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
+import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import com.example.maintmanagerultimate.presenttation.controller.PriorityController;
-import com.example.maintmanagerultimate.service.services.CapabilityService;
-import com.example.maintmanagerultimate.service.services.PrioritiesService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -18,7 +20,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static java.time.LocalDate.now;
 
 @RequiredArgsConstructor
 @SpringBootApplication
@@ -26,6 +31,8 @@ public class MaintManagerUltimateApplication {
 
     private final CapabilityController capabilityController;
     private final PriorityController priorityController;
+    private final MaintController maintController;
+    private final MaintCommentsController maintCommentsController;
 
     public static void main(String[] args) {
         SpringApplication.run(MaintManagerUltimateApplication.class, args);
@@ -82,5 +89,30 @@ public class MaintManagerUltimateApplication {
 
                 )
                 .forEach(priorityController::createPriority);
+
+        var maintBody = Maint.builder()
+                .maintIdentifier("MAINT-1")
+                .capabilityId(1L)
+                .createdData(now())
+                .dueData(now())
+                .solvePriorityId(1)
+                .fixVersion("1.1.1")
+                .client("MCB")
+                .build();
+
+        final var maint = maintController.createMaint(maintBody);
+
+        maintBody.setId(1L);
+
+        IntStream.rangeClosed(0, 1000)
+                .forEach(i -> {
+                    var comment = MaintComments.builder()
+                            .maint(maintBody)
+                            .commentText("New comment" + i)
+                            .createdData(now())
+                            .build();
+
+                    maintCommentsController.createComment(comment);
+                });
     }
 }

@@ -9,6 +9,9 @@ import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
 import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,8 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
+@CacheConfig(cacheNames={"maintComments"})
+@Slf4j
 @RestController
 @RequestMapping("/comments")
 @RequiredArgsConstructor
@@ -48,9 +54,9 @@ public class MaintCommentsController implements MaintCommentsSwagger {
                         .build());
     }
 
-    @GetMapping
+    @GetMapping("/{maintCommentId}")
     @Override
-    public ResponseEntity<GetMaintCommentsResponseDto> getComment(@RequestParam Long maintCommentId) {
+    public ResponseEntity<GetMaintCommentsResponseDto> getComment(@PathVariable Long maintCommentId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(maintCommentsService.getMaintComment(maintCommentId));
@@ -81,11 +87,19 @@ public class MaintCommentsController implements MaintCommentsSwagger {
                 .body(maintCommentsService.getIdentifiedMaintComments());
     }
 
-    //todo remove '/all' mapping through replace query param with path param into getComment()
-    @GetMapping("/all")
+    @Cacheable
+    @GetMapping
     @Override
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
+        var startTime = LocalTime.now().getSecond();
+        log.info("=========================={}==========================", startTime);
+
         final var comments = maintCommentsService.getComments();
+
+        var finishTime = LocalTime.now().getSecond();
+        log.info("=========================={}==========================", finishTime);
+        var resultTime = finishTime - startTime;
+        log.info("=========================={}==========================", resultTime);
 
         if (comments.isEmpty()) {
             return ResponseEntity
