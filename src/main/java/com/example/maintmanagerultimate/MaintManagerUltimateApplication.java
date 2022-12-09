@@ -17,6 +17,7 @@ import io.swagger.v3.oas.models.info.License;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,7 @@ import java.util.stream.Stream;
 
 import static java.time.LocalDate.now;
 
+@EnableCaching
 @RequiredArgsConstructor
 @SpringBootApplication
 public class MaintManagerUltimateApplication {

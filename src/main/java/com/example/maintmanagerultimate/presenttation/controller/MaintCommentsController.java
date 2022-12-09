@@ -91,15 +91,7 @@ public class MaintCommentsController implements MaintCommentsSwagger {
     @GetMapping
     @Override
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {
-        var startTime = LocalTime.now().getSecond();
-        log.info("=========================={}==========================", startTime);
-
         final var comments = maintCommentsService.getComments();
-
-        var finishTime = LocalTime.now().getSecond();
-        log.info("=========================={}==========================", finishTime);
-        var resultTime = finishTime - startTime;
-        log.info("=========================={}==========================", resultTime);
 
         if (comments.isEmpty()) {
             return ResponseEntity
