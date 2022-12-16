@@ -10,6 +10,7 @@ import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchM
 import com.example.maintmanagerultimate.service.mappers.MaintCommentsMapper;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ import java.util.stream.Collectors;
 public class MaintCommentsService {
 
     private final MaintCommentsRepository maintCommentsRepository;
+
+    @Autowired
+    private final MaintCommentsMapper maintCommentsMapper;
 
     // Not good implementation causing a plenty additional select calls from result set
 //    public List<MaintCommentsDto> getIdentifiedMaintComments() {
@@ -43,7 +47,7 @@ public class MaintCommentsService {
                 .findById(maintCommentId)
                 .orElseThrow(() -> new NoSuchMaintCommentsException(maintCommentId));
 
-        return MaintCommentsMapper.INSTANCE.maintCommentsEntityToMaintCommentsDto(maintComment);
+        return maintCommentsMapper.maintCommentsEntityToMaintCommentsDto(maintComment);
     }
 
     public CreateMaintCommentResponseDto createComment(MaintComments maintComment) {
@@ -66,7 +70,7 @@ public class MaintCommentsService {
         final var comments = maintCommentsRepository.findAll(pageable);
 
         return new PageImpl<>(comments.stream()
-                .map(MaintCommentsMapper.INSTANCE::maintCommentsEntityToMaintCommentsDto)
+                .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
                 .collect(Collectors.toList()));
     }
 
@@ -74,7 +78,7 @@ public class MaintCommentsService {
         final var comments = maintCommentsRepository.findAll();
 
         return comments.stream()
-                .map(MaintCommentsMapper.INSTANCE::maintCommentsEntityToMaintCommentsDto)
+                .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
                 .collect(Collectors.toList());
     }
 
@@ -82,7 +86,7 @@ public class MaintCommentsService {
         final var comments = maintCommentsRepository.findAllBy(MaintComments.class);
 
         return comments.stream()
-                .map(MaintCommentsMapper.INSTANCE::maintCommentsEntityToMaintCommentsDto)
+                .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
                 .collect(Collectors.toList());
     }
 
