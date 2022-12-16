@@ -1,5 +1,7 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -12,9 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @Entity
 @Table(name = "maint")
@@ -27,8 +27,9 @@ public class Maint {
     @Column(name = "maint_identifier", unique = true)
     private String maintIdentifier;
 
+    @Enumerated
     @Column(name = "capability_id", nullable = false)
-    private Long capabilityId;
+    private Capabilities capabilityId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "appeared_data", nullable = false)
@@ -38,8 +39,9 @@ public class Maint {
     @Column(name = "due_data", nullable = false)
     private LocalDate dueData;
 
+    @Enumerated
     @Column(name = "sovle_priority_id", nullable = false)
-    private Integer solvePriorityId;
+    private Priorities solvePriorityId;
 
     @Column
     @ColumnDefault("'N/A'")

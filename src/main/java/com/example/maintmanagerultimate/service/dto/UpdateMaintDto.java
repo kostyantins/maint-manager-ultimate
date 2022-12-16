@@ -1,5 +1,7 @@
 package com.example.maintmanagerultimate.service.dto;
 
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,10 +14,10 @@ public class UpdateMaintDto {
 
     private Long id;
     private String maintIdentifier;
-    private Long capabilityId;
+    private Capabilities capabilityId;
     private LocalDate createdData;
     private LocalDate dueData;
-    private Integer solvePriorityId;
+    private Priorities solvePriorityId;
     private Integer estimate;
     private String fixVersion;
     private String client;

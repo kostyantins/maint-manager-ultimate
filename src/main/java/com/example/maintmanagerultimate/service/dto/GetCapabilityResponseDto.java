@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.service.dto;
 
-import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
 public class GetCapabilityResponseDto {
 
     private Long id;
-    private CapabilityNames capabilityName;
+    private Capabilities capabilityName;
 }

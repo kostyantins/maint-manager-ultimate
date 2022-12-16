@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.persistence.enums;
 
-public enum CapabilityNames {
+public enum Capabilities {
 
     ACCESS_CONTROL,
     APPROVALS,

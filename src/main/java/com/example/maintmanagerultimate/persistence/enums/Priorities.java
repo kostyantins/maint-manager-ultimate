@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.persistence.enums;
 
-public enum PrioritiesNames {
+public enum Priorities {
 
     HIGH,
     MID,

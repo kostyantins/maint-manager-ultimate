@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.service.dto;
 
-import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
 public class GetPriorityResponseDto {
 
     private Long id;
-    private PrioritiesNames prioritiesName;
+    private Priorities prioritiesName;
 }

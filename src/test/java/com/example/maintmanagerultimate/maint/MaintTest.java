@@ -2,6 +2,8 @@ package com.example.maintmanagerultimate.maint;
 
 import com.example.maintmanagerultimate.MaintManagerUltimateApplicationTests;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
@@ -125,10 +127,10 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
         final var update = UpdateMaintDto.builder()
                 .id(1L)
                 .maintIdentifier("MAINT-1.1")
-                .capabilityId(1L)
+                .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
-                .solvePriorityId(2)
+                .solvePriorityId(Priorities.HIGH)
                 .fixVersion("3.3.3")
                 .client("MCB")
                 .build();
@@ -145,10 +147,10 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
     private Maint createRequestMaintModel() {
         return Maint.builder()
                 .maintIdentifier("MAINT-1")
-                .capabilityId(1L)
+                .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
-                .solvePriorityId(1)
+                .solvePriorityId(Priorities.HIGH)
                 .fixVersion("1.1.1")
                 .client("MCB")
                 .build();
@@ -158,10 +160,10 @@ public class MaintTest extends MaintManagerUltimateApplicationTests {
         return GetMaintResponseDto.builder()
                 .id(1L)
                 .maintIdentifier("MAINT-1")
-                .capabilityId(1L)
+                .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
-                .solvePriorityId(1)
+                .solvePriorityId(Priorities.HIGH)
                 .fixVersion("1.1.1")
                 .client("MCB")
                 .build();

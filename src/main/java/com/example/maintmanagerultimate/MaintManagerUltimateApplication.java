@@ -1,15 +1,11 @@
 package com.example.maintmanagerultimate;
 
-import com.example.maintmanagerultimate.persistence.entities.Capability;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
-import com.example.maintmanagerultimate.persistence.entities.Priorities;
-import com.example.maintmanagerultimate.persistence.enums.CapabilityNames;
-import com.example.maintmanagerultimate.persistence.enums.PrioritiesNames;
-import com.example.maintmanagerultimate.presenttation.controller.CapabilityController;
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
-import com.example.maintmanagerultimate.presenttation.controller.PriorityController;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -24,6 +20,8 @@ import javax.annotation.PostConstruct;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static com.example.maintmanagerultimate.persistence.enums.Capabilities.APPROVALS;
+import static com.example.maintmanagerultimate.persistence.enums.Priorities.HIGH;
 import static java.time.LocalDate.now;
 
 @EnableCaching
@@ -31,8 +29,6 @@ import static java.time.LocalDate.now;
 @SpringBootApplication
 public class MaintManagerUltimateApplication {
 
-    private final CapabilityController capabilityController;
-    private final PriorityController priorityController;
     private final MaintController maintController;
     private final MaintCommentsController maintCommentsController;
 
@@ -59,45 +55,12 @@ public class MaintManagerUltimateApplication {
 
     @PostConstruct
     public void createDefaultCapabilities() {
-        Stream.of(
-                        Capability.builder()
-                                .id(1L)
-                                .capabilityName(CapabilityNames.ACCESS_CONTROL)
-                                .build(),
-                        Capability.builder()
-                                .id(2L)
-                                .capabilityName(CapabilityNames.APPROVALS)
-                                .build(),
-                        Capability.builder()
-                                .id(3L)
-                                .capabilityName(CapabilityNames.LIMITS)
-                                .build()
-                )
-                .forEach(capabilityController::createCapability);
-
-        Stream.of(
-                        Priorities.builder()
-                                .id(1L)
-                                .priorityName(PrioritiesNames.HIGH)
-                                .build(),
-                        Priorities.builder()
-                                .id(2L)
-                                .priorityName(PrioritiesNames.MID)
-                                .build(),
-                        Priorities.builder()
-                                .id(3L)
-                                .priorityName(PrioritiesNames.LOW)
-                                .build()
-
-                )
-                .forEach(priorityController::createPriority);
-
         var maintBody = Maint.builder()
                 .maintIdentifier("MAINT-1")
-                .capabilityId(1L)
+                .capabilityId(APPROVALS)
                 .createdData(now())
                 .dueData(now())
-                .solvePriorityId(1)
+                .solvePriorityId(HIGH)
                 .fixVersion("1.1.1")
                 .client("MCB")
                 .build();

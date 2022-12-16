@@ -3,6 +3,8 @@ package com.example.maintmanagerultimate.maint;
 import com.example.maintmanagerultimate.MaintManagerUltimateApplicationTests;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
+import com.example.maintmanagerultimate.persistence.enums.Capabilities;
+import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
@@ -30,10 +32,10 @@ public class MaintCommentsTest extends MaintManagerUltimateApplicationTests {
         maint = Maint.builder()
                 .id(1L)
                 .maintIdentifier("MAINT-1.1.2")
-                .capabilityId(1L)
+                .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
-                .solvePriorityId(1)
+                .solvePriorityId(Priorities.HIGH)
                 .fixVersion("1.1.1")
                 .client("AIB")
                 .build();
