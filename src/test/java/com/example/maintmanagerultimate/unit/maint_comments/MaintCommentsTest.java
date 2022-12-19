@@ -1,18 +1,18 @@
-package com.example.maintmanagerultimate.maint;
+package com.example.maintmanagerultimate.unit.maint_comments;
 
 import com.example.maintmanagerultimate.MaintManagerUltimateApplicationTests;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
-import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
+import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
@@ -20,10 +20,12 @@ import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+//@RequiredArgsConstructor
 public class MaintCommentsTest extends MaintManagerUltimateApplicationTests {
 
     @Mock
-    private MaintCommentsController maintCommentsController;
+    private MaintCommentsService maintCommentsService;
 
     private static Maint maint;
 
@@ -49,44 +51,38 @@ public class MaintCommentsTest extends MaintManagerUltimateApplicationTests {
                 .createdData(now())
                 .build();
 
-        ResponseEntity response = ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(CreateMaintCommentResponseDto.builder()
-                        .maintCommentId(1L)
-                        .build());
+        final var response = CreateMaintCommentResponseDto.builder()
+                .maintCommentId(1L)
+                .build();
 
-        when(maintCommentsController.createComment(maintCommentRequest)).thenReturn(response);
+        when(maintCommentsService.createComment(maintCommentRequest)).thenReturn(response);
 
-        assertThat(maintCommentsController.createComment(maintCommentRequest)).isEqualTo(response);
+        assertThat(maintCommentsService.createComment(maintCommentRequest)).isEqualTo(response);
     }
 
     @Test
     void testMaintCommentShouldBeRetrieved() {
-        ResponseEntity<GetMaintCommentsResponseDto> response = ResponseEntity
-                .status(HttpStatus.OK)
-                .body(GetMaintCommentsResponseDto.builder()
-                        .id(1L)
-                        .createdData(now())
-                        .commentText("One more comment")
-                        .build());
+        final var response = GetMaintCommentsResponseDto.builder()
+                .id(1L)
+                .createdData(now())
+                .commentText("One more comment")
+                .build();
 
-        when(maintCommentsController.getComment(1L)).thenReturn(response);
+        when(maintCommentsService.getMaintComment(1L)).thenReturn(response);
 
-        assertThat(maintCommentsController.getComment(1L)).isEqualTo(response);
+        assertThat(maintCommentsService.getMaintComment(1L)).isEqualTo(response);
     }
 
     @Test
     void testAllMaintCommentsShouldBeRetrieved() {
-        ResponseEntity<List<GetMaintCommentsResponseDto>> response = ResponseEntity
-                .status(HttpStatus.OK)
-                .body(List.of(GetMaintCommentsResponseDto.builder()
-                        .id(1L)
-                        .createdData(now())
-                        .commentText("Another comment")
-                        .build()));
+        List<GetMaintCommentsResponseDto> response = List.of(GetMaintCommentsResponseDto.builder()
+                .id(1L)
+                .createdData(now())
+                .commentText("Another comment")
+                .build());
 
-        when(maintCommentsController.getComments()).thenReturn(response);
+        when(maintCommentsService.getComments()).thenReturn(response);
 
-        assertThat(maintCommentsController.getComments()).isEqualTo(response);
+        assertThat(maintCommentsService.getComments()).isEqualTo(response);
     }
 }
