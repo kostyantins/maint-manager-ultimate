@@ -8,7 +8,6 @@ import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -21,8 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@RequiredArgsConstructor
-public class MaintTest {
+public class MaintUnitTest {
 
     @Mock
     MaintService maintService;
@@ -84,6 +82,8 @@ public class MaintTest {
     void testMainShouldBeDeleted() {
         doNothing().when(maintService).deleteMaint(1L);
 
+        maintService.deleteMaint(1L);
+
         verify(maintService).deleteMaint(1L);
     }
 
@@ -95,6 +95,8 @@ public class MaintTest {
                 .build();
 
         doNothing().when(maintService).patchMaintFixVersion(patch);
+
+        maintService .patchMaintFixVersion(patch);
 
         verify(maintService).patchMaintFixVersion(patch);
     }
@@ -113,6 +115,8 @@ public class MaintTest {
                 .build();
 
         doNothing().when(maintService).updateMaint(update);
+
+        maintService.updateMaint(update);
 
         verify(maintService).updateMaint(update);
     }

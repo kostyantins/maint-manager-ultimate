@@ -21,8 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-//@RequiredArgsConstructor
-public class MaintCommentsTest extends MaintManagerUltimateApplicationTests {
+public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests {
 
     @Mock
     private MaintCommentsService maintCommentsService;
