@@ -8,19 +8,26 @@ import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.services.MaintService;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Locale;
 
+import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MaintUnitTest {
+
+    private static final Faker FAKER = new Faker(Locale.ENGLISH);
+    private static final String MAINT_IDENTIFIER = format("MAINT-%s", FAKER.number().digits(10));
+    private static final String MAINT_FIX_VERSION = format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit());
 
     @Mock
     MaintService maintService;
@@ -91,7 +98,7 @@ public class MaintUnitTest {
     void testMainFixVersionShouldBePatched() {
         final var patch = FixVersionRequestDto.builder()
                 .maintId(1L)
-                .fixVersion("2.2.2")
+                .fixVersion(MAINT_FIX_VERSION)
                 .build();
 
         doNothing().when(maintService).patchMaintFixVersion(patch);
@@ -105,13 +112,13 @@ public class MaintUnitTest {
     void testMainShouldBeUpdated() {
         final var update = UpdateMaintDto.builder()
                 .id(1L)
-                .maintIdentifier("MAINT-1.1")
+                .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
-                .fixVersion("3.3.3")
-                .client("MCB")
+                .fixVersion(MAINT_FIX_VERSION)
+                .client(FAKER.company().name())
                 .build();
 
         doNothing().when(maintService).updateMaint(update);
@@ -123,26 +130,26 @@ public class MaintUnitTest {
 
     private Maint createRequestMaintModel() {
         return Maint.builder()
-                .maintIdentifier("MAINT-1")
+                .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
-                .fixVersion("1.1.1")
-                .client("MCB")
+                .fixVersion(MAINT_FIX_VERSION)
+                .client(FAKER.company().name())
                 .build();
     }
 
     private GetMaintResponseDto createResponseMaintModel() {
         return GetMaintResponseDto.builder()
                 .id(1L)
-                .maintIdentifier("MAINT-1")
+                .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
                 .createdData(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
-                .fixVersion("1.1.1")
-                .client("MCB")
+                .fixVersion(MAINT_FIX_VERSION)
+                .client(FAKER.company().name())
                 .build();
     }
 }
