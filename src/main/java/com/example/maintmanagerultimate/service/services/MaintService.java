@@ -35,7 +35,9 @@ public class MaintService {
             maint.addComments(maint.getComments());
         }
 
-        return CreateMaintResponseDto.builder().maintId(maintRepository.save(maint).getId()).build();
+        return CreateMaintResponseDto.builder()
+                .maintId(maintRepository.save(maint).getId())
+                .build();
     }
 
     public GetMaintResponseDto getMaintFetchComment(Long maintId) {

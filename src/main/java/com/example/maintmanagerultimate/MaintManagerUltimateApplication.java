@@ -52,31 +52,32 @@ public class MaintManagerUltimateApplication {
                                 .url("https://springdoc.org/")));
     }
 
-    @PostConstruct
-    public void createDefaultCapabilities() {
-        var maintBody = Maint.builder()
-                .maintIdentifier("MAINT-1")
-                .capabilityId(APPROVALS)
-                .createdData(now())
-                .dueData(now())
-                .solvePriorityId(HIGH)
-                .fixVersion("1.1.1")
-                .client("MCB")
-                .build();
-
-        final var maint = maintController.createMaint(maintBody);
-
-        maintBody.setId(1L);
-
-        IntStream.rangeClosed(0, 1000)
-                .forEach(i -> {
-                    var comment = MaintComments.builder()
-                            .maint(maintBody)
-                            .commentText("New comment" + i)
-                            .createdData(now())
-                            .build();
-
-                    maintCommentsController.createComment(comment);
-                });
-    }
+    //Uncomment bloc for catch testing
+//    @PostConstruct
+//    public void createDefaultCapabilities() {
+//        var maintBody = Maint.builder()
+//                .maintIdentifier("MAINT-1")
+//                .capabilityId(APPROVALS)
+//                .createdData(now())
+//                .dueData(now())
+//                .solvePriorityId(HIGH)
+//                .fixVersion("1.1.1")
+//                .client("MCB")
+//                .build();
+//
+//        final var maint = maintController.createMaint(maintBody);
+//
+//        maintBody.setId(1L);
+//
+//        IntStream.rangeClosed(0, 1000)
+//                .forEach(i -> {
+//                    var comment = MaintComments.builder()
+//                            .maint(maintBody)
+//                            .commentText("New comment" + i)
+//                            .createdData(now())
+//                            .build();
+//
+//                    maintCommentsController.createComment(comment);
+//                });
+//    }
 }
