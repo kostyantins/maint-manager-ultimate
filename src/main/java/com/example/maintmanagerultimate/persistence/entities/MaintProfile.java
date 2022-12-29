@@ -2,7 +2,6 @@ package com.example.maintmanagerultimate.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +9,10 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "maint_profile")
 public class MaintProfile {

@@ -3,6 +3,7 @@ package com.example.maintmanagerultimate.unit.maint;
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
+import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
 import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
@@ -11,6 +12,7 @@ import com.example.maintmanagerultimate.service.services.MaintService;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,8 +31,12 @@ public class MaintUnitTest {
     private static final String MAINT_IDENTIFIER = format("MAINT-%s", FAKER.number().digits(10));
     private static final String MAINT_FIX_VERSION = format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit());
 
+//    @Mock
+//    private MaintRepository maintRepository;
+
     @Mock
-    MaintService maintService;
+//    @InjectMocks
+    private MaintService maintService;
 
     @Test
     void testMaintShouldBeCreated() {
@@ -132,7 +138,7 @@ public class MaintUnitTest {
         return Maint.builder()
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
-                .createdData(now())
+                .createdDate(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(MAINT_FIX_VERSION)

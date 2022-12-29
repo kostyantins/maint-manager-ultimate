@@ -34,7 +34,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
                 .id(1L)
                 .maintIdentifier("MAINT-1.1.2")
                 .capabilityId(Capabilities.APPROVALS)
-                .createdData(now())
+                .createdDate(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion("1.1.1")
@@ -47,7 +47,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
         final var maintCommentRequest = MaintComments.builder()
                 .maint(maint)
                 .commentText("New comment")
-                .createdData(now())
+                .createdDate(now())
                 .build();
 
         final var response = CreateMaintCommentResponseDto.builder()
@@ -63,7 +63,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
     void testMaintCommentShouldBeRetrieved() {
         final var response = GetMaintCommentsResponseDto.builder()
                 .id(1L)
-                .createdData(now())
+                .createdDate(now())
                 .commentText("One more comment")
                 .build();
 
@@ -76,7 +76,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
     void testAllMaintCommentsShouldBeRetrieved() {
         List<GetMaintCommentsResponseDto> response = List.of(GetMaintCommentsResponseDto.builder()
                 .id(1L)
-                .createdData(now())
+                .createdDate(now())
                 .commentText("Another comment")
                 .build());
 

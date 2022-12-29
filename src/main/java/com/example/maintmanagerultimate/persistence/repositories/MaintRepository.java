@@ -9,7 +9,7 @@ public interface MaintRepository extends JpaRepository<Maint, Long> {
 
     Maint findMaintByMaintIdentifier(String maintIdentifier);
 
-    @Query("select m from Maint m order by m.createdData desc")
+    @Query("select m from Maint m order by m.createdDate desc")
     Maint findLastAddedMaint();
 
     //The purpose of such constructions (native queries) is mostly to use 'join fetch' approach that allows us to avoid additional sql/DB calls

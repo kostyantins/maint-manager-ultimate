@@ -29,7 +29,6 @@ public class MaintService {
     @Autowired
     private final MaintMapper maintMapper;
 
-    //todo remove method, but I didnt get why((, need Artur clarification
     public CreateMaintResponseDto createMaintAndCommentsIfPresent(Maint maint) {
         if (maint.getComments() != null && !maint.getComments().isEmpty()) {
             maint.addComments(maint.getComments());
@@ -53,7 +52,6 @@ public class MaintService {
         final var maints = maintRepository.findAll();
 
         return maints.stream().map(maintMapper::maintEntityToMaintDto).collect(Collectors.toList());
-
     }
 
     @Transactional
@@ -90,7 +88,7 @@ public class MaintService {
         maint.setClient(updateMaintDto.getClient());
         maint.setMaintIdentifier(updateMaintDto.getMaintIdentifier());
         maint.setCapabilityId(updateMaintDto.getCapabilityId());
-        maint.setCreatedData(updateMaintDto.getCreatedData());
+        maint.setCreatedDate(updateMaintDto.getCreatedData());
         maint.setDueData(updateMaintDto.getDueData());
         maint.setEstimate(updateMaintDto.getEstimate());
         maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());

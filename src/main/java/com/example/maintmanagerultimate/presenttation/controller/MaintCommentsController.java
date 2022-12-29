@@ -86,7 +86,7 @@ public class MaintCommentsController implements MaintCommentsSwagger {
                 .body(maintCommentsService.getIdentifiedMaintComments());
     }
 
-    @Cacheable
+    @Cacheable //todo replace on service layer
     @GetMapping
     @Override
     public ResponseEntity<List<GetMaintCommentsResponseDto>> getComments() {

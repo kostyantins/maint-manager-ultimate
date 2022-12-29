@@ -11,5 +11,5 @@ public class GetMaintCommentsResponseDto {
 
     private Long id;
     private String commentText;
-    private LocalDate createdData;
+    private LocalDate createdDate;
 }

@@ -3,7 +3,6 @@ package com.example.maintmanagerultimate.persistence.entities;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,7 +16,10 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Builder
 @Entity
 @Table(name = "maint")
@@ -37,7 +39,7 @@ public class Maint {
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "appeared_data", nullable = false)
-    private LocalDate createdData;
+    private LocalDate createdDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_data", nullable = false)
@@ -58,10 +60,10 @@ public class Maint {
     @Column(nullable = false)
     private String client;
 
-
     @Setter(AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<MaintComments> comments = new ArrayList<>();
 
     public void addComment(MaintComments comment) {
@@ -70,12 +72,13 @@ public class Maint {
     }
 
     public void addComments(List<MaintComments> maintComments) {
-        if (maintComments == null || maintComments.isEmpty()){
-            throw new IllegalArgumentException("");
+        //todo replace with 'comments'
+        if (maintComments == null || maintComments.isEmpty()) {
+            throw new IllegalArgumentException("Maint comments should not be null or empty !!");
         }
 
+        maintComments.forEach(comment -> comment.setMaint(this));
         comments.addAll(maintComments);
-        comments.forEach(comment -> comment.setMaint(this));
     }
 
     public void removeComment(MaintComments comment) {

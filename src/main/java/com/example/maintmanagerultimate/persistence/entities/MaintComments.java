@@ -1,18 +1,17 @@
 package com.example.maintmanagerultimate.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @Builder
 @Entity
 @Table(name = "maint_comments")
@@ -26,19 +25,18 @@ public class MaintComments {
     private String commentText;
 
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @CreationTimestamp
     @Column(name = "created_data", nullable = false)
-    private LocalDate createdData;
-
+    private LocalDate createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "maint_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Maint maint;
 
     public MaintComments(String commentText, Maint maint) {
         this.commentText = commentText;
         this.maint = maint;
-        this.createdData = LocalDate.now();
+        this.createdDate = LocalDate.now();
     }
 }

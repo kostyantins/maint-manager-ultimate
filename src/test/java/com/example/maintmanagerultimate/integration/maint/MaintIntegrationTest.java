@@ -120,7 +120,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .id(maint.getId())
                 .maintIdentifier(maint.getMaintIdentifier())
                 .capabilityId(maint.getCapabilityId())
-                .createdData(maint.getCreatedData())
+                .createdData(maint.getCreatedDate())
                 .dueData(now().plusMonths(5))
                 .solvePriorityId(maint.getSolvePriorityId())
                 .fixVersion(FAKER.number().digits(5))
@@ -145,7 +145,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
         final var maintRequest = Maint.builder()
                 .maintIdentifier(format("MAINT-%s", FAKER.number().digits(10)))
                 .capabilityId(Capabilities.APPROVALS)
-                .createdData(now())
+                .createdDate(now())
                 .dueData(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit()))
@@ -156,7 +156,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
 
         final var comment = MaintComments.builder()
                 .commentText(FAKER.lorem().word())
-                .createdData(now())
+                .createdDate(now())
                 .maint(maint)
                 .build();
 
