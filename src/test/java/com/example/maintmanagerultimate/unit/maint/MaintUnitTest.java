@@ -139,7 +139,7 @@ public class MaintUnitTest {
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
                 .createdDate(now())
-                .dueData(now())
+                .dueDate(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(MAINT_FIX_VERSION)
                 .client(FAKER.company().name())

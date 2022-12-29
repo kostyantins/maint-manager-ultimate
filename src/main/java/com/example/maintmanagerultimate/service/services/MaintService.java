@@ -89,7 +89,7 @@ public class MaintService {
         maint.setMaintIdentifier(updateMaintDto.getMaintIdentifier());
         maint.setCapabilityId(updateMaintDto.getCapabilityId());
         maint.setCreatedDate(updateMaintDto.getCreatedData());
-        maint.setDueData(updateMaintDto.getDueData());
+        maint.setDueDate(updateMaintDto.getDueData());
         maint.setEstimate(updateMaintDto.getEstimate());
         maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());
 

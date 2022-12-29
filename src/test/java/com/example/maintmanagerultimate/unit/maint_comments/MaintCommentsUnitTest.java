@@ -35,7 +35,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
                 .maintIdentifier("MAINT-1.1.2")
                 .capabilityId(Capabilities.APPROVALS)
                 .createdDate(now())
-                .dueData(now())
+                .dueDate(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion("1.1.1")
                 .client("AIB")

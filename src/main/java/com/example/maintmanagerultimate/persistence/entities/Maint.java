@@ -43,7 +43,7 @@ public class Maint {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "due_data", nullable = false)
-    private LocalDate dueData;
+    private LocalDate dueDate;
 
     @Enumerated
     @Column(name = "sovle_priority_id", nullable = false)

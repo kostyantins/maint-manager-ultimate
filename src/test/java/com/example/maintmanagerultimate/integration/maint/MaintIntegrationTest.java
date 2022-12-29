@@ -135,7 +135,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
             softAssertions.assertThat(requireNonNull(updatedMaint, "Updated maint should not be null !!").getFixVersion())
                     .as("Fix version")
                     .isEqualTo(updatedMaintBody.getFixVersion());
-            softAssertions.assertThat(updatedMaint.getDueData())
+            softAssertions.assertThat(updatedMaint.getDueDate())
                     .as("Due data")
                     .isEqualTo(updatedMaintBody.getDueData());
         });
@@ -146,7 +146,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .maintIdentifier(format("MAINT-%s", FAKER.number().digits(10)))
                 .capabilityId(Capabilities.APPROVALS)
                 .createdDate(now())
-                .dueData(now())
+                .dueDate(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit()))
                 .client(FAKER.company().name())
