@@ -2,10 +2,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.presenttation.swagger.MaintCommentsSwagger;
-import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
-import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
-import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
+import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +29,7 @@ public class MaintCommentsController implements MaintCommentsSwagger {
 
     @PostMapping
     @Override
-    public ResponseEntity<?> createComment(@RequestBody MaintComments maintComment) {
+    public ResponseEntity<?> createComment(@RequestBody CreateMaintCommentsRequestDto maintComment) {
         final CreateMaintCommentResponseDto commentComment;
 
         try {

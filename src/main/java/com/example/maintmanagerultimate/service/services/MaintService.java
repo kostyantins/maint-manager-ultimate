@@ -1,11 +1,8 @@
 package com.example.maintmanagerultimate.service.services;
 
-import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
+import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintIdentifierException;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDeleteException;
@@ -25,17 +22,26 @@ import java.util.stream.Collectors;
 public class MaintService {
 
     private final MaintRepository maintRepository;
+    private final MaintCommentsRepository maintCommentsRepository;
 
     @Autowired
     private final MaintMapper maintMapper;
 
-    public CreateMaintResponseDto createMaintAndCommentsIfPresent(Maint maint) {
-        if (maint.getComments() != null && !maint.getComments().isEmpty()) {
-            maint.addComments(maint.getComments());
+    @Transactional
+    public CreateMaintResponseDto createMaint(CreateMaintRequestDto maint) {
+        final var maintEntity = maintMapper.createMaintDtoToMaintEntity(maint);
+
+        final var savedMaint = maintRepository.save(maintEntity);
+
+        if (savedMaint.getComments() != null) {
+            savedMaint.getComments()
+                    .forEach(comment -> comment.setMaint(savedMaint));
         }
 
+        maintCommentsRepository.saveAll(savedMaint.getComments());
+
         return CreateMaintResponseDto.builder()
-                .maintId(maintRepository.save(maint).getId())
+                .maintId(savedMaint.getId())
                 .build();
     }
 
@@ -45,7 +51,6 @@ public class MaintService {
 
         return maintMapper.maintEntityToMaintDto(maint);
     }
-
 
     @Transactional
     public List<GetMaintResponseDto> getMaints() {
@@ -76,7 +81,12 @@ public class MaintService {
 
         maint.setFixVersion(fixVersionRequestDto.getFixVersion());
 
-        createMaintAndCommentsIfPresent(maint);
+        final var savedMaint = maintRepository.save(maint);
+
+        savedMaint.getComments()
+                .forEach(comment -> comment.setMaint(savedMaint));
+
+        maintCommentsRepository.saveAll(savedMaint.getComments());
     }
 
     @Transactional
@@ -88,8 +98,8 @@ public class MaintService {
         maint.setClient(updateMaintDto.getClient());
         maint.setMaintIdentifier(updateMaintDto.getMaintIdentifier());
         maint.setCapabilityId(updateMaintDto.getCapabilityId());
-        maint.setCreatedDate(updateMaintDto.getCreatedData());
-        maint.setDueDate(updateMaintDto.getDueData());
+        maint.setCreatedDate(updateMaintDto.getCreatedDate());
+        maint.setDueDate(updateMaintDto.getDueDate());
         maint.setEstimate(updateMaintDto.getEstimate());
         maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());
 

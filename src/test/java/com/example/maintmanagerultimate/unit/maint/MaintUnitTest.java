@@ -1,21 +1,25 @@
 package com.example.maintmanagerultimate.unit.maint;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
+import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
+import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
+import com.example.maintmanagerultimate.service.dto.*;
+import com.example.maintmanagerultimate.service.mappers.MaintMapper;
+import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.Mapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,28 +35,32 @@ public class MaintUnitTest {
     private static final String MAINT_IDENTIFIER = format("MAINT-%s", FAKER.number().digits(10));
     private static final String MAINT_FIX_VERSION = format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit());
 
-//    @Mock
-//    private MaintRepository maintRepository;
+    @Mock
+    private MaintRepository maintRepository;
 
     @Mock
-//    @InjectMocks
+    private MaintCommentsRepository maintCommentsRepository;
+
+    @InjectMocks
     private MaintService maintService;
+
+    @Spy
+    private MaintMapper mapper;
 
     @Test
     void testMaintShouldBeCreated() {
         final var maintRequest = createRequestMaintModel();
 
-        final var maintResponse = CreateMaintResponseDto.builder()
-                .maintId(1L)
+        final var maintResponse = Maint.builder()
+                .id(1L)
                 .build();
 
-        final var response = CreateMaintResponseDto.builder()
-                .maintId(maintResponse.getMaintId())
-                .build();
+        when(maintRepository.save(mapper.createMaintDtoToMaintEntity(maintRequest))).thenReturn(maintResponse);
+        when(maintCommentsRepository.saveAll(maintResponse.getComments())).thenReturn(Collections.emptyList());
 
-        when(maintService.createMaintAndCommentsIfPresent(maintRequest)).thenReturn(response);
+        final var actualMaint = maintService.createMaint(maintRequest);
 
-        assertThat(maintService.createMaintAndCommentsIfPresent(maintRequest)).isEqualTo(response);
+        assertThat(actualMaint.getMaintId()).isEqualTo(maintResponse.getId());
     }
 
     @Test
@@ -109,7 +117,7 @@ public class MaintUnitTest {
 
         doNothing().when(maintService).patchMaintFixVersion(patch);
 
-        maintService .patchMaintFixVersion(patch);
+        maintService.patchMaintFixVersion(patch);
 
         verify(maintService).patchMaintFixVersion(patch);
     }
@@ -120,8 +128,8 @@ public class MaintUnitTest {
                 .id(1L)
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
-                .createdData(now())
-                .dueData(now())
+                .createdDate(now())
+                .dueDate(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(MAINT_FIX_VERSION)
                 .client(FAKER.company().name())
@@ -134,8 +142,8 @@ public class MaintUnitTest {
         verify(maintService).updateMaint(update);
     }
 
-    private Maint createRequestMaintModel() {
-        return Maint.builder()
+    private CreateMaintRequestDto createRequestMaintModel() {
+        return CreateMaintRequestDto.builder()
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
                 .createdDate(now())
@@ -151,8 +159,8 @@ public class MaintUnitTest {
                 .id(1L)
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
-                .createdData(now())
-                .dueData(now())
+                .createdDate(now())
+                .dueDate(now())
                 .solvePriorityId(Priorities.HIGH)
                 .fixVersion(MAINT_FIX_VERSION)
                 .client(FAKER.company().name())

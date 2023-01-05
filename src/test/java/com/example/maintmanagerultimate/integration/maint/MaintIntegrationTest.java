@@ -120,8 +120,8 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .id(maint.getId())
                 .maintIdentifier(maint.getMaintIdentifier())
                 .capabilityId(maint.getCapabilityId())
-                .createdData(maint.getCreatedDate())
-                .dueData(now().plusMonths(5))
+                .createdDate(maint.getCreatedDate())
+                .dueDate(now().plusMonths(5))
                 .solvePriorityId(maint.getSolvePriorityId())
                 .fixVersion(FAKER.number().digits(5))
                 .client(maint.getClient())
@@ -137,7 +137,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                     .isEqualTo(updatedMaintBody.getFixVersion());
             softAssertions.assertThat(updatedMaint.getDueDate())
                     .as("Due data")
-                    .isEqualTo(updatedMaintBody.getDueData());
+                    .isEqualTo(updatedMaintBody.getDueDate());
         });
     }
 

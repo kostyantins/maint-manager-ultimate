@@ -10,9 +10,8 @@ import java.util.List;
 
 @Data
 @Builder
-public class UpdateMaintDto {
+public class CreateMaintRequestDto {
 
-    private Long id;
     private String maintIdentifier;
     private Capabilities capabilityId;
     private LocalDate createdDate;

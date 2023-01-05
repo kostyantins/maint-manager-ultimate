@@ -15,8 +15,8 @@ public class GetMaintResponseDto {
     private Long id;
     private String maintIdentifier;
     private Capabilities capabilityId;
-    private LocalDate createdData;
-    private LocalDate dueData;
+    private LocalDate createdDate;
+    private LocalDate dueDate;
     private Priorities solvePriorityId;
     private Integer estimate;
     private String fixVersion;

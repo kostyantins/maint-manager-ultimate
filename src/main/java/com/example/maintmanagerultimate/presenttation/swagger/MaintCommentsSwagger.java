@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.presenttation.swagger;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,7 @@ public interface MaintCommentsSwagger {
     })
     ResponseEntity<?> createComment(
             @RequestBody(description = "Create Maint Comment", required = true)
-                    MaintComments maintComment
+                    CreateMaintCommentsRequestDto maintComment
     );
 
     @Operation(description = "Get Maint Comment by Comment id, returns Maint Comment object")

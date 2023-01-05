@@ -6,6 +6,8 @@ import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
+import com.example.maintmanagerultimate.service.dto.CreateMaintRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,12 +28,11 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
     @Mock
     private MaintCommentsService maintCommentsService;
 
-    private static Maint maint;
+    private static CreateMaintRequestDto maint;
 
     @BeforeAll
     public static void createMaint() {
-        maint = Maint.builder()
-                .id(1L)
+        maint = CreateMaintRequestDto.builder()
                 .maintIdentifier("MAINT-1.1.2")
                 .capabilityId(Capabilities.APPROVALS)
                 .createdDate(now())
@@ -44,7 +45,7 @@ public class MaintCommentsUnitTest extends MaintManagerUltimateApplicationTests 
 
     @Test
     void testMaintCommentShouldBeCreated() {
-        final var maintCommentRequest = MaintComments.builder()
+        final var maintCommentRequest = CreateMaintCommentsRequestDto.builder()
                 .maint(maint)
                 .commentText("New comment")
                 .createdDate(now())

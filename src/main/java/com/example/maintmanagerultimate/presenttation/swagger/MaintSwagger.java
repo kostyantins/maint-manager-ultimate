@@ -1,10 +1,7 @@
 package com.example.maintmanagerultimate.presenttation.swagger;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
+import com.example.maintmanagerultimate.service.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -24,7 +21,7 @@ public interface MaintSwagger {
     })
     ResponseEntity<CreateMaintResponseDto> createMaint(
             @RequestBody(description = "Create Maint request body object", required = true)
-                    Maint maint
+                    CreateMaintRequestDto maint
     );
 
     @Operation(description = "Get Maint by Maint id, returns Maint object")

@@ -2,10 +2,7 @@ package com.example.maintmanagerultimate.presenttation.controller;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.presenttation.swagger.MaintSwagger;
-import com.example.maintmanagerultimate.service.dto.CreateMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
+import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,11 +20,11 @@ public class MaintController implements MaintSwagger {
 
     @PostMapping
     @Override
-    public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody Maint maint) {
+    public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody CreateMaintRequestDto maint) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(CreateMaintResponseDto.builder()
-                        .maintId(maintService.createMaintAndCommentsIfPresent(maint).getMaintId())
+                        .maintId(maintService.createMaint(maint).getMaintId())
                         .build());
     }
 

@@ -3,6 +3,7 @@ package com.example.maintmanagerultimate.service.services;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
 import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
@@ -50,12 +51,14 @@ public class MaintCommentsService {
         return maintCommentsMapper.maintCommentsEntityToMaintCommentsDto(maintComment);
     }
 
-    public CreateMaintCommentResponseDto createComment(MaintComments maintComment) {
+    public CreateMaintCommentResponseDto createComment(CreateMaintCommentsRequestDto maintComment) {
         final Long commentId;
+
+        final var maintCommentEntity = maintCommentsMapper.createMaintCommentsDtoToMaintCommentsEntity(maintComment);
 
         try {
             commentId = maintCommentsRepository
-                    .save(maintComment)
+                    .save(maintCommentEntity)
                     .getId();
         } catch (Exception e) {
             throw new IllegalReceiveException("Cannot create Maint comment");

@@ -1,6 +1,7 @@
 package com.example.maintmanagerultimate.service.mappers;
 
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import org.mapstruct.Mapper;
 
@@ -8,4 +9,6 @@ import org.mapstruct.Mapper;
 public interface MaintCommentsMapper {
 
     GetMaintCommentsResponseDto maintCommentsEntityToMaintCommentsDto(MaintComments entity);
+
+    MaintComments createMaintCommentsDtoToMaintCommentsEntity(CreateMaintCommentsRequestDto entity);
 }
