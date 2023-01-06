@@ -83,8 +83,10 @@ public class MaintService {
 
         final var savedMaint = maintRepository.save(maint);
 
-        savedMaint.getComments()
-                .forEach(comment -> comment.setMaint(savedMaint));
+        if (savedMaint.getComments() != null && !savedMaint.getComments().isEmpty()) {
+            savedMaint.getComments()
+                    .forEach(comment -> comment.setMaint(savedMaint));
+        }
 
         maintCommentsRepository.saveAll(savedMaint.getComments());
     }

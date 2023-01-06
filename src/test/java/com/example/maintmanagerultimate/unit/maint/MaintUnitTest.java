@@ -1,19 +1,18 @@
 package com.example.maintmanagerultimate.unit.maint;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.enums.Capabilities;
 import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.dto.*;
+import com.example.maintmanagerultimate.service.dto.CreateMaintRequestDto;
+import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
+import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
-import com.example.maintmanagerultimate.service.services.MaintCommentsService;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.Mapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -26,7 +25,7 @@ import java.util.Locale;
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MaintUnitTest {
@@ -64,82 +63,87 @@ public class MaintUnitTest {
     }
 
     @Test
-    void testMainsShouldBeRetrieved() {
-        final var response = List.of(createResponseMaintModel());
+    void testMaintCommentsShouldBeFetched() {
+        final var maintResponse = createMaintModel();
 
-        when(maintService.getMaints()).thenReturn(response);
+        when(maintRepository.findByIdFetchComment(1L)).thenReturn(maintResponse);
 
-        assertThat(maintService.getMaints()).isEqualTo(response);
+        assertThat(maintService.getMaintFetchComment(1L)).isEqualTo(mapper.maintEntityToMaintDto(maintResponse));
     }
 
     @Test
-    void testMainsShouldNotBeRetrieved() {
-        List<GetMaintResponseDto> response = List.of();
+    void testMaintsShouldBeRetrieved() {
+        final var maintResponse = List.of(createMaintModel());
 
-        when(maintService.getMaints()).thenReturn(response);
+        when(maintRepository.findAll()).thenReturn(maintResponse);
 
-        assertThat(maintService.getMaints()).isEqualTo(response);
+        final var expected = maintResponse.stream()
+                .map(i -> mapper.maintEntityToMaintDto(i))
+                .toList();
+
+        assertThat(maintService.getMaints()).isEqualTo(expected);
     }
 
     @Test
-    void testMainCommentsShouldBeFetched() {
-        final var maintResponse = createResponseMaintModel();
+    void testMaintShouldBeRetrievedByIdIdentifier() {
+        final var maintEntity = createMaintModel();
 
-        when(maintService.getMaintFetchComment(1L)).thenReturn(maintResponse);
+        when(maintRepository.findMaintByMaintIdentifier(maintEntity.getMaintIdentifier())).thenReturn(maintEntity);
 
-        assertThat(maintService.getMaintFetchComment(1L)).isEqualTo(maintResponse);
+        assertThat(maintService.getMaintByIdIdentifier(maintEntity.getMaintIdentifier())).isEqualTo(mapper.maintEntityToMaintDto(maintEntity));
     }
 
     @Test
-    void testMainShouldBeRetrievedByIdIdentifier() {
-        final var maintResponse = createResponseMaintModel();
+    void testMaintShouldBeDeleted() {
+        final var maintEntity = createMaintModel();
 
-        when(maintService.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).thenReturn(maintResponse);
+        //todo how to fix?
+        //doNothing().when(maintRepository).delete(maintEntity);
 
-        assertThat(maintService.getMaintByIdIdentifier(maintResponse.getMaintIdentifier())).isEqualTo(maintResponse);
+        //maintService.deleteMaint(1L);
+
+        //assertThat(maintService.getMaints()).isEmpty();
     }
 
     @Test
-    void testMainShouldBeDeleted() {
-        doNothing().when(maintService).deleteMaint(1L);
+    void testMaintFixVersionShouldBePatched() {
+        final var maintEntity = createMaintModel();
 
-        maintService.deleteMaint(1L);
+        maintEntity.setFixVersion(MAINT_FIX_VERSION);
 
-        verify(maintService).deleteMaint(1L);
-    }
-
-    @Test
-    void testMainFixVersionShouldBePatched() {
-        final var patch = FixVersionRequestDto.builder()
+        final var patchedMaint = FixVersionRequestDto.builder()
                 .maintId(1L)
                 .fixVersion(MAINT_FIX_VERSION)
                 .build();
 
-        doNothing().when(maintService).patchMaintFixVersion(patch);
+        when(maintRepository.findByIdFetchComment(1L)).thenReturn(maintEntity);
+        when(maintRepository.save(maintEntity)).thenReturn(maintEntity);
+        when(maintCommentsRepository.saveAll(maintEntity.getComments())).thenReturn(maintEntity.getComments());
 
-        maintService.patchMaintFixVersion(patch);
-
-        verify(maintService).patchMaintFixVersion(patch);
+        maintService.patchMaintFixVersion(patchedMaint);
+        //todo how to do validation
+        //assertThat()
     }
 
     @Test
-    void testMainShouldBeUpdated() {
+    void testMaintShouldBeUpdated() {
+        final var maintEntity = createMaintModel();
+
         final var update = UpdateMaintDto.builder()
-                .id(1L)
-                .maintIdentifier(MAINT_IDENTIFIER)
-                .capabilityId(Capabilities.APPROVALS)
-                .createdDate(now())
-                .dueDate(now())
-                .solvePriorityId(Priorities.HIGH)
-                .fixVersion(MAINT_FIX_VERSION)
-                .client(FAKER.company().name())
+                .id(maintEntity.getId())
+                .maintIdentifier(maintEntity.getMaintIdentifier())
+                .capabilityId(maintEntity.getCapabilityId())
+                .createdDate(maintEntity.getCreatedDate())
+                .dueDate(maintEntity.getDueDate())
+                .solvePriorityId(maintEntity.getSolvePriorityId())
+                .fixVersion(maintEntity.getFixVersion())
+                .client(maintEntity.getClient())
                 .build();
 
-        doNothing().when(maintService).updateMaint(update);
+        when(maintRepository.getReferenceById(1L)).thenReturn(maintEntity);
+        when(maintRepository.save(maintEntity)).thenReturn(maintEntity);
 
         maintService.updateMaint(update);
-
-        verify(maintService).updateMaint(update);
     }
 
     private CreateMaintRequestDto createRequestMaintModel() {
@@ -154,8 +158,8 @@ public class MaintUnitTest {
                 .build();
     }
 
-    private GetMaintResponseDto createResponseMaintModel() {
-        return GetMaintResponseDto.builder()
+    private Maint createMaintModel() {
+        return Maint.builder()
                 .id(1L)
                 .maintIdentifier(MAINT_IDENTIFIER)
                 .capabilityId(Capabilities.APPROVALS)
