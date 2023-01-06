@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
 @Service
 @RequiredArgsConstructor
 public class MaintCommentsService {
@@ -61,7 +63,7 @@ public class MaintCommentsService {
                     .save(maintCommentEntity)
                     .getId();
         } catch (Exception e) {
-            throw new IllegalReceiveException("Cannot create Maint comment");
+            throw new IllegalReceiveException(format("Cannot create Maint comment \n %s \n %s", e.getMessage(), e.getCause()));
         }
 
         return CreateMaintCommentResponseDto.builder()
@@ -74,7 +76,7 @@ public class MaintCommentsService {
 
         return new PageImpl<>(comments.stream()
                 .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     public List<GetMaintCommentsResponseDto> getComments() {
@@ -82,7 +84,7 @@ public class MaintCommentsService {
 
         return comments.stream()
                 .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<GetMaintCommentsResponseDto> getAllComments() {
@@ -90,7 +92,7 @@ public class MaintCommentsService {
 
         return comments.stream()
                 .map(maintCommentsMapper::maintCommentsEntityToMaintCommentsDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void deleteMaintComment(Long maintCommentId) {

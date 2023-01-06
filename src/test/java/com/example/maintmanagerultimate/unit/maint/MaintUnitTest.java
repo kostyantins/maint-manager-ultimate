@@ -1,16 +1,13 @@
 package com.example.maintmanagerultimate.unit.maint;
 
 import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.enums.Capabilities;
-import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
-import com.example.maintmanagerultimate.service.dto.CreateMaintRequestDto;
 import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
 import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import com.example.maintmanagerultimate.service.services.MaintService;
-import com.github.javafaker.Faker;
+import com.example.maintmanagerultimate.unit.UnitTestBase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,19 +17,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
-import static java.lang.String.format;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class MaintUnitTest {
-
-    private static final Faker FAKER = new Faker(Locale.ENGLISH);
-    private static final String MAINT_IDENTIFIER = format("MAINT-%s", FAKER.number().digits(10));
-    private static final String MAINT_FIX_VERSION = format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit());
+public class MaintUnitTest extends UnitTestBase {
 
     @Mock
     private MaintRepository maintRepository;
@@ -95,14 +86,9 @@ public class MaintUnitTest {
 
     @Test
     void testMaintShouldBeDeleted() {
-        final var maintEntity = createMaintModel();
+        maintService.deleteMaint(1L);
 
-        //todo how to fix?
-        //doNothing().when(maintRepository).delete(maintEntity);
-
-        //maintService.deleteMaint(1L);
-
-        //assertThat(maintService.getMaints()).isEmpty();
+        verify(maintRepository).deleteById(1L);
     }
 
     @Test
@@ -121,8 +107,10 @@ public class MaintUnitTest {
         when(maintCommentsRepository.saveAll(maintEntity.getComments())).thenReturn(maintEntity.getComments());
 
         maintService.patchMaintFixVersion(patchedMaint);
-        //todo how to do validation
-        //assertThat()
+
+        verify(maintRepository).findByIdFetchComment(1L);
+        verify(maintRepository).save(maintEntity);
+        verify(maintCommentsRepository).saveAll(maintEntity.getComments());
     }
 
     @Test
@@ -144,30 +132,5 @@ public class MaintUnitTest {
         when(maintRepository.save(maintEntity)).thenReturn(maintEntity);
 
         maintService.updateMaint(update);
-    }
-
-    private CreateMaintRequestDto createRequestMaintModel() {
-        return CreateMaintRequestDto.builder()
-                .maintIdentifier(MAINT_IDENTIFIER)
-                .capabilityId(Capabilities.APPROVALS)
-                .createdDate(now())
-                .dueDate(now())
-                .solvePriorityId(Priorities.HIGH)
-                .fixVersion(MAINT_FIX_VERSION)
-                .client(FAKER.company().name())
-                .build();
-    }
-
-    private Maint createMaintModel() {
-        return Maint.builder()
-                .id(1L)
-                .maintIdentifier(MAINT_IDENTIFIER)
-                .capabilityId(Capabilities.APPROVALS)
-                .createdDate(now())
-                .dueDate(now())
-                .solvePriorityId(Priorities.HIGH)
-                .fixVersion(MAINT_FIX_VERSION)
-                .client(FAKER.company().name())
-                .build();
     }
 }
