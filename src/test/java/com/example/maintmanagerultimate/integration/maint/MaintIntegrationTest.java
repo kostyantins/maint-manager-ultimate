@@ -8,14 +8,13 @@ import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
-import com.example.maintmanagerultimate.service.dto.FixVersionRequestDto;
-import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
-import com.example.maintmanagerultimate.service.dto.UpdateMaintDto;
+import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import java.util.Locale;
 
@@ -31,22 +30,39 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
     private static final String MAINT_BODY_SHOULD_NOT_BE_NULL = "Maint body should not be null !!";
     private static final Faker FAKER = new Faker(Locale.ENGLISH);
 
+    private final TestRestTemplate testRestTemplate = new TestRestTemplate();
+
     @Autowired
     private MaintController maintService;
+
     @Autowired
     private MaintRepository maintRepository;
+
     @Autowired
     private MaintCommentsRepository maintCommentsRepository;
 
     @Test
     void testMaintShouldBeCreated() {
-        final var expectedMaint = createMaint();
+        final var maintRequest = CreateMaintRequestDto.builder()
+                .maintIdentifier(format("MAINT-%s", FAKER.number().digits(10)))
+                .capabilityId(Capabilities.APPROVALS)
+                .createdDate(now())
+                .dueDate(now())
+                .solvePriorityId(Priorities.HIGH)
+                .fixVersion(format("%s.%s.%s", FAKER.number().digit(), FAKER.number().digit(), FAKER.number().digit()))
+                .client(FAKER.company().name())
+                .build();
 
-        final var actualMaintId = requireNonNull(maintRepository.findById(expectedMaint.getId())
-                .orElseThrow(() -> new NoSuchMaintException(expectedMaint.getId())))
+        final var expectedMaint = testRestTemplate.postForEntity(
+                "http://localhost:8080/maints",
+                maintRequest,
+                CreateMaintResponseDto.class);
+
+        final var actualMaintId = requireNonNull(maintRepository.findById(expectedMaint.getBody().getMaintId())
+                .orElseThrow(() -> new NoSuchMaintException(expectedMaint.getBody().getMaintId())))
                 .getId();
 
-        assertThat(actualMaintId).isEqualTo(expectedMaint.getId());
+        assertThat(actualMaintId).isEqualTo(expectedMaint.getBody().getMaintId());
     }
 
     @Test

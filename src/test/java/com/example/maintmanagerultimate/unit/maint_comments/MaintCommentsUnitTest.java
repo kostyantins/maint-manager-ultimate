@@ -47,7 +47,7 @@ public class MaintCommentsUnitTest extends UnitTestBase {
                 .createdDate(now())
                 .build();
 
-        final var maintCommentEntity = MaintComments.builder()
+        final var maintCommentEntityResponse = MaintComments.builder()
                 .id(1L)
                 .maint(maintEntity)
                 .commentText(FAKER.lorem().sentence(10))
@@ -58,9 +58,9 @@ public class MaintCommentsUnitTest extends UnitTestBase {
                 .maintCommentId(1L)
                 .build();
 
-        when(maintCommentsRepository.save(maintCommentEntity)).thenReturn(maintCommentEntity);
+        when(maintCommentsRepository.save(maintCommentsMapper.createMaintCommentsDtoToMaintCommentsEntity(maintCommentRequest)))
+                .thenReturn(maintCommentEntityResponse);
 
-        //todo doesnt work, understand why
         assertThat(maintCommentsService.createComment(maintCommentRequest)).isEqualTo(response);
     }
 
