@@ -72,7 +72,6 @@ public class Maint {
     }
 
     public void addComments(List<MaintComments> maintComments) {
-        //todo replace with 'comments'
         if (maintComments == null || maintComments.isEmpty()) {
             throw new IllegalArgumentException("Maint comments should not be null or empty !!");
         }

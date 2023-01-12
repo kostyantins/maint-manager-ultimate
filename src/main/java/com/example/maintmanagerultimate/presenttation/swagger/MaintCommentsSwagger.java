@@ -44,7 +44,7 @@ public interface MaintCommentsSwagger {
             @ApiResponse(responseCode = "400", description = "ResponseErrorDto.class")
     })
     ResponseEntity<Page<GetMaintCommentsResponseDto>> getMaintCommentsPageable(
-            //todo how to mark such parameter ?
+            @Parameter(description = "Maint Comment id request parameter", required = true)
             Pageable pageable
     );
 

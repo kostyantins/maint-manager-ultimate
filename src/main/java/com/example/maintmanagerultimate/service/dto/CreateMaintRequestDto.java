@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class CreateMaintRequestDto {
 
+    private Long id;
     private String maintIdentifier;
     private Capabilities capabilityId;
     private LocalDate createdDate;

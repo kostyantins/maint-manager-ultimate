@@ -10,13 +10,9 @@ import com.example.maintmanagerultimate.persistence.repositories.MaintRepository
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
-import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-
-import java.util.Locale;
 
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
@@ -27,13 +23,8 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 @RequiredArgsConstructor
 public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
 
-    private static final String MAINT_BODY_SHOULD_NOT_BE_NULL = "Maint body should not be null !!";
-    private static final Faker FAKER = new Faker(Locale.ENGLISH);
-
-    private final TestRestTemplate testRestTemplate = new TestRestTemplate();
-
     @Autowired
-    private MaintController maintService;
+    private MaintController maintController;
 
     @Autowired
     private MaintRepository maintRepository;
@@ -69,7 +60,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
     void testMaintShouldBeRetrievedById() {
         final var maint = createMaint();
 
-        final var actualMaintId = requireNonNull(maintService.getMaint(maint.getId())
+        final var actualMaintId = requireNonNull(maintController.getMaint(maint.getId())
                 .getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL)
                 .getId();
 
@@ -80,7 +71,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
     void testMaintShouldBeRetrievedByIdIdentifier() {
         final var maint = createMaint();
 
-        final var actualMaintId = requireNonNull(maintService.getMaintByIdIdentifier(maint.getMaintIdentifier())
+        final var actualMaintId = requireNonNull(maintController.getMaintByIdIdentifier(maint.getMaintIdentifier())
                 .getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL)
                 .getId();
 
@@ -91,7 +82,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
     void testMaintShouldBeDeleted() {
         final var maint = createMaint();
 
-        maintService.deleteMaint(maint.getId());
+        maintController.deleteMaint(maint.getId());
 
         assertThat(maintRepository.findById(maint.getId())).isEmpty();
     }
@@ -101,7 +92,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
         final var maint_01 = createMaint();
         final var maint_02 = createMaint();
 
-        final var maints = maintService.getMaints().getBody();
+        final var maints = maintController.getMaints().getBody();
 
         final var maintsIds = requireNonNull(maints, MAINT_BODY_SHOULD_NOT_BE_NULL).stream()
                 .map(GetMaintResponseDto::getId)
@@ -119,7 +110,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .fixVersion(FAKER.number().digits(3))
                 .build();
 
-        maintService.patchMaintFixVersion(patchedMaintBody);
+        maintController.patchMaintFixVersion(patchedMaintBody);
 
         final var patchedMaintFixVersion = requireNonNull(maintRepository.findById(maint.getId()).orElse(null),
                 "Patched maint should not be null !!")
@@ -143,7 +134,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .client(maint.getClient())
                 .build();
 
-        maintService.updateMaint(updatedMaintBody);
+        maintController.updateMaint(updatedMaintBody);
 
         final var updatedMaint = maintRepository.findById(maint.getId()).orElse(null);
 

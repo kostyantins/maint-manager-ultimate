@@ -29,19 +29,8 @@ public class MaintCommentsController implements MaintCommentsSwagger {
 
     @PostMapping
     @Override
-    public ResponseEntity<?> createComment(@RequestBody CreateMaintCommentsRequestDto maintComment) {
-        final CreateMaintCommentResponseDto commentComment;
-
-        try {
-            commentComment = maintCommentsService.createComment(maintComment);
-        } catch (IllegalReceiveException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(ResponseErrorDto.builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
-                            .date(LocalDate.now())
-                            .comment("Could not create Maint comment"));
-        }
+    public ResponseEntity<CreateMaintCommentResponseDto> createComment(@RequestBody CreateMaintCommentsRequestDto maintComment) {
+        final var commentComment = maintCommentsService.createComment(maintComment);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
