@@ -45,12 +45,12 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .build();
 
         final var expectedMaint = testRestTemplate.postForEntity(
-                "http://localhost:8080/maints",
+                absoluteUrl("/maints"),
                 maintRequest,
                 CreateMaintResponseDto.class);
 
-        final var actualMaintId = requireNonNull(maintRepository.findById(expectedMaint.getBody().getMaintId())
-                .orElseThrow(() -> new NoSuchMaintException(expectedMaint.getBody().getMaintId())))
+        final var actualMaintId = maintRepository.findById(requireNonNull(expectedMaint.getBody(), "Maint body should not ve null !!").getMaintId())
+                .orElseThrow(() -> new NoSuchMaintException(expectedMaint.getBody().getMaintId()))
                 .getId();
 
         assertThat(actualMaintId).isEqualTo(expectedMaint.getBody().getMaintId());
@@ -60,11 +60,11 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
     void testMaintShouldBeRetrievedById() {
         final var maint = createMaint();
 
-        final var actualMaintId = requireNonNull(maintController.getMaint(maint.getId())
-                .getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL)
-                .getId();
+        final var actualMaintId = testRestTemplate.getForEntity(
+                absoluteUrl("/maints/1"),
+                GetMaintResponseDto.class);
 
-        assertThat(actualMaintId).isEqualTo(maint.getId());
+        assertThat(requireNonNull(actualMaintId.getBody(), "Maint should be present !!").getId()).isEqualTo(maint.getId());
     }
 
     @Test

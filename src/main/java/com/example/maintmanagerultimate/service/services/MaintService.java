@@ -36,9 +36,9 @@ public class MaintService {
         if (savedMaint.getComments() != null) {
             savedMaint.getComments()
                     .forEach(comment -> comment.setMaint(savedMaint));
-        }
 
-        maintCommentsRepository.saveAll(savedMaint.getComments());
+            maintCommentsRepository.saveAll(savedMaint.getComments());
+        }
 
         return CreateMaintResponseDto.builder()
                 .maintId(savedMaint.getId())
