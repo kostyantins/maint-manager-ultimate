@@ -10,9 +10,16 @@ import com.example.maintmanagerultimate.persistence.repositories.MaintRepository
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
@@ -24,13 +31,13 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
 
     @Autowired
-    private MaintController maintController;
-
-    @Autowired
     private MaintRepository maintRepository;
 
     @Autowired
     private MaintCommentsRepository maintCommentsRepository;
+
+    @Autowired
+    private MaintMapper maintMapper;
 
     @Test
     void testMaintShouldBeCreated() {
@@ -49,7 +56,7 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 maintRequest,
                 CreateMaintResponseDto.class);
 
-        final var actualMaintId = maintRepository.findById(requireNonNull(expectedMaint.getBody(), "Maint body should not ve null !!").getMaintId())
+        final var actualMaintId = maintRepository.findById(requireNonNull(expectedMaint.getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL).getMaintId())
                 .orElseThrow(() -> new NoSuchMaintException(expectedMaint.getBody().getMaintId()))
                 .getId();
 
@@ -61,28 +68,36 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
         final var maint = createMaint();
 
         final var actualMaintId = testRestTemplate.getForEntity(
-                absoluteUrl("/maints/1"),
+                absoluteUrl(format("/maints/%s", maint.getId())),
                 GetMaintResponseDto.class);
 
-        assertThat(requireNonNull(actualMaintId.getBody(), "Maint should be present !!").getId()).isEqualTo(maint.getId());
+        assertThat(requireNonNull(actualMaintId.getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL).getId()).isEqualTo(maint.getId());
     }
 
+    //todo how to use testRestTemplate with request params?
     @Test
     void testMaintShouldBeRetrievedByIdIdentifier() {
         final var maint = createMaint();
 
-        final var actualMaintId = requireNonNull(maintController.getMaintByIdIdentifier(maint.getMaintIdentifier())
-                .getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL)
-                .getId();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("maintIdentifier", maint.getMaintIdentifier());
 
-        assertThat(actualMaintId).isEqualTo(maint.getId());
+        HttpEntity httpEntity = new HttpEntity(headers);
+
+        final var actualMaint = testRestTemplate.exchange(
+                absoluteUrl("/maints/identifier"),
+                HttpMethod.GET,
+                httpEntity,
+                GetMaintResponseDto.class).getBody();
+
+        assertThat(actualMaint).isEqualTo(maintMapper.maintEntityToMaintDto(maint));
     }
 
     @Test
     void testMaintShouldBeDeleted() {
         final var maint = createMaint();
 
-        maintController.deleteMaint(maint.getId());
+        testRestTemplate.delete(absoluteUrl(format("/maints/%s", maint.getId())));
 
         assertThat(maintRepository.findById(maint.getId())).isEmpty();
     }
@@ -92,15 +107,18 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
         final var maint_01 = createMaint();
         final var maint_02 = createMaint();
 
-        final var maints = maintController.getMaints().getBody();
+        final var maints = List.of(requireNonNull(testRestTemplate.getForEntity(
+                absoluteUrl("/maints"),
+                GetMaintResponseDto[].class).getBody(), "Maints array should not be null !!"));
 
-        final var maintsIds = requireNonNull(maints, MAINT_BODY_SHOULD_NOT_BE_NULL).stream()
+        final var maintsIds = maints.stream()
                 .map(GetMaintResponseDto::getId)
                 .toList();
 
         assertThat(maintsIds).contains(maint_01.getId(), maint_02.getId());
     }
 
+    //todo doesnt work
     @Test
     void testMaintFixVersionShouldBePatched() {
         final var maint = createMaint();
@@ -110,7 +128,16 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .fixVersion(FAKER.number().digits(3))
                 .build();
 
-        maintController.patchMaintFixVersion(patchedMaintBody);
+        testRestTemplate.patchForObject(
+                absoluteUrl("/maints/fixversion"),
+                patchedMaintBody,
+                HttpStatus.class);
+
+//        testRestTemplate.exchange(
+//                absoluteUrl("/maints/fixversion"),
+//                HttpMethod.PATCH,
+//                new HttpEntity(patchedMaintBody),
+//                HttpStatus.class).getBody();
 
         final var patchedMaintFixVersion = requireNonNull(maintRepository.findById(maint.getId()).orElse(null),
                 "Patched maint should not be null !!")
@@ -134,7 +161,10 @@ public class MaintIntegrationTest extends MaintManagerUltimateApplicationTests {
                 .client(maint.getClient())
                 .build();
 
-        maintController.updateMaint(updatedMaintBody);
+        testRestTemplate.put(
+                absoluteUrl("/maints"),
+                updatedMaintBody,
+                HttpStatus.class);
 
         final var updatedMaint = maintRepository.findById(maint.getId()).orElse(null);
 

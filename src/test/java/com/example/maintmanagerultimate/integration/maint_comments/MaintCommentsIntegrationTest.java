@@ -8,8 +8,10 @@ import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.CreateMaintRequestDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintResponseDto;
 import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static java.util.Objects.requireNonNull;
+import static javax.servlet.http.HttpServletResponse.SC_CREATED;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @RequiredArgsConstructor
 public class MaintCommentsIntegrationTest extends MaintManagerUltimateApplicationTests {
@@ -53,15 +58,21 @@ public class MaintCommentsIntegrationTest extends MaintManagerUltimateApplicatio
                 .createdDate(now())
                 .build();
 
-        final var expectedMaintCommentId = requireNonNull(maintCommentsController.createComment(maintCommentRequest)
-                .getBody())
-                .getMaintCommentId();
+        final var maintComment = testRestTemplate.postForEntity(
+                absoluteUrl("/comments"),
+                maintCommentRequest,
+                CreateMaintCommentResponseDto.class);
+
+        final var expectedMaintCommentId = requireNonNull(maintComment.getBody(), MAINT_BODY_SHOULD_NOT_BE_NULL).getMaintCommentId();
 
         final var actualMaintCommentId = requireNonNull(maintCommentsRepository.findById(expectedMaintCommentId)
                 .orElseThrow(() -> new NoSuchMaintCommentsException(expectedMaintCommentId)))
                 .getId();
 
-        assertThat(actualMaintCommentId).isEqualTo(expectedMaintCommentId);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(maintComment.getStatusCodeValue()).isEqualTo(SC_CREATED);
+            softAssertions.assertThat(actualMaintCommentId).isEqualTo(expectedMaintCommentId);
+        });
     }
 
     @Test
@@ -76,9 +87,17 @@ public class MaintCommentsIntegrationTest extends MaintManagerUltimateApplicatio
 
         final var expectedMaintCommentId = maintCommentsRepository.save(maintCommentEntityRequest).getId();
 
-        final var actualMaintCommentId = requireNonNull(maintCommentsController.getComment(expectedMaintCommentId).getBody()).getId();
+        final var maintComment = testRestTemplate.getForEntity(
+                absoluteUrl(format("/maints/%s", expectedMaintCommentId)),
+                GetMaintResponseDto.class);
 
-        assertThat(actualMaintCommentId).isEqualTo(expectedMaintCommentId);
+        final var actualMaintCommentId = requireNonNull(maintComment.getBody(), "Maint comment body should not be null !!")
+                .getComments().get(0).getId();
+
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(maintComment.getStatusCodeValue()).isEqualTo(SC_OK);
+            softAssertions.assertThat(actualMaintCommentId).isEqualTo(expectedMaintCommentId);
+        });
     }
 
     private Maint createMaint() {

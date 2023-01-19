@@ -1,10 +1,11 @@
 package com.example.maintmanagerultimate.presenttation.controller;
 
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.presenttation.swagger.MaintCommentsSwagger;
-import com.example.maintmanagerultimate.service.dto.*;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
+import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
+import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
+import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
 import com.example.maintmanagerultimate.service.services.MaintCommentsService;
-import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @CacheConfig(cacheNames = {"maintComments"})
