@@ -1,3 +1,25 @@
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-07-11T182652.201.json
+
+###
+
 GET http://localhost:8080/maints/identifier?maintIdentifier=MAINT-2
 
 <> 2023-07-11T171839.404.json
@@ -842,12 +864,6 @@ Content-Type: application/json
 GET http://localhost:8080/comments
 
 <> 2022-12-09T193619.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T193616.200.json
 
 ###
 

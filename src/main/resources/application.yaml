@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+#  datasource:
+#    url:
+#    username:
+#    password:
+#server:
+#  port: 8081
