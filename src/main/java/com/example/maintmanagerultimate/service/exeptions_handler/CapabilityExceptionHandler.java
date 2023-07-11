@@ -1,7 +1,7 @@
-package com.example.maintmanagerultimate.service.exeptions_hanler;
+package com.example.maintmanagerultimate.service.exeptions_handler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
-import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
+import com.example.maintmanagerultimate.service.exeptions.capability.NoSuhcCapabilityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import static java.time.LocalDate.now;
 
 @ControllerAdvice
-public class MaintCommentsExceptionHandler {
+public class CapabilityExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<ResponseErrorDto> handleNoSuchMaintCommentException(NoSuchMaintCommentsException exception) {
+    @ExceptionHandler(NoSuhcCapabilityException.class)
+    public ResponseEntity<ResponseErrorDto> handleNoSuchCapabilityException(NoSuhcCapabilityException noSuhcCapabilityException) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND.value())
                 .body(ResponseErrorDto.builder()
                         .status(HttpStatus.NOT_FOUND.value())
-                        .comment(exception.getMessage())
+                        .comment(noSuhcCapabilityException.getMessage())
                         .date(now())
                         .build());
     }

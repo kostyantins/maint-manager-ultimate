@@ -58,7 +58,7 @@ public class MaintCommentsIntegrationTest extends MaintManagerUltimateApplicatio
                 .createdDate(now())
                 .build();
 
-        final var maintComment = testRestTemplate.postForEntity(
+        final var maintComment = restTemplate.postForEntity(
                 absoluteUrl("/comments"),
                 maintCommentRequest,
                 CreateMaintCommentResponseDto.class);
@@ -87,7 +87,7 @@ public class MaintCommentsIntegrationTest extends MaintManagerUltimateApplicatio
 
         final var expectedMaintCommentId = maintCommentsRepository.save(maintCommentEntityRequest).getId();
 
-        final var maintComment = testRestTemplate.getForEntity(
+        final var maintComment = restTemplate.getForEntity(
                 absoluteUrl(format("/maints/%s", expectedMaintCommentId)),
                 GetMaintResponseDto.class);
 

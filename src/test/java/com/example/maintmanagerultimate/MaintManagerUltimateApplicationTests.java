@@ -2,8 +2,8 @@ package com.example.maintmanagerultimate;
 
 import com.github.javafaker.Faker;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Locale;
 
@@ -16,9 +16,9 @@ public class MaintManagerUltimateApplicationTests {
     @LocalServerPort
     private int port;
 
-    protected final TestRestTemplate testRestTemplate = new TestRestTemplate();
+    protected final RestTemplate restTemplate = new RestTemplate();
 
-    protected String absoluteUrl(String path){
+    protected String absoluteUrl(String path) {
         return "http://localhost:" + port + path;
     }
 }

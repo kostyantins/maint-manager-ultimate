@@ -46,7 +46,6 @@ public class MaintUnitTest extends UnitTestBase {
                 .build();
 
         when(maintRepository.save(mapper.createMaintDtoToMaintEntity(maintRequest))).thenReturn(maintResponse);
-        when(maintCommentsRepository.saveAll(maintResponse.getComments())).thenReturn(Collections.emptyList());
 
         final var actualMaint = maintService.createMaint(maintRequest);
 

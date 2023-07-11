@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.exeptions_hanler;
+package com.example.maintmanagerultimate.service.exeptions_handler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
 import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;

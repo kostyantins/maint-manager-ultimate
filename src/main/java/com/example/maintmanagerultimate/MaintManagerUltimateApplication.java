@@ -1,7 +1,5 @@
 package com.example.maintmanagerultimate;
 
-import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
 import com.example.maintmanagerultimate.presenttation.controller.MaintController;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,13 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
-import javax.annotation.PostConstruct;
-import java.util.stream.IntStream;
-
-import static com.example.maintmanagerultimate.persistence.enums.Capabilities.APPROVALS;
-import static com.example.maintmanagerultimate.persistence.enums.Priorities.HIGH;
-import static java.time.LocalDate.now;
 
 @EnableJpaAuditing
 @EnableCaching

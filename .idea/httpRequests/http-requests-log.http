@@ -1,3 +1,549 @@
+GET http://localhost:8080/maints/identifier?maintIdentifier=MAINT-2
+
+<> 2023-07-11T171839.404.json
+
+###
+
+GET http://localhost:8080/maints/identifier?maintIdentifier=MAINT-1
+
+<> 2023-07-11T171824.200.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-07-11T171807.201.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-07-11T171649.500.json
+
+###
+
+GET http://localhost:8080/maints/identifier?maintIdentifier=MAINT-1
+
+###
+
+GET http://localhost:8080/maints/identifier?maintIdentifier=MAINT-1
+
+###
+
+GET http://localhost:8080/maints
+
+<> 2023-01-30T171436.404.html
+
+###
+
+GET http://localhost:8080/maints
+
+<> 2023-01-21T185935.200.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-21T185933.201.json
+
+###
+
+GET http://localhost:8080/comments
+
+<> 2023-01-21T185753.200.json
+
+###
+
+POST http://localhost:8080/comments
+Content-Type: application/json
+
+{
+  "commentText": "This is MCB maint additional comment ooph[oh",
+  "maint": {
+    "id": 1,
+    "maintIdentifier": "MAINT-1",
+    "capabilityId": "1",
+    "dueDate": "2022-09-15",
+    "solvePriorityId": "1",
+    "estimate": "5",
+    "fixVersion": "2022.08.01",
+    "client": "MCB"
+  }
+}
+
+<> 2023-01-21T185749.201.json
+
+###
+
+GET http://localhost:8080/comments
+
+<> 2023-01-21T185731.200.json
+
+###
+
+POST http://localhost:8080/comments
+Content-Type: application/json
+
+{
+  "commentText": "This is MCB maint additional comment",
+  "maint": {
+    "id": 1,
+    "maintIdentifier": "MAINT-1",
+    "capabilityId": "1",
+    "dueDate": "2022-09-15",
+    "solvePriorityId": "1",
+    "estimate": "5",
+    "fixVersion": "2022.08.01",
+    "client": "MCB"
+  }
+}
+
+<> 2023-01-21T185729.201.json
+
+###
+
+GET http://localhost:8080/comments
+
+<> 2023-01-21T185637.200.json
+
+###
+
+POST http://localhost:8080/comments
+Content-Type: application/json
+
+{
+  "commentText": "This is MCB maint additional comment",
+  "createdDate": "2022-10-14",
+  "maint": {
+    "id": 1,
+    "maintIdentifier": "MAINT-1",
+    "capabilityId": "1",
+    "dueDate": "2022-09-15",
+    "solvePriorityId": "1",
+    "estimate": "5",
+    "fixVersion": "2022.08.01",
+    "client": "MCB"
+  }
+}
+
+<> 2023-01-21T185631.201.json
+
+###
+
+GET http://localhost:8080/maints
+
+<> 2023-01-21T185608.200.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-21T185606.201.json
+
+###
+
+GET http://localhost:8080/maints
+
+<> 2023-01-21T185146.200.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-21T185137.201.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-21T184719.201.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-21T184532.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-21T184102.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "maint": {
+
+        "maintIdentifier": "MAINT-2",
+        "capabilityId": "APPROVALS",
+        "createdDate": "2022-09-14",
+        "dueDate": "2022-09-15",
+        "solvePriorityId": "HIGH",
+        "estimate": "5",
+        "fixVersion": "2022.08.01",
+        "client": "MCB"
+      },
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-19T175704.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-19T175652.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-19T175628.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "maint": {
+        "id": 1,
+        "maintIdentifier": "MAINT-2",
+        "capabilityId": "APPROVALS",
+        "createdDate": "2022-09-14",
+        "dueDate": "2022-09-15",
+        "solvePriorityId": "HIGH",
+        "estimate": "5",
+        "fixVersion": "2022.08.01",
+        "client": "MCB"
+      },
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-19T175502.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint",
+      "createdDate": "2022-09-14"
+    }
+  ]
+}
+
+<> 2023-01-19T175242.500.json
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-19T175212.500.json
+
+###
+
+GET http://localhost:8080/maints/1
+
+<> 2023-01-19T175158.404.json
+
+###
+
+GET http://localhost:8080/maints
+
+###
+
+POST http://localhost:8080/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "createdDate": "2022-09-14",
+  "dueDate": "2022-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comments": [
+    {
+      "commentText": "This is MCB maint"
+    }
+  ]
+}
+
+<> 2023-01-19T175046.500.json
+
+###
+
 POST http://localhost:8080/maints
 Content-Type: application/json
 
@@ -302,346 +848,6 @@ GET http://localhost:8080/comments
 GET http://localhost:8080/comments
 
 <> 2022-12-09T193616.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T193613.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T193610.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T193603.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192800.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192756.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192642.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192638.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192518.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192441.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192416.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T192325.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191938.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191803.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191751.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191550.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191514.200.json
-
-###
-
-GET http://localhost:8080/comments
-
-<> 2022-12-09T191357.500.json
-
-###
-
-GET http://localhost:8080/v3/api-docs
-
-<> 2022-11-23T165415.200.json
-
-###
-
-GET http://localhost:8080/v2/api-docs
-
-<> 2022-11-23T165407.404.json
-
-###
-
-GET http://localhost:8080/v2/api-docs
-
-<> 2022-11-23T162709.200.json
-
-###
-
-GET http://127.0.0.1:8080/actuator/mappings
-Accept: application/vnd.spring-boot.actuator.v3+json
-
-<> 2022-11-21T223851.200.json
-
-###
-
-GET http://localhost:8080/maints
-
-<> 2022-11-18T201145.200.json
-
-###
-
-PUT http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "id": "1",
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "3",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "2",
-  "estimate": "10",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-###
-
-POST http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "1",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "1",
-  "estimate": "5",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T201137.201.json
-
-###
-
-PUT http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "id": "1",
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "3",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "2",
-  "estimate": "10",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T201006.500.json
-
-###
-
-POST http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "1",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "1",
-  "estimate": "5",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T201000.201.json
-
-###
-
-PUT http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "id": "1",
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "3",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "2",
-  "estimate": "10",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T195426.500.json
-
-###
-
-PATCH http://localhost:8080/maints/fixversion
-Content-Type: application/json
-
-{
-  "maintId": 1,
-  "fixVersion": "1.1.1"
-}
-
-###
-
-POST http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "1",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "1",
-  "estimate": "5",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T195418.201.json
-
-###
-
-PUT http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "id": "1",
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "3",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "2",
-  "estimate": "10",
-  "fixVersion": "2022.08.01",
-  "client": "MCB"
-}
-
-<> 2022-11-18T195221.500.json
-
-###
-
-PATCH http://localhost:8080/maints/fixversion
-Content-Type: application/json
-
-{
-  "maintId": 1,
-  "fixVersion": "1.1.1"
-}
-
-###
-
-POST http://localhost:8080/maints
-Content-Type: application/json
-
-{
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "1",
-  "createdData": "2022-09-14",
-  "dueData": "2022-09-15",
-  "solvePriorityId": "1",
-  "estimate": "5",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comments": [
-    {
-      "commentText": "This is MCB maint"
-    }
-  ]
-}
-
-<> 2022-11-18T195211.201.json
-
-###
-
-GET http://localhost:8080/maints/1
-
-<> 2022-11-18T194423.200.json
 
 ###
 
