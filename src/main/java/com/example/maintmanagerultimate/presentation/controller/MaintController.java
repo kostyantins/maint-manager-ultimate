@@ -1,7 +1,6 @@
-package com.example.maintmanagerultimate.presenttation.controller;
+package com.example.maintmanagerultimate.presentation.controller;
 
-import com.example.maintmanagerultimate.persistence.entities.Maint;
-import com.example.maintmanagerultimate.presenttation.swagger.MaintSwagger;
+import com.example.maintmanagerultimate.presentation.swagger.MaintSwagger;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;

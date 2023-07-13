@@ -38,11 +38,11 @@ public class Maint {
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "appeared_data", nullable = false)
+    @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "due_data", nullable = false)
+    @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
     @Enumerated

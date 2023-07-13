@@ -5,11 +5,29 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
-#  datasource:
-#    url:
-#    username:
-#    password:
-#server:
-#  port: 8081
+  flyway:
+    table: flyway_schema_history
+    baseline-on-migrate: true
+    baseline-version: 0
+  datasource:
+    url: jdbc:postgresql://localhost:5001/maintmanager
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 30000
+      pool-name: SpringBootJPAHikariCP
+      connection-timeout: 30000
+      max-lifetime: 2000000
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    tagsSorter: alpha
+    operationsSorter: alpha
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+server:
+  port: 8081

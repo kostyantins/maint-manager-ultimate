@@ -29,7 +29,7 @@ public class MaintComments {
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "created_data")
+    @Column(name = "created_date")
     private LocalDate createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

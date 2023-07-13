@@ -1,6 +1,6 @@
-package com.example.maintmanagerultimate.presenttation.controller;
+package com.example.maintmanagerultimate.presentation.controller;
 
-import com.example.maintmanagerultimate.presenttation.swagger.MaintCommentsSwagger;
+import com.example.maintmanagerultimate.presentation.swagger.MaintCommentsSwagger;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
