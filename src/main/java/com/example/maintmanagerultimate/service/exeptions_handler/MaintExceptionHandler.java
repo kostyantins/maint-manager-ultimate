@@ -1,9 +1,9 @@
 package com.example.maintmanagerultimate.service.exeptions_handler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
-import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
-import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintIdentifierException;
-import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintToDeleteException;
+import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintIdentifierException;
+import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintToDeleteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

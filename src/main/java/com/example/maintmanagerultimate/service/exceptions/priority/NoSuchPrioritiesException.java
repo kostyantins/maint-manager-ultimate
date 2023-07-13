@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.service.exeptions.priority;
+package com.example.maintmanagerultimate.service.exceptions.priority;
 
 import static java.lang.String.format;
 

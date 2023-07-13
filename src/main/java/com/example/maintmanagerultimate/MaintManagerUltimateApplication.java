@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate;
 
-import com.example.maintmanagerultimate.presenttation.controller.MaintCommentsController;
-import com.example.maintmanagerultimate.presenttation.controller.MaintController;
+import com.example.maintmanagerultimate.presentation.controller.MaintCommentsController;
+import com.example.maintmanagerultimate.presentation.controller.MaintController;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;

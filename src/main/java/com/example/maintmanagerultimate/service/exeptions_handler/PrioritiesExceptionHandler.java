@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate.service.exeptions_handler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
-import com.example.maintmanagerultimate.service.exeptions.priority.NoSuchPrioritiesException;
+import com.example.maintmanagerultimate.service.exceptions.priority.NoSuchPrioritiesException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

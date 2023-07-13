@@ -14,15 +14,24 @@
 
 **[6. Swagger](#swagger)**
 
+**[7. Containers](#containers)**
+
 ## Presentation layer
-//TODO
+   - controller
+   - swagger
 
 ## Service layer
-//TODO
+   - dto
+   - exceptions
+   - exception_handler
+   - mappers
+   - services
 
 ## Data access layer
-//TODO
-
+    - entities
+    - enums
+    - repositories
+    
 ## Examples of http calls
 ```
 POST http://localhost:8080/maints
@@ -151,3 +160,14 @@ GET http://localhost:8080/priorities/all
 - @Content - Describe schema or an examples for the type of multimedia.
 
 - @Hidden - Describe a resource, operation or property
+
+## Containers:
+1. Run DB through docker image - docker-compose.yaml needs to be run:
+
+To start container with postgres
+```docker-compose up -d``` 
+
+To shut container with postgres down
+```docker-compose down```
+
+2. Start the application - mvn spring-boot:run or through Intellij Idea Run config

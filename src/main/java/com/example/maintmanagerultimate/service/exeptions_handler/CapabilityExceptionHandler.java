@@ -1,7 +1,7 @@
 package com.example.maintmanagerultimate.service.exeptions_handler;
 
 import com.example.maintmanagerultimate.service.dto.ResponseErrorDto;
-import com.example.maintmanagerultimate.service.exeptions.capability.NoSuhcCapabilityException;
+import com.example.maintmanagerultimate.service.exceptions.capability.NoSuhcCapabilityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

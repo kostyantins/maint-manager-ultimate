@@ -8,14 +8,11 @@ import com.example.maintmanagerultimate.persistence.enums.Priorities;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.*;
-import com.example.maintmanagerultimate.service.exeptions.maint.NoSuchMaintException;
+import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Builder
@@ -21,5 +20,5 @@ public class CreateMaintRequestDto {
     private Integer estimate;
     private String fixVersion;
     private String client;
-    private List<GetMaintCommentsResponseDto> comments;
+    private GetMaintCommentsResponseDto comment;
 }

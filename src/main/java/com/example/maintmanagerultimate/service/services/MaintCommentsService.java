@@ -6,8 +6,8 @@ import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDt
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
 import com.example.maintmanagerultimate.service.dto.MaintCommentsMaintIdentifierDto;
-import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsException;
-import com.example.maintmanagerultimate.service.exeptions.maint_comments.NoSuchMaintCommentsToDeleteException;
+import com.example.maintmanagerultimate.service.exceptions.maint_comments.NoSuchMaintCommentsException;
+import com.example.maintmanagerultimate.service.exceptions.maint_comments.NoSuchMaintCommentsToDeleteException;
 import com.example.maintmanagerultimate.service.mappers.MaintCommentsMapper;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 

@@ -1,6 +1,5 @@
-package com.example.maintmanagerultimate.presenttation.swagger;
+package com.example.maintmanagerultimate.presentation.swagger;
 
-import com.example.maintmanagerultimate.persistence.entities.Maint;
 import com.example.maintmanagerultimate.service.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
