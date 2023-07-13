@@ -1,24 +1,14 @@
 package com.example.maintmanagerultimate;
 
 import com.github.javafaker.Faker;
-import org.junit.ClassRule;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.Locale;
-
-import static org.springframework.test.jdbc.JdbcTestUtils.deleteFromTables;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MaintManagerUltimateApplicationTests {
@@ -46,7 +36,7 @@ public class MaintManagerUltimateApplicationTests {
 //    protected JdbcTemplate jdbcTemplate;
 
     static {
-        postgresqlContainer = new PostgreSQLContainer("postgres:11.1")
+        postgresqlContainer = new PostgreSQLContainer("postgres:15.2")
                 .withDatabaseName(DATABASE_NAME)
                 .withUsername(DATABASE_USER_NAME)
                 .withPassword(DATABASE_USER_PASSWORD);
