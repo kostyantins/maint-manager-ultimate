@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.presentation.controller;
 
-import com.example.maintmanagerultimate.presentation.swagger.MaintSwagger;
+import com.example.maintmanagerultimate.presentation.interfaces.MaintInterface;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/maints")
 @RequiredArgsConstructor
-public class MaintController implements MaintSwagger {
+public class MaintController implements MaintInterface {
 
     private final MaintService maintService;
 

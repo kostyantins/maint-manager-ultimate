@@ -61,9 +61,13 @@ public class Maint {
     private String client;
 
     @Setter(AccessLevel.PRIVATE)
-    @OneToMany(mappedBy = "maint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "maint",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private List<MaintComments> comments = new ArrayList<>();
 
     public void addComment(MaintComments comment) {
