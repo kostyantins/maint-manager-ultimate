@@ -1,5 +1,6 @@
 package com.example.maintmanagerultimate.service.services;
 
+import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.service.dto.*;
@@ -33,11 +34,14 @@ public class MaintService {
 
         final var savedMaint = maintRepository.save(maintEntity);
 
-        if (savedMaint.getComments() != null) {
-            savedMaint.getComments()
-                    .forEach(comment -> comment.setMaint(savedMaint));
+        if (maint.getComment() != null) {
+            savedMaint.addComment(new MaintComments(maint.getComment().getCommentText(), savedMaint));
 
-            maintCommentsRepository.saveAll(savedMaint.getComments());
+//        if (savedMaint.getComments() != null) {
+//            savedMaint.getComments()
+//                    .forEach(comment -> comment.setMaint(savedMaint));
+
+            //maintCommentsRepository.saveAll(savedMaint.getComments());
         }
 
         return CreateMaintResponseDto.builder()

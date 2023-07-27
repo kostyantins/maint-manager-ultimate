@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.presentation.swagger;
+package com.example.maintmanagerultimate.presentation.interfaces;
 
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface MaintCommentsSwagger {
+public interface MaintCommentsInterface {
 
     @Operation(description = "Create Maint Comment, returns created Maint Comment id")
     @ApiResponses(value = {

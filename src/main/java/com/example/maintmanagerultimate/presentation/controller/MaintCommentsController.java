@@ -1,6 +1,6 @@
 package com.example.maintmanagerultimate.presentation.controller;
 
-import com.example.maintmanagerultimate.presentation.swagger.MaintCommentsSwagger;
+import com.example.maintmanagerultimate.presentation.interfaces.MaintCommentsInterface;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentResponseDto;
 import com.example.maintmanagerultimate.service.dto.CreateMaintCommentsRequestDto;
 import com.example.maintmanagerultimate.service.dto.GetMaintCommentsResponseDto;
@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 @RequiredArgsConstructor
-public class MaintCommentsController implements MaintCommentsSwagger {
+public class MaintCommentsController implements MaintCommentsInterface {
 
     private final MaintCommentsService maintCommentsService;
 

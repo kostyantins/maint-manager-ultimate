@@ -1,4 +1,4 @@
-package com.example.maintmanagerultimate.presentation.swagger;
+package com.example.maintmanagerultimate.presentation.interfaces;
 
 import com.example.maintmanagerultimate.service.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface MaintSwagger {
+public interface MaintInterface {
 
     @Operation(description = "Create Maint, returns created Maint id")
     @ApiResponses(value = {
