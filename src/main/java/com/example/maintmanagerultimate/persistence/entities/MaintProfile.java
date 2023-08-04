@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "maint")
 @EqualsAndHashCode
 @Entity
 @Table(name = "maint_profile")
@@ -28,7 +28,7 @@ public class MaintProfile {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate pbrRealDate;
 
-    @Column(name = "pbr_conclusions")
+    @Column(name = "pbr_conclusion")
     private String pbrConclusion;
 
     @Column(name = "definition_of_ready")
@@ -39,5 +39,6 @@ public class MaintProfile {
 
     @MapsId
     @OneToOne
+    @JoinColumn(name = "maint_id")
     private Maint maint;
 }

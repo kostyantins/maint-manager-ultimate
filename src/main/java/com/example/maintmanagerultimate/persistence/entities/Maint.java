@@ -70,6 +70,11 @@ public class Maint {
     @Builder.Default
     private List<MaintComments> comments = new ArrayList<>();
 
+    @OneToOne(
+            mappedBy = "maint",
+            cascade = CascadeType.ALL)
+    private MaintProfile maintProfile;
+
     public void addComment(MaintComments comment) {
         comments.add(comment);
         comment.setMaint(this);
@@ -87,5 +92,10 @@ public class Maint {
     public void removeComment(MaintComments comment) {
         comments.remove(comment);
         comment.setMaint(null);
+    }
+
+    public void addProfile(MaintProfile maintProfile){
+        maintProfile.setMaint(this);
+        this.maintProfile = maintProfile;
     }
 }

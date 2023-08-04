@@ -43,15 +43,15 @@ create table if not exists maint_comments
 
 create table if not exists maint_profile
 (
-    "id"                      int8          not null,
+    "maint_id"                      int8          not null,
     "pbr_planed_date"         timestamp,
     "pbr_real_date"           timestamp,
     "pbr_conclusion"          varchar(255) collate "pg_catalog"."default",
     "definition_of_ready"     varchar(255) collate "pg_catalog"."default",
     "definition_of_done"      varchar(255) collate "pg_catalog"."default",
 
-    primary key (id),
-    foreign key (id) references maint (id) on delete no action on update no action
+    primary key (maint_id),
+    foreign key (maint_id) references maint (id) on delete no action on update no action
 );
 
 -- todo investigate what purpose of it
