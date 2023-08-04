@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -29,11 +31,7 @@ public class MaintManagerUltimateApplicationTests {
         return "http://localhost:" + port + path;
     }
 
-    public static final PostgreSQLContainer postgresqlContainer;
-
-    //Just an example
-//    @Autowired
-//    protected JdbcTemplate jdbcTemplate;
+    private static PostgreSQLContainer postgresqlContainer;
 
     static {
         postgresqlContainer = new PostgreSQLContainer("postgres:15.2")
@@ -44,10 +42,22 @@ public class MaintManagerUltimateApplicationTests {
         postgresqlContainer.start();
     }
 
+    //Just an example
+//    @Autowired
+//    protected JdbcTemplate jdbcTemplate;
+
+
 //    @AfterEach
 //    void tearDownBase() {
 //        deleteFromTables(jdbcTemplate, "om_user");
 //    }
+
+    @DynamicPropertySource
+    public static void containersProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.username", postgresqlContainer::getUsername);
+        registry.add("spring.datasource.password", postgresqlContainer::getPassword);
+        registry.add("spring.datasource.url", postgresqlContainer::getJdbcUrl);
+    }
 
     @Test
     void validIfContainerIsRunning() {
