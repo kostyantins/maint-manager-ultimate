@@ -95,6 +95,10 @@ public class Maint {
     }
 
     public void addProfile(MaintProfile maintProfile){
+        if (maintProfile == null) {
+            throw new IllegalArgumentException("Maint profile should not be null or empty !!");
+        }
+
         maintProfile.setMaint(this);
         this.maintProfile = maintProfile;
     }

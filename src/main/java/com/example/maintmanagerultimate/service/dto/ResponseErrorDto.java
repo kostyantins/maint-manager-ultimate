@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class ResponseErrorDto {
 
     private Integer status;
-    private String comment;
+    private String error;
     private LocalDate date;
+    private String path;
 }

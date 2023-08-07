@@ -8,10 +8,7 @@ import com.example.maintmanagerultimate.service.services.MaintProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/profiles")
@@ -31,12 +28,20 @@ public class MaintProfileController implements MaintProfileInterface {
     }
 
     @Override
-    public ResponseEntity<GetMaintProfileResponseDto> getMaint(Long maintProfileId) {
-        return null;
+    @GetMapping("{maintProfileId}")
+    public ResponseEntity<GetMaintProfileResponseDto> getMaint(@PathVariable Long maintProfileId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintProfileService.getMaintProfile(maintProfileId));
     }
 
     @Override
-    public ResponseEntity<HttpStatus> deleteMaintProfile(Long maintProfileId) {
-        return null;
+    @DeleteMapping("{maintProfileId}")
+    public ResponseEntity<HttpStatus> deleteMaintProfile(@PathVariable Long maintProfileId) {
+        maintProfileService.deleteMaintProfile(maintProfileId);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }
