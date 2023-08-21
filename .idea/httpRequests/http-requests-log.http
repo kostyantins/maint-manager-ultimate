@@ -1,3 +1,291 @@
+GET http://localhost:8081/maints
+
+<> 2023-08-21T192324.200.json
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-2",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+<> 2023-08-21T191956.403.json
+
+###
+
+GET http://localhost:8081/maints
+
+<> 2023-08-21T191921.500.json
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+Authorization: Basic d1c577c5-27eb-4cae-af2b-32e6bd2da995
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+Authorization: Username: user, Password: d1c577c5-27eb-4cae-af2b-32e6bd2da995
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+Authorization: d02ea845-4f96-4234-ba28-80a0e2446a3a
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+POST http://localhost:8081/maints
+Content-Type: application/json
+
+{
+  "maintIdentifier": "MAINT-1",
+  "capabilityId": "APPROVALS",
+  "dueDate": "2023-09-15",
+  "solvePriorityId": "HIGH",
+  "estimate": "5",
+  "fixVersion": "2022.08.01",
+  "client": "MCB",
+  "comment":
+    {
+      "commentText": "This is MCB maint"
+    }
+}
+
+###
+
+GET http://localhost:8081/maints
+
+###
+
 DELETE http://localhost:8081/profiles/9
 
 ###
@@ -170,247 +458,6 @@ Content-Type: application/json
 }
 
 <> 2023-08-07T165237.500.json
-
-###
-
-POST http://localhost:8081/maints
-Content-Type: application/json
-
-{
-  "maintIdentifier": "MAINT-1",
-  "capabilityId": "APPROVALS",
-  "dueDate": "2023-09-15",
-  "solvePriorityId": "HIGH",
-  "estimate": "5",
-  "fixVersion": "2022.08.01",
-  "client": "MCB",
-  "comment":
-    {
-      "commentText": "This is MCB maint"
-    }
-}
-
-<> 2023-08-07T165229.201.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "maintId": 3,
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T165122.500.json
-
-###
-
-DELETE http://localhost:8081/maints/1
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "id": 2,
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T164837.404.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "id": 2,
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T164622.500.json
-
-###
-
-GET http://localhost:8081/profiles/2
-
-<> 2023-08-07T164617.404.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "id": 2,
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T164606.500.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "id": 1,
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T164553.500.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T164235.500.json
-
-###
-
-GET http://localhost:8081/profiles/2
-
-<> 2023-08-07T162741.404.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-<> 2023-08-07T162706.200.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-07T162412.500.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-<> 2023-08-07T162404.404.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-<> 2023-08-07T162350.404.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-<> 2023-08-07T162334.404.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-<> 2023-08-07T162124.404.json
-
-###
-
-GET http://localhost:8081/profiles/1
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022-09-01",
-  "pbrRealDate": "2022-09-01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-04T165341.201.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022.09.01",
-  "pbrRealDate": "2022.09.01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-04T164936.400.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022.09.01",
-  "pbrRealDate": "2022.09.01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-04T164853.201.json
-
-###
-
-POST http://localhost:8081/profiles
-Content-Type: application/json
-
-{
-  "pbrPlanedDate": "2022.09.01",
-  "pbrRealDate": "2022.09.01",
-  "pbrConclusion": "Rolled MCB tactical solution beck",
-  "definitionOfReady": "Groom CAL functionality",
-  "definitionOfDone": "CAL functionality developed and successfully tested"
-}
-
-<> 2023-08-04T164437.201.json
 
 ###
 
