@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -17,6 +18,7 @@ public class MaintController implements MaintInterface {
 
     private final MaintService maintService;
 
+    @RolesAllowed("admin")
     @PostMapping
     @Override
     public ResponseEntity<CreateMaintResponseDto> createMaint(@RequestBody CreateMaintRequestDto maint) {
@@ -27,6 +29,7 @@ public class MaintController implements MaintInterface {
                         .build());
     }
 
+    @RolesAllowed({"user", "admin"})
     @GetMapping("{maintId}")
     @Override
     public ResponseEntity<GetMaintResponseDto> getMaint(@PathVariable Long maintId) {
@@ -35,6 +38,7 @@ public class MaintController implements MaintInterface {
                 .body(maintService.getMaintFetchComment(maintId));
     }
 
+    @RolesAllowed({"user", "admin"})
     @GetMapping
     @Override
     public ResponseEntity<List<GetMaintResponseDto>> getMaints() {
@@ -51,6 +55,7 @@ public class MaintController implements MaintInterface {
                 .body(maints);
     }
 
+    @RolesAllowed({"user", "admin"})
     @GetMapping("identifier")
     @Override
     public ResponseEntity<GetMaintResponseDto> getMaintByIdIdentifier(@RequestParam String maintIdentifier) {
@@ -59,6 +64,7 @@ public class MaintController implements MaintInterface {
                 .body(maintService.getMaintByIdIdentifier(maintIdentifier));
     }
 
+    @RolesAllowed("admin")
     @DeleteMapping("{maintId}")
     @Override
     public ResponseEntity<HttpStatus> deleteMaint(@PathVariable Long maintId) {
@@ -69,6 +75,7 @@ public class MaintController implements MaintInterface {
                 .build();
     }
 
+    @RolesAllowed("admin")
     @PatchMapping("fixversion")
     @Override
     public ResponseEntity<HttpStatus> patchMaintFixVersion(@RequestBody FixVersionRequestDto fixVersionRequestDto) {
@@ -79,6 +86,7 @@ public class MaintController implements MaintInterface {
                 .build();
     }
 
+    @RolesAllowed("admin")
     @PutMapping
     @Override
     public ResponseEntity<HttpStatus> updateMaint(@RequestBody UpdateMaintDto updateMaintDto) {

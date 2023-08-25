@@ -171,3 +171,9 @@ To shut container with postgres down
 ```docker-compose down```
 
 2. Start the application - mvn spring-boot:run or through Intellij Idea Run config
+
+### keycloak:
+
+https://www.keycloak.org/
+
+POST http://localhost:8890/realms/Myrealm/protocol/openid-connect/token

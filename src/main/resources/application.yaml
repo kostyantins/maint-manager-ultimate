@@ -31,3 +31,15 @@ springdoc:
     path: /swagger-ui.html
 server:
   port: 8081
+
+keycloak:
+  auth-server-url: http://localhost:8890
+  realm: Myrealm
+  resource: login
+  public-client: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
