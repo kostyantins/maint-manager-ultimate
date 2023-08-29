@@ -3,6 +3,7 @@ package com.example.maintmanagerultimate.service.services;
 import com.example.maintmanagerultimate.persistence.entities.MaintComments;
 import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRepository;
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
+import com.example.maintmanagerultimate.presentation.interfaces.feigns.MaintRequestsFeign;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintIdentifierException;
@@ -10,6 +11,7 @@ import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintToDe
 import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ public class MaintService {
 
     private final MaintRepository maintRepository;
     private final MaintCommentsRepository maintCommentsRepository;
+    private final MaintRequestsFeign maintRequestsFeign;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Autowired
     private final MaintMapper maintMapper;
@@ -104,5 +108,13 @@ public class MaintService {
         maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());
 
         maintRepository.save(maint);
+    }
+
+    public RequestsDto getMaintRequests(Long requestsId) {
+        final RequestsDto maintRequests = circuitBreakerFactory
+                .create("maint-manager")
+                .run(() -> maintRequestsFeign.getMaintRequests(requestsId));
+
+        return new RequestsDto(maintRequests.id(), maintRequests.client(), maintRequests.jiraTicket());
     }
 }

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -79,4 +80,14 @@ public interface MaintInterface {
             @RequestBody(description = "Update Maint request body object", required = true)
                     UpdateMaintDto updateMaintDto
     );
+
+    @Operation(description = "Get Maint requests")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "404", description = "ResponseErrorDto.class")
+    })
+    ResponseEntity<RequestsDto> getMaintRequests(
+            @Parameter(description = "Get Maint requests object", required = true)
+                    Long requestsId
+    ) throws InterruptedException;
 }

@@ -4,12 +4,15 @@ import com.example.maintmanagerultimate.presentation.interfaces.MaintInterface;
 import com.example.maintmanagerultimate.service.dto.*;
 import com.example.maintmanagerultimate.service.services.MaintService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Log4j2
 @RestController
 @RequestMapping("/maints")
 @RequiredArgsConstructor
@@ -87,5 +90,13 @@ public class MaintController implements MaintInterface {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @GetMapping("/requests")
+    @Override
+    public ResponseEntity<RequestsDto> getMaintRequests(@RequestParam Long requestsId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(maintService.getMaintRequests(requestsId));
     }
 }

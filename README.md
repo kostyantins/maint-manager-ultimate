@@ -171,3 +171,14 @@ To shut container with postgres down
 ```docker-compose down```
 
 2. Start the application - mvn spring-boot:run or through Intellij Idea Run config
+
+## To start the service as a part of microservices architecture:
+### Components of the infrastructure need to be launched:
+ - maint-manager-config-service - 
+ - maint-manager-discovery-service - 
+ - maint-manager-requests-service -
+ - maint-manager-ultimate - 
+
+The endpoint to test microservices collaboration:
+
+```GET http://localhost:8081/maints/requests?requestsId={requestsId}```
