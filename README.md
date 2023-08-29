@@ -179,6 +179,47 @@ To shut container with postgres down
  - maint-manager-requests-service -
  - maint-manager-ultimate - 
 
-The endpoint to test microservices collaboration:
+## The endpoint to test microservices collaboration:
 
-```GET http://localhost:8081/maints/requests?requestsId={requestsId}```
+```http request
+GET http://localhost:8081/maints/requests?requestsId={requestsId}
+```
+
+## Circuit Breaker library was implemented here in order to get height resilience for the requests service when maint manager service will call it
+
+The starter was added:
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+</dependency>
+```
+
+Then we need to add in the application.yaml instances of the services we should use:
+
+```yaml
+resilience4j:
+  circuitbreaker:
+    instances:
+      maint-mansger:
+        minimumNumberOfCalls: 5
+        slowCallDurationThreshold: 1000ms
+```
+
+And then we can use it like:
+
+```java
+@FeignClient(name = "requests")
+public interface MaintRequestsFeign {
+
+    @CircuitBreaker(name = "maint-manager", fallbackMethod = "defaultRequests")
+    @GetMapping("/requests")
+    RequestsDto getMaintRequests(@RequestParam Long requestsId);
+
+    default RequestsDto defaultRequests (Long requestsId, Throwable throwable){
+        return new RequestsDto(requestsId, "DEFAULT", "DEFAULT");
+    }
+}
+```
+
