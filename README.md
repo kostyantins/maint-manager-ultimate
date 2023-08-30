@@ -174,10 +174,10 @@ To shut container with postgres down
 
 ## To start the service as a part of microservices architecture:
 ### Components of the infrastructure need to be launched:
- - maint-manager-config-service - 
- - maint-manager-discovery-service - 
- - maint-manager-requests-service -
- - maint-manager-ultimate - 
+ - maint-manager-config-service - https://github.com/kostyantins/maint-manager-config-service
+ - maint-manager-discovery-service - https://github.com/kostyantins/maint-manager-discovery-service
+ - maint-manager-requests-service - https://github.com/kostyantins/maint-manager-requests-service
+ - maint-manager-ultimate - https://github.com/kostyantins/maint-manager-ultimate
 
 ## The endpoint to test microservices collaboration:
 
