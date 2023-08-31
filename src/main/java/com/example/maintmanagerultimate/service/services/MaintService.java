@@ -5,6 +5,7 @@ import com.example.maintmanagerultimate.persistence.repositories.MaintCommentsRe
 import com.example.maintmanagerultimate.persistence.repositories.MaintRepository;
 import com.example.maintmanagerultimate.presentation.interfaces.feigns.MaintRequestsFeign;
 import com.example.maintmanagerultimate.service.dto.*;
+import com.example.maintmanagerultimate.service.events.MaintUpdateEvent;
 import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintException;
 import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintIdentifierException;
 import com.example.maintmanagerultimate.service.exceptions.maint.NoSuchMaintToDeleteException;
@@ -12,6 +13,7 @@ import com.example.maintmanagerultimate.service.mappers.MaintMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ public class MaintService {
     private final MaintCommentsRepository maintCommentsRepository;
     private final MaintRequestsFeign maintRequestsFeign;
     private final CircuitBreakerFactory circuitBreakerFactory;
+    private final StreamBridge streamBridge;
 
     @Autowired
     private final MaintMapper maintMapper;
@@ -108,6 +111,9 @@ public class MaintService {
         maint.setSolvePriorityId(updateMaintDto.getSolvePriorityId());
 
         maintRepository.save(maint);
+
+        //Sending the fact fo the update in the message broker
+        streamBridge.send("maint-topic", new MaintUpdateEvent(maint.getId()));
     }
 
     public RequestsDto getMaintRequests(Long requestsId) {
